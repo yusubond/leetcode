@@ -45,7 +45,7 @@
 
 小元素栈 minStack 保存当前的最小元素。
 
-入栈的时候，如果 minStack 的栈顶元素 大于等于入栈元素，那么把入栈元素 val 也放入 minStack 中。
+入栈的时候，如果 minStack 的栈顶元素 大于等于入栈元素，那么把入栈元素 val 也放入 minStack 中，这样做是为了保证两个连续相同的元素都可以入小元素栈。
 
 出栈的时候，如果 minStack 的栈顶元素 等于 dataStack 的栈顶元素，那么 minStack 也要出栈。
 
