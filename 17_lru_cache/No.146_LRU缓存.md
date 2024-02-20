@@ -49,17 +49,15 @@ removeTail()
 
 
 
-
-
 ```go
 // date 2023/10/16
 type MyNode struct {
     key, val int
-    pre, next *MyNode
+    prev, next *MyNode
 }
 
 type LRUCache struct {
-    size, capacity int
+    size int
     cache map[int]*MyNode
     head, tail *MyNode
 }
@@ -67,13 +65,13 @@ type LRUCache struct {
 
 func Constructor(capacity int) LRUCache {
     lr := LRUCache{
-        capacity: capacity,
-        cache: map[int]*MyNode{},
+        size: capacity,
+        cache: make(map[int]*MyNode, capacity),
         head: &MyNode{0,0,nil,nil},
         tail: &MyNode{0,0,nil,nil},
     }
     lr.head.next = lr.tail
-    lr.tail.pre = lr.head
+    lr.tail.prev = lr.head
     return lr
 }
 
@@ -95,12 +93,10 @@ func (this *LRUCache) Put(key int, value int)  {
         node := &MyNode{key, value, nil, nil}
         this.cache[key] = node
         this.addToHead(node)
-        this.size++
-        if this.size > this.capacity {
+        if len(this.cache) > this.size {
             // remove tail
             rmd := this.removeTail()
             delete(this.cache, rmd.key)
-            this.size--
         }
     } else {
         node.val = value
@@ -109,16 +105,16 @@ func (this *LRUCache) Put(key int, value int)  {
 }
 
 func (this *LRUCache) addToHead(node *MyNode) {
-    node.pre = this.head
+    node.prev = this.head
     node.next = this.head.next
     
-    this.head.next.pre = node
+    this.head.next.prev = node
     this.head.next = node
 }
 
 func (this *LRUCache) removeNode(node *MyNode) {
-    node.pre.next = node.next
-    node.next.pre = node.pre
+    node.prev.next = node.next
+    node.next.prev = node.prev
 }
 
 func(this *LRUCache) moveToHead(node *MyNode) {
@@ -127,11 +123,10 @@ func(this *LRUCache) moveToHead(node *MyNode) {
 }
 
 func (this *LRUCache) removeTail() *MyNode {
-    node := this.tail.pre
+    node := this.tail.prev
     this.removeNode(node)
     return node
 }
-
 
 
 /**
