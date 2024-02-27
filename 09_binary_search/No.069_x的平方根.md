@@ -12,14 +12,15 @@
 
 分析：
 
-二分查找，求最后一个等于或小于 x 的值。
+二分查找，找到最后一个key，key的平方等于或小于 x 。
 
 ```go
 // data 2023/12/06
 func mySqrt(x int) int {
+    // 查找区间[0,x]
     left, right := 0, x
     for left <= right {
-        mid := left + (right - left) / 2
+        mid := left + (right-left)/2
         v := mid * mid
         if v > x {
             right = mid - 1

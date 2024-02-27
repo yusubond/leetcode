@@ -72,28 +72,43 @@ func pathSum(root *TreeNode, targetSum int) [][]int {
 
 ```go
 // date 2022/10/24
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
 func pathSum(root *TreeNode, targetSum int) [][]int {
     ans := make([][]int, 0, 16)
     path := make([]int, 0, 16)
 
-    var dfs func(root *TreeNode, leftVal int)
-    dfs = func(root *TreeNode, leftVal int) {
+    var dfs func(root *TreeNode, sum int)
+    dfs = func(root *TreeNode, sum int) {
         if root == nil {
             return
         }
         path = append(path, root.Val)
+        sum -= root.Val
+
         defer func() {
             path = path[:len(path)-1]
         }()
-        leftVal -= root.Val
-        if root.Left == nil && root.Right == nil && leftVal == 0 {
-            ans = append(ans, append([]int{}, path...))
+
+        if root.Left == nil && root.Right == nil && sum == 0 {
+            one := make([]int, len(path))
+            copy(one, path)
+            ans = append(ans, one)
             return
         }
-        dfs(root.Left, leftVal)
-        dfs(root.Right, leftVal)
+
+        dfs(root.Left, sum)
+        dfs(root.Right, sum)
     }
+
     dfs(root, targetSum)
+
     return ans
 }
 ```
