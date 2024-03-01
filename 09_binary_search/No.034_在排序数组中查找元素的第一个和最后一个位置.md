@@ -17,43 +17,37 @@
 ```go
 // date 2022/09/15
 func searchRange(nums []int, target int) []int {
-    res := make([]int, 2, 2)
-
-    l := searchFirstEqual(nums, target)
-    r := searchLastEqual(nums, target)
-
-    res[0] = l
-    res[1] = r
-
-    return res
+    v1 := searchFirstEqual(nums, target)
+    v2 := searchFindLastEqual(nums, target)
+    return []int{v1, v2}
 }
 
 func searchFirstEqual(nums []int, target int) int {
     left, right := 0, len(nums)-1
+
     for left <= right {
-        mid := (left + right) / 2
-        if nums[mid] >= target {
-            right = mid - 1
-        } else if nums[mid] < target {
-            left = mid + 1
+        mid := left + (right-left)/2
+        if nums[mid] >= target { // 舍弃掉的
+            right = mid-1
+        } else {
+            left = mid+1
         }
     }
     if left < len(nums) && nums[left] == target {
         return left
     }
+
     return -1
 }
 
-// 从 right 找边界
-func searchLastEqual(nums []int, target int) int {
-    n := len(nums)
-    left, right := 0, n-1
+func searchFindLastEqual(nums []int, target int) int {
+    left, right := 0, len(nums)-1
     for left <= right {
-        mid := (left + right) / 2
-        if nums[mid] > target {
+        mid := left + (right-left)/2
+        if nums[mid] <= target { // 舍弃掉的
+            left = mid+1
+        } else {
             right = mid - 1
-        } else if nums[mid] <= target {  // 从右侧找边界，left 不断地向 right 靠近
-            left = mid + 1
         }
     }
     if right >= 0 && nums[right] == target {
