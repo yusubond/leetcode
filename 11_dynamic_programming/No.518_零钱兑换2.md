@@ -17,6 +17,7 @@
 典型的动态规划题目。我们设 dp[i] 表示总金额为 i 所对应的组合数，那么对于每一种 coin，有如下递推公式：
 
 ```
+// for _, coin := range coions
 dp[i] = dp[i] + dp[i-coin]
 ```
 
@@ -46,12 +47,10 @@ dp[i] = dp[i] + dp[i-coin]
 // date 2023/11/09
 func change(amount int, coins []int) int {
     dp := make([]int, amount+1)
+    // 不选取任何硬币金额之和才为0，所以只有一种组合
     dp[0] = 1
     for _, coin := range coins {
-        for i := 1; i <= amount; i++ {
-            if i < coin {
-                continue
-            }
+        for i := coin; i <= amount; i++ {
             dp[i] += dp[i-coin]
         }
     }

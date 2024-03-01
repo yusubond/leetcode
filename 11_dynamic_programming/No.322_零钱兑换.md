@@ -9,7 +9,8 @@
 你可以认为每种硬币的数量是无限的。
 
 
-分析：
+
+**解题思路**
 
 该问题具有最优子结构，设目标值为 target，目标值对应的最优解为 opt[target]，那么在所有的硬币里面可以得到下面的递推公式：
 
@@ -21,22 +22,30 @@ opt[target] = min(opt[target], 1+opt[target-coin])
 ```go
 // date 2023/11/08
 func coinChange(coins []int, amount int) int {
-    opt := make([]int, amount+1)
-    for i := 0; i <= amount; i++ {
-        opt[i] = amount+1
+    dp := make([]int, amount+1)
+    dp[0] = 0
+    for i := 1; i <= amount; i++ {
+        dp[i] = amount+1
     }
-    opt[0] = 0
-    for v := 1; v <= amount; v++ {
-        for _, coin := range coins {
-            if v < coin {
+
+    for i := 1; i <= amount; i++ {
+        for _, v := range coins {
+            if i < v {
                 continue
             }
-            opt[v] = min(opt[v], 1+opt[v-coin])
+            dp[i] = min(dp[i], 1+dp[i-v])
         }
     }
-    if opt[amount] == amount + 1 {
+    if dp[amount] == amount+1 {
         return -1
     }
-    return opt[amount]
+    return dp[amount]
+}
+
+func min(x, y int) int {
+    if x < y {
+        return x
+    }
+    return y
 }
 ```
