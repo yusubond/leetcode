@@ -65,6 +65,38 @@ func permute(nums []int) [][]int {
 
     return res
 }
+
+// 解法2
+// 也是回溯算法，通过标记是否已经遍历过实现去重
+func permute(nums []int) [][]int {
+    ans := make([][]int, 0, 16)
+    n := len(nums)
+    onPath := make([]bool, n)
+
+    var backtrace func(path []int)
+    backtrace = func(path []int) {
+        if len(path) == n {
+            one := make([]int, n)
+            copy(one, path)
+            ans = append(ans, one)
+            return
+        }
+        for i, visited := range onPath {
+            if !visited {
+                path = append(path, nums[i])
+                onPath[i] = true
+                backtrace(path)
+                onPath[i] = false
+                path = path[:len(path)-1]
+            }
+        }
+    }
+
+
+    backtrace([]int{})
+
+    return ans
+}
 ```
 
 
