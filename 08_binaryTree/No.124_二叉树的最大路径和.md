@@ -58,6 +58,7 @@ func maxPathSum(root *TreeNode) int {
         if root == nil {
             return 0
         }
+      	// 如果左右子树的总和为负数，可以不加入路径
         left := max(bfs(root.Left), 0)
         right := max(bfs(root.Right), 0)
         
