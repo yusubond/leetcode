@@ -21,8 +21,11 @@
 ```go
 func search(nums []int, n int, key int) int {
   left, right := 0, n-1
+  // 因为要判断所有元素，所以循环区间为 left <= right
+  // left == right 就是判断最后一个元素
   for left <= right {
-    mid := (left + right) / 2
+    // 避免下标溢出
+    mid := left + (right - left) / 2
     if nums[mid] == key {
       return mid
     } else if nums[mid] > key {
@@ -35,7 +38,7 @@ func search(nums []int, n int, key int) int {
 }
 ```
 
-程序不复杂，但是也要注意一点，每次移动 left 和 right 指针的时候，要在 mid 的基础上 +1 或者 -1。
+程序不复杂，但是也要注意一点，因为已经判断了`nums[mid] == key`，所以每次移动 left 和 right 指针的时候，要在 mid 的基础上 +1 或者 -1。
 
 
 

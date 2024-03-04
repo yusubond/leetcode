@@ -68,41 +68,33 @@ func search(nums []int, target int) int {
     return res
 }
 
-// 解法2
+// 解法2 二分查找
 // O(logN)
 func search(nums []int, target int) int {
-    res := -1
-    n := len(nums)
-    if n == 1 {
-        if nums[0] == target {
-            res = 0
-        }
-        return res
-    }
-    
-    left, right := 0, n-1
-    for left <= right {
-        mid := left + (right-left)/2
-        if nums[mid] == target {
-            return mid
-        }
-        // 前半段有序
-        if nums[left] <= nums[mid] {
-            if nums[left] <= target && target < nums[mid] {
-                right = mid - 1  // search [left, mid-1]
-            } else {
-                left = mid + 1   // search [mid+1, right]
-            }
-        } else {
-            // 后半段有序
-            if nums[mid] < target && target <= nums[n-1] {
-                left = mid + 1   // search [mid+1, right]
-            } else {
-                right = mid - 1  // search [left, mid-1]
-            }
-        }
-    }
+	res := -1
+	left, right := 0, len(nums)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if nums[mid] == target {
+			return mid
+		}
+		// 前半段有序
+		if nums[left] <= nums[mid] {
+			if nums[left] <= target && target < nums[mid] {
+				right = mid - 1 // search [left, mid-1]
+			} else {
+				left = mid + 1 // search [mid+1, right]
+			}
+		} else {
+			// 后半段有序
+			if nums[mid] < target && target <= nums[right] {
+				left = mid + 1 // search [mid+1, right]
+			} else {
+				right = mid - 1 // search [left, mid-1]
+			}
+		}
+	}
 
-    return res
+	return res
 }
 ```
