@@ -33,26 +33,28 @@
  * }
  */
 func pathSum(root *TreeNode, targetSum int) int {
-    var ans int
-    preSum := map[int64]int{0:1}
+	var ans int
+	// k is sum of the path
+	// v is the total amount of k
+	pathSum := map[int64]int{0: 1}
 
-    var dfs func(root *TreeNode, cur int64)
-    dfs = func(root *TreeNode, cur int64) {
-        if root == nil {
-            return
-        }
-        cur += int64(root.Val)
-        ans += preSum[cur - int64(targetSum)]
+	var dfs func(root *TreeNode, cur int64)
+	dfs = func(root *TreeNode, cur int64) {
+		if root == nil {
+			return
+		}
+		cur += int64(root.Val)
+		ans += pathSum[cur-int64(targetSum)]
 
-        preSum[cur]++
-        dfs(root.Left, cur)
-        dfs(root.Right, cur)
-        preSum[cur]--
-    }
+		pathSum[cur]++
+		dfs(root.Left, cur)
+		dfs(root.Right, cur)
+		pathSum[cur]--
+	}
 
-    dfs(root, 0)
+	dfs(root, 0)
 
-    return ans
+	return ans
 }
 ```
 
