@@ -42,4 +42,30 @@ func max(x, y int) int {
     }
     return x
 }
+// 简洁版
+// 因为当晚可获得最大金额至于前两天的状态有关，所以可用两个变量维护。
+func rob(nums []int) int {
+    n := len(nums)
+    if n == 1 {
+        return nums[0]
+    }
+    // y1 前一天可偷的最大值
+    // y2 前两天可偷的最大值
+    y2 := nums[0]
+    y1 := max(nums[0], nums[1])
+    y0 := max(y1, y2)
+    for i := 2; i < n; i++ {
+        y0 = max(y1, y2+nums[i])
+        y2, y1 = y1, y0
+    }
+
+    return y0
+}
+
+func max(x, y int) int {
+    if x > y {
+        return x
+    }
+    return y
+}
 ```

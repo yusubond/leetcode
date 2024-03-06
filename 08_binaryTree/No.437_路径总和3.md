@@ -32,24 +32,30 @@
  *     Right *TreeNode
  * }
  */
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
 func pathSum(root *TreeNode, targetSum int) int {
-	var ans int
-	// k is sum of the path
-	// v is the total amount of k
-	pathSum := map[int64]int{0: 1}
+	ans := 0
+	pathPreSum := map[int]int{0: 1}
 
-	var dfs func(root *TreeNode, cur int64)
-	dfs = func(root *TreeNode, cur int64) {
+	var dfs func(root *TreeNode, sum int)
+	dfs = func(root *TreeNode, sum int) {
 		if root == nil {
 			return
 		}
-		cur += int64(root.Val)
-		ans += pathSum[cur-int64(targetSum)]
+		sum += root.Val
+		ans += pathPreSum[sum-targetSum]
 
-		pathSum[cur]++
-		dfs(root.Left, cur)
-		dfs(root.Right, cur)
-		pathSum[cur]--
+		pathPreSum[sum]++
+		dfs(root.Left, sum)
+		dfs(root.Right, sum)
+		pathPreSum[sum]--
 	}
 
 	dfs(root, 0)

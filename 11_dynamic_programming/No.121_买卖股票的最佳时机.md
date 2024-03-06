@@ -16,22 +16,23 @@
 ```go
 // date 2023/11/08
 func maxProfit(prices []int) int {
-    var profit int
-    if len(prices) < 2 {
-        return 0
-    }
+	n := len(prices)
+	if n < 2 {
+		return 0
+	}
+	profit := 0
+	minPrice := prices[0]
 
-    cur_min := prices[0]
+	for _, curPrice := range prices {
+		if curPrice > minPrice && profit < curPrice-minPrice {
+			profit = curPrice - minPrice
+		}
+		// update the min price
+		if curPrice < minPrice {
+			minPrice = curPrice
+		}
+	}
 
-    for _, v := range prices {
-        if cur_min < v && profit < v - cur_min {
-            profit = v - cur_min
-        }
-        if v < cur_min {
-            cur_min = v
-        }
-    }
-
-    return profit
+	return profit
 }
 ```
