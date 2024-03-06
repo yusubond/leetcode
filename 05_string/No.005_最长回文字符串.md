@@ -15,27 +15,25 @@
 ```go
 // date 2023/12/09
 func longestPalindrome(s string) string {
-    n := len(s)
-    res := ""
-    for i:= 0; i < n; i++ {
-        s1 := palindrome(s, i, i)
-        s2 := palindrome(s, i, i+1)
-        if len(s1) > len(res) {
-            res = s1
-        }
-        if len(s2) > len(res) {
-            res = s2
-        }
-    }
-    return res
-}
+	res := ""
+	n := len(s)
+	var checkPalindrome func(left, right int)
+	checkPalindrome = func(left, right int) {
+		for left >= 0 && right < n && s[left] == s[right] {
+			left--
+			right++
+		}
+		if len(s[left+1:right]) > len(res) {
+			res = s[left+1 : right]
+		}
+	}
 
-func palindrome(s string, l, r int) string {
-    for l >= 0 && r < len(s) && s[l] == s[r] {
-        l--
-        r++
-    }
-    return string(s[l+1:r])
+	for i := 0; i < n; i++ {
+		checkPalindrome(i, i)
+		checkPalindrome(i, i+1)
+	}
+
+	return res
 }
 ```
 
