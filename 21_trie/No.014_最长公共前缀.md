@@ -17,64 +17,62 @@
 ```go
 // date 2024/01/25
 type Trie struct {
-    child [26]*Trie
-    cnt int
+	child [26]*Trie
+	cnt   int
 }
-
 
 func NewTrie() *Trie {
-    return &Trie{
-        child: [26]*Trie{},
-        cnt: 0,
-    }
+	return &Trie{
+		child: [26]*Trie{},
+		cnt:   0,
+	}
 }
 
-
-func (this *Trie) Insert(word string)  {
-    n := len(word)
-    cur := this
-    for i := 0; i < n; i++ {
-        idx := word[i] - 'a'
-        if cur.child[idx] == nil {
-            cur.child[idx] = &Trie{child: [26]*Trie{}, cnt: 0}
-        }
-        cur.child[idx].cnt++
-        cur = cur.child[idx]
-    }
+func (this *Trie) Insert(word string) {
+	n := len(word)
+	cur := this
+	for i := 0; i < n; i++ {
+		idx := word[i] - 'a'
+		if cur.child[idx] == nil {
+			cur.child[idx] = &Trie{child: [26]*Trie{}, cnt: 0}
+		}
+		cur.child[idx].cnt++
+		cur = cur.child[idx]
+	}
 }
 
 func (this *Trie) findLongestCommonPrefix(totalTime int) string {
-    ans := ""
-    idx := -1
-    cur := this
-    for cur != nil {
-        idx = -1
-        for i := 0; i < 26; i++ {
-            node := cur.child[i]
-            if node != nil && node.cnt == totalTime {
-                idx = i
-            }
-        }
-        if idx == -1 {
-            break
-        }
-        ans += string(idx+'a')
-        cur = cur.child[idx]
-    }
-    return ans
+	ans := ""
+	idx := -1
+	cur := this
+	for cur != nil {
+		idx = -1
+		for i := 0; i < 26; i++ {
+			node := cur.child[i]
+			if node != nil && node.cnt == totalTime {
+				idx = i
+			}
+		}
+		if idx == -1 {
+			break
+		}
+		ans += string(idx + 'a')
+		cur = cur.child[idx]
+	}
+	return ans
 }
 
 func longestCommonPrefix(strs []string) string {
-    n := len(strs)
-    if n == 0 {
-        return ""
-    }
-    tie := NewTrie()
-    for _, v := range strs {
-        tie.Insert(v)
-    }
-    res := tie.findLongestCommonPrefix(n)
-    return res
+	n := len(strs)
+	if n == 0 {
+		return ""
+	}
+	tie := NewTrie()
+	for _, v := range strs {
+		tie.Insert(v)
+	}
+	res := tie.findLongestCommonPrefix(n)
+	return res
 }
 ```
 
