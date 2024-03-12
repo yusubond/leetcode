@@ -33,25 +33,27 @@
 ```go
 // date 2023/11/21
 func totalFruit(fruits []int) int {
-    var ans int
-    set := make(map[int]int, 16)
-    left := 0
-    for right, v := range fruits {
-        set[v]++
-      	// 一旦超过两种，则缩小
-        for len(set) > 2 {
-            y := fruits[left]
-            set[y]--
-            if set[y] == 0 {
-                delete(set, y)
-            }
-            left++
-        }
-        if right - left + 1 > ans {
-            ans = right - left + 1
-        }
-    }
-    return ans
+	ans := 0
+	left, right := 0, 0
+	size := len(fruits)
+	set := make(map[int]int, 16)
+
+	for right < size {
+		set[fruits[right]]++
+		right++
+		for len(set) > 2 {
+			set[fruits[left]]--
+			if set[fruits[left]] == 0 {
+				delete(set, fruits[left])
+			}
+			left++
+		}
+		if ans < right-left {
+			ans = right - left
+		}
+	}
+
+	return ans
 }
 ```
 
