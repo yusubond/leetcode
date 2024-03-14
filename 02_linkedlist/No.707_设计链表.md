@@ -27,108 +27,98 @@ size 表示链表中的元素个数，对 index 进行校验。
 
 ```go
 // date 2023/10/17
+type MyListNode struct {
+	Val        int
+	prev, next *MyListNode
+}
+
 type MyLinkedList struct {
-    size int
-    head, tail *MyNode
+	size       int
+	head, tail *MyListNode
 }
-
-type MyNode struct {
-    val int
-    prev, next *MyNode
-}
-
 
 func Constructor() MyLinkedList {
-    ll := MyLinkedList{
-        size: -1,
-        head: &MyNode{},
-        tail: &MyNode{},
-    }
-    ll.head.next = ll.tail
-    ll.tail.prev = ll.head
-    return ll
+	list := MyLinkedList{
+		size: 0,
+		head: &MyListNode{},
+		tail: &MyListNode{},
+	}
+	list.head.next = list.tail
+	list.tail.prev = list.head
+	return list
 }
-
 
 func (this *MyLinkedList) Get(index int) int {
-    if index < 0 || index > this.size {
-        return -1
-    }
-    pre := this.head
-    for index >= 0 {
-        pre = pre.next
-        index--
-    }
-    return pre.val
+	if index >= 0 && index < this.size {
+		cur := this.head.next
+		for index > 0 {
+			cur = cur.next
+			index--
+		}
+		return cur.Val
+	}
+	return -1
 }
 
+func (this *MyLinkedList) AddAtHead(val int) {
+	node := &MyListNode{Val: val}
+	node.next = this.head.next
+	node.prev = this.head
 
-func (this *MyLinkedList) AddAtHead(val int)  {
-    node := &MyNode{val, nil, nil}
-    node.next = this.head.next
-    this.head.next.prev = node
-
-    this.head.next = node
-    node.prev = this.head
-    this.size++
+	this.head.next.prev = node
+	this.head.next = node
+	this.size++
 }
 
+func (this *MyLinkedList) AddAtTail(val int) {
+	node := &MyListNode{Val: val}
+	node.prev = this.tail.prev
+	node.next = this.tail
 
-func (this *MyLinkedList) AddAtTail(val int)  {
-    node := &MyNode{val, nil, nil}
-    this.tail.prev.next = node
-    node.prev = this.tail.prev
-    
-    node.next = this.tail
-    this.tail.prev = node
-    this.size++
+	this.tail.prev.next = node
+	this.tail.prev = node
+	this.size++
 }
 
-
-func (this *MyLinkedList) AddAtIndex(index int, val int)  {
-    if index < 0 || index > this.size + 1 {
-        return
-    }
-    if index == 0 {
-        this.AddAtHead(val)
-        return
-    }
-    if index == this.size+1 {
-        this.AddAtTail(val)
-        return
-    }
-    node := &MyNode{val, nil, nil}
-    pre := this.head
-    for index > 0 {
-        pre = pre.next
-        index--
-    }
-    after := pre.next
-
-    pre.next = node
-    after.prev = node
-
-    node.prev = pre
-    node.next = after
-    this.size++
+func (this *MyLinkedList) AddAtIndex(index int, val int) {
+	if index > this.size {
+		return
+	}
+	if index == this.size {
+		this.AddAtTail(val)
+		return
+	}
+	if index == 0 {
+		this.AddAtHead(val)
+		return
+	}
+	node := &MyListNode{Val: val}
+	pre := this.head
+	for index > 0 {
+		pre = pre.next
+		index--
+	}
+	node.next = pre.next
+	node.prev = pre
+	pre.next.prev = node
+	pre.next = node
+	this.size++
 }
 
+func (this *MyLinkedList) DeleteAtIndex(index int) {
+	if index < 0 || index >= this.size {
+		return
+	}
+	pre := this.head
+	for index > 0 {
+		pre = pre.next
+		index--
+	}
 
-func (this *MyLinkedList) DeleteAtIndex(index int)  {
-    if index < 0 || index > this.size {
-        return
-    }
-    pre := this.head
-    for index > 0 {
-        index--
-        pre = pre.next
-    }
-    after := pre.next.next
-    pre.next = after
-    after.prev = pre
-    this.size--
+	pre.next = pre.next.next
+	pre.next.prev = pre
+	this.size--
 }
-
 
 /**
  * Your MyLinkedList object will be instantiated and called as such:

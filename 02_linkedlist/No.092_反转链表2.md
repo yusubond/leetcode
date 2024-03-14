@@ -76,3 +76,58 @@ func reverseBetween(head *ListNode, left int, right int) *ListNode {
 
 ![image](images/image092.png)
 
+
+
+解法2：实现区间节点反转函数。
+
+```go
+// date 2024/03/14
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reverseBetween(head *ListNode, left int, right int) *ListNode {
+    if left == right {
+        return head
+    }
+    cur := head
+    leftPre := head
+    for left > 1 {
+        leftPre = cur
+        cur = cur.Next
+        left--
+        right--
+    }
+    // now cur is the left
+    leftNode := cur
+    for right > 1 {
+        cur = cur.Next
+        right--
+    }
+    rightNode := cur.Next
+
+    if leftNode == head {
+        return reverse(leftNode, rightNode)
+    }
+    leftPre.Next = reverse(leftNode, rightNode)
+    return head
+}
+
+// [first, last)
+func reverse(first, last *ListNode) *ListNode {
+	prev := last
+	for first != last {
+		temp := first.Next
+
+		first.Next = prev
+		prev = first
+
+		first = temp
+	}
+	return prev
+}
+```
+
