@@ -73,6 +73,7 @@ func search(nums []int, target int) int {
 func search(nums []int, target int) int {
 	res := -1
 	left, right := 0, len(nums)-1
+  // 每个都需要判断到，所以需要 =
 	for left <= right {
 		mid := left + (right-left)/2
 		if nums[mid] == target {

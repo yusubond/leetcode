@@ -107,10 +107,11 @@ func reverseBetween(head *ListNode, left int, right int) *ListNode {
         cur = cur.Next
         right--
     }
-    rightNode := cur.Next
+  	// now cur is the right
+    rightPost := cur.Next
 
     if leftNode == head {
-        return reverse(leftNode, rightNode)
+        return reverse(leftNode, rightPost)
     }
     leftPre.Next = reverse(leftNode, rightNode)
     return head
