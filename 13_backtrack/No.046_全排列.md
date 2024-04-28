@@ -71,29 +71,30 @@ func permute(nums []int) [][]int {
 func permute(nums []int) [][]int {
     ans := make([][]int, 0, 16)
     n := len(nums)
-    onPath := make([]bool, n)
+    visited := make([]bool, n)
 
-    var backtrace func(path []int)
-    backtrace = func(path []int) {
+    var backtrack func(path []int)
+    backtrack = func(path []int) {
         if len(path) == n {
             one := make([]int, n)
             copy(one, path)
             ans = append(ans, one)
             return
         }
-        for i, visited := range onPath {
-            if !visited {
+        for i, visit := range visited {
+            if !visit {
                 path = append(path, nums[i])
-                onPath[i] = true
-                backtrace(path)
-                onPath[i] = false
+                visited[i] = true
+
+                backtrack(path)
+                
+                visited[i] = false
                 path = path[:len(path)-1]
             }
         }
     }
 
-
-    backtrace([]int{})
+    backtrack([]int{})
 
     return ans
 }
