@@ -72,7 +72,7 @@ func reverse(nums []int, left, right int) {
 
 算法图解：
 
-![image-20220924164237944](./images/img189.svg)
+![image-20220924164237944](./assets/img189.svg)
 
 
 
@@ -104,6 +104,3 @@ func moveOneStep(nums []int) {
 }
 ```
 
-算法图解：
-
-![image-20220924164237944](../images/image_189.png)

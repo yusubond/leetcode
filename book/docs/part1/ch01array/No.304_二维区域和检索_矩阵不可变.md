@@ -15,7 +15,7 @@
 
 分析：
 
-![image](images/img304.png)
+![image](./assets/img304.png)
 
 ```go
 // date 2023/12/12

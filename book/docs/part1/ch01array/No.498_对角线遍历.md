@@ -63,4 +63,4 @@ func findDiagonalOrder(mat [][]int) []int {
 }
 ```
 
-![image](images/img498.png)
+![image](./assets/img498.png)
