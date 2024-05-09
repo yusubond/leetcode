@@ -33,8 +33,3 @@ func subsets(nums []int) [][]int {
 }
 ```
 
-
-
-算法图解：
-
-![image-20220920211625521](../images/078.png)

@@ -37,8 +37,3 @@ func removeDuplicates(nums []int) int {
 }
 ```
 
-
-
-算法图解：
-
-![image-20220920214614765](../images/80.png)
