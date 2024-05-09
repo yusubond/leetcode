@@ -7,6 +7,7 @@ headless: true
   - [第 2 章 链表]({{< relref "../docs/part1/ch02list/" >}})
   - [第 3 章 队列]({{< relref "../docs/part1/ch03queue/" >}})
   - [第 4 章 栈]({{< relref "../docs/part1/ch04stack/" >}})
+  - [第 5 章 字符串]({{< relref "../docs/part1/ch05string/" >}})
 - [第 2 部分 进阶部分]({{< relref "../docs/part2/" >}})
   - [第 3 章]({{< relref "../docs/part2/ch03/three.md" >}})
   - [第 4 章]({{< relref "../docs/part2/ch04/four.md" >}})

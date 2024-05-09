@@ -1,6 +1,6 @@
 ## String
 
-[TOC]
+
 
 ### Golang中的字符串
 
