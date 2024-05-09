@@ -13,7 +13,7 @@ const (
 	srcDoc = "../book/"
 
 	dstDoc   = "content/" // copy all src doc to dst doc
-	dstAsset = "assets/"
+	dstAsset = "static/img/"
 )
 
 func walkMd(path string, info os.FileInfo, err error) error {
@@ -35,7 +35,7 @@ func walkMd(path string, info os.FileInfo, err error) error {
 	// rules:
 	//   - replace ./assets to ../assets
 	if strings.HasSuffix(path, "md") {
-		data = bytes.Replace(data, []byte("./assets"), []byte("../assets"), -1)
+		data = bytes.Replace(data, []byte("./assets"), []byte("../../../../img"), -1)
 		dst := dstDoc + strings.TrimPrefix(path, srcDoc)
 		fmt.Printf("walkmd: markdown writing %v\n", dst)
 		// create directory first

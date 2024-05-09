@@ -6,7 +6,7 @@
 
 ### 2、在表头插入
 
-![image](images/double_list_add_front.png)
+![image](./assets/double_list_add_front.png)
 
 ```go
 // code

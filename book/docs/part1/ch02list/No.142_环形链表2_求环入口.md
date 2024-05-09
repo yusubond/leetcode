@@ -55,4 +55,4 @@ func detectCycle(head *ListNode) *ListNode {
 }
 ```
 
-![image](images/image142.png)
+![image](./assets/img142.png)

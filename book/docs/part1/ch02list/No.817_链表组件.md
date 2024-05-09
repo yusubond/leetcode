@@ -85,11 +85,9 @@ func numComponents(head *ListNode, nums []int) int {
 }
 ```
 
-![image](images/image817.png)
+![image](./assets/img817.png)
 
 
-
-====
 
 下面的代码是一样的思路，只是在一个循环中搞定，需要考虑的边界的条件更多，可读性反而不如上面的写法，不推荐。
 

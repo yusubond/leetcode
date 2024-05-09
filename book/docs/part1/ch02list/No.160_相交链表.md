@@ -41,4 +41,4 @@ func getIntersectionNode(headA, headB *ListNode) *ListNode {
 }
 ```
 
-![image](images/image160.png)
+![image](./assets/img160.png)

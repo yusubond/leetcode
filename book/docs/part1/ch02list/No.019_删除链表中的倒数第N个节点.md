@@ -71,4 +71,4 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 }
 ```
 
-![image](images/image019.png)
+![image](./assets/img019.png)

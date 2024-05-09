@@ -21,6 +21,8 @@
  *     Next *ListNode
  * }
  */
+// 1 -> 2 -> 3; return 2
+// 1 -> 2 -> 3 -> 4; return 3
 func middleNode(head *ListNode) *ListNode {
     slow, fast := head, head
     for fast != nil && fast.Next != nil {

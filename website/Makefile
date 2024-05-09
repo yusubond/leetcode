@@ -5,4 +5,4 @@ s: all
 	hugo server -D
 
 clean:
-	rm -rf content assets
+	rm -rf content public static

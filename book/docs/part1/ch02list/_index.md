@@ -1,9 +1,10 @@
 ---
-title: "第 1 章 链表"
+title: "第 2 章 链表"
 ---
 
-# 第 1 章 链表
+# 第 2 章 链表
 
-- [1.1 基本题型](./first-post)
-- [1.2 基本题型](./second-post)
+- [2.1 链表及其技巧](./linkedlist)
+- [2.2 链表排序](./linkedlist_sort.md)
+- [2.3 双向链表](./double_linkedlist.md)
 

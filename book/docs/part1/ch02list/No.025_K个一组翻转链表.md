@@ -73,4 +73,4 @@ func reverseBetween(first, last *ListNode) *ListNode {
 }
 ```
 
-![image](images/img025.svg)
+![image](./assets/img025.svg)
