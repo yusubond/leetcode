@@ -13,4 +13,6 @@ headless: true
   - [第 7 章 二分查找]({{< relref "../docs/part2/ch11/" >}})
   - [第 8 章 排序算法]({{< relref "../docs/part2/ch12/" >}})
   - [第 9 章 回溯算法]({{< relref "../docs/part2/ch13/" >}})
+  - [第 10 章 广度优先搜索]({{< relref "../docs/part2/ch14/" >}})
+  - [第 11 章 深度优先搜索]({{< relref "../docs/part2/ch15/" >}})
 
