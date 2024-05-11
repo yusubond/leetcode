@@ -4,7 +4,7 @@
 
 其思想是通过映射函数将输入的 N 个数据均匀地分配到 K 个桶中，如果桶内有冲突，再对桶内元素进行排序。
 
-![image](images/bucket_sort.png)
+![image](./assets/bucket_sort.png)
 
 为了使桶排序更加高效，我们需要做到两点：
 
