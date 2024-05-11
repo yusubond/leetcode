@@ -1,3 +1,8 @@
+---
+title: "第 17 章 LRU 缓存"
+---
+
+
 ## LRU缓存
 
 LRU 是 Least Recently Used 的缩写，即最近最少使用，是数据缓冲淘汰的一种常见机制，重点在于理解**最近**和**最少**两个关键词。
@@ -139,4 +144,4 @@ LRUCache 的创建和更新，都是`Put`函数。先从 map 中查，如果存�
 
 总结下，LRU 是一个由 map 和 双向链表组成的数据结构。map 中 key 对应的 value 是双向链表的节点。双向链表中存储具体的 key-value 信息。双向链表表头用于更新缓存，表尾用于淘汰缓存。
 
-![image](images/lru_cache.png)
+![image](./assets/lru_cache.png)

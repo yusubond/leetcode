@@ -6,6 +6,7 @@ title: "Leet Book"
 
 - [第 1 章](./part1)
 - [第 2 章](./part2)
+- [第 2 章](./part2)
 
 
 

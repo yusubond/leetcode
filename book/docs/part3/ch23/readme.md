@@ -1,3 +1,8 @@
+---
+title: "第18 章 LFU 缓存"
+---
+
+
 ## LFU缓存
 
 ### 1、什么是LFU
@@ -36,7 +41,7 @@ LFU 是 Least Frequently Used 的缩写，即最不经常、最少使用，也�
 
 这里有一个 LRU 特别的地方。如果淘汰的数据有多个相同的计数器，那么选择最靠近尾部的数据，即从尾部删除。
 
-![image](images/lfu_cache.png)
+![image](./assets/lfu_cache.png)
 
 比如上图中数据 A、B、C的访问次数相同，都是 1，新插入的数据 F 不在缓存中，那么要淘汰 A，并把 F 放到数据 C 的前面。也就是说**相同访问次数，按照新旧顺序排列，淘汰最旧的数据。**
 
@@ -191,4 +196,4 @@ func (l *LFUCache) Put(key, value int) {
 
 这里的双向链表的作用与 LRU 类似，既可以根据 map 中 key 更新双向链表节点的 value 和 frequency，也可以根据双向链表节点中的 key 和 frequency 反向更新 map 中的对应关系。
 
-![image](images/lfu_cache_struct.png)
+![image](./assets/lfu_cache_struct.png)

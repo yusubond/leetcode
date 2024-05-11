@@ -1,3 +1,8 @@
+---
+title: "第 16 章 线段树"
+---
+
+
 # 线段树
 
 ## 1、什么是线段树
@@ -14,7 +19,7 @@
 - 其内部节点（即非叶子节点）是其两个孩子节点的并集
 - 每个节点（包含叶子节点）中有一个存储线段的数据结构。
 
-![image](images/segment_tree.png)
+![image](./assets/segment_tree.png)
 
 以原始数据 data 为例，构造区间和的线段树如上所示。
 
@@ -119,7 +124,7 @@ func (s *SegmentTree) buildSegmentTree(treeIdx int, left, right int) {
 
 我们以数组`arr = [0, 1, 3, 5, -2, 3]`为例，构造区间和线段树：
 
-![image](images/segment_tree.png)
+![image](./assets/segment_tree.png)
 
 线段树构造好以后，tree 里面的数据是：
 
@@ -174,7 +179,7 @@ func (s *SegmentTree) queryInTree(root, tl, tr int, left, right int) int {
 
 
 
-![image](images/segment_tree_query.png)
+![image](./assets/segment_tree_query.png)
 
 在上面的示例中，查询`[0,4]`区间的元素和。线段树中没有任何节点完全代表`[2,4]`的范围，但是可以看到，节点1所代表的区间`[0,2]`，节点5所代表的区间`[3,4]`，这两个节点的并集正好构成区间`[0,4]`，那么区间`[0,4]`的元素和，就是节点1和节点5的值之和。
 
@@ -236,7 +241,7 @@ func (s *SegmentTree) updateInTree(root, tl, tr int, index, val int) {
 
 
 
-![image](images/segment_tree_update.png)
+![image](./assets/segment_tree_update.png)
 
 在这个示例中，我们原始数组中 index 为 3 的值更新为 12，那么整个线段树的更新如图所示，可以看到节点11，节点5，节点2，节点0依次被修改，传到到树根。
 
@@ -252,7 +257,7 @@ func (s *SegmentTree) updateInTree(root, tl, tr int, index, val int) {
 
 叶子更新后，开始返回更新其父节点，这个时间与线段树的高度成线性关系。
 
-![image](images/segment_tree_logn.png)
+![image](./assets/segment_tree_logn.png)
 
 `4*n`个节点可以确保将线段树构建为完整的二叉树，从而树的高度为**以2为底，4n+1**的对数。
 
