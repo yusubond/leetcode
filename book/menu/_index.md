@@ -10,5 +10,6 @@ headless: true
   - [第 5 章 字符串]({{< relref "../docs/part1/ch05string/" >}})
   - [第 6 章 二叉树]({{< relref "../docs/part1/ch06binarytree/" >}})
 - [第 2 部分 进阶部分]({{< relref "../docs/part2/" >}})
-  - [第 7 章 排序算法]({{< relref "../docs/part2/ch12/" >}})
-  - [第 4 章]({{< relref "../docs/part2/ch04/four.md" >}})
+  - [第 7 章 二分查找]({{< relref "../docs/part2/ch11/" >}})
+  - [第 8 章 排序算法]({{< relref "../docs/part2/ch12/" >}})
+
