@@ -60,4 +60,4 @@ func generateParenthesis(n int) []string {
 }
 ```
 
-![image](images/img022.png)
+![image](./assets/img022.png)
