@@ -24,7 +24,7 @@
 
 ## 3、树形数组概念
 
-![image](images/bit.png)
+![image](./assets/bit.png)
 
 说明：图中实线表示数组 B 中节点之间的关系；虚线表示两个数组下标对齐。
 
@@ -138,7 +138,7 @@ func lowbit(x int) int {
 
 初始化以后，原始数组 A 和树形数组 B 的对应关系如下：
 
-![image](images/bit_init.png)
+![image](./assets/bit_init.png)
 
 
 
@@ -198,7 +198,7 @@ func (b *BinaryIndexedTree) RangeSum(start, end int) int {
 
 比如，12 = 8 + 4，要想得到原始数组A中前 12 项的和，那么只需要将 B12 + B8 即可。B8 存储了前8项的和，B12 存储了后4项的和。
 
-![image](images/bit_query.png)
+![image](./assets/bit_query.png)
 
 
 
@@ -222,7 +222,7 @@ func (b *BinaryIndexedTree) Add(index, val int) {
 }
 ```
 
-![image](images/bit_update.png)
+![image](./assets/bit_update.png)
 
 
 

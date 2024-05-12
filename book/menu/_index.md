@@ -26,4 +26,6 @@ headless: true
   - [第 17 章 LRU缓存]({{< relref "../docs/part3/ch22/" >}})
   - [第 18 章 LFU缓存]({{< relref "../docs/part3/ch23/" >}})
   - [第 19 章 字典树]({{< relref "../docs/part3/ch24/" >}})
+  - [第 20 章 二叉索引树]({{< relref "../docs/part3/ch25/" >}})
+  - [第 21 章 图]({{< relref "../docs/part3/ch26/" >}})
 

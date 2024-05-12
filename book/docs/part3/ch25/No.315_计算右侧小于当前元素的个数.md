@@ -44,7 +44,7 @@
 
 具体过程如下：
 
-![image](images/image315.svg)
+![image](./assets/image315.svg)
 
 
 
