@@ -15,6 +15,7 @@ headless: true
   - [第 9 章 回溯算法]({{< relref "../docs/part2/ch13/" >}})
   - [第 10 章 广度优先搜索]({{< relref "../docs/part2/ch14/" >}})
   - [第 11 章 深度优先搜索]({{< relref "../docs/part2/ch15/" >}})
+  - [第 12 章 贪婪算法]({{< relref "../docs/part2/ch16/" >}})
 - [第 3 部分 算法进阶]({{< relref "../docs/part3/" >}})
   - [第 15 章 并查集]({{< relref "../docs/part3/ch20/" >}})
   - [第 16 章 线段树]({{< relref "../docs/part3/ch21/" >}})
