@@ -9,6 +9,8 @@ headless: true
   - [第 4 章 栈]({{< relref "../docs/part1/ch04stack/" >}})
   - [第 5 章 字符串]({{< relref "../docs/part1/ch05string/" >}})
   - [第 6 章 二叉树]({{< relref "../docs/part1/ch06binarytree/" >}})
+  - [第 7 章 堆]({{< relref "../docs/part1/ch07heap/" >}})
+  - [第 8 章 哈希表]({{< relref "../docs/part1/ch08hash/" >}})
 - [第 2 部分 进阶部分]({{< relref "../docs/part2/" >}})
   - [第 7 章 二分查找]({{< relref "../docs/part2/ch11/" >}})
   - [第 8 章 排序算法]({{< relref "../docs/part2/ch12/" >}})
