@@ -56,4 +56,4 @@ func min(x, y int) int {
 }
 ```
 
-![image](images/image72.png)
+![image](./assets/img72.png)

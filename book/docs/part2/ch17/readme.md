@@ -18,7 +18,7 @@
 3. 此时停止增加 `right` ，而要开始增加 `left` 指针，缩小窗口，直到窗口不满足条件，即不包含 `T` 中的字符串
 4. 重复第 2 和 第 3 步，直到 `right` 到达数组或者字符串的边界。
 
-![image-20220929112135413](./images/image_slidingwindow.png)
+![image-20220929112135413](./assets/image_slidingwindow.png)
 
 
 
