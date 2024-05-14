@@ -11,16 +11,15 @@ type (
 
 	// LRUCache define
 	LRUCache struct {
-		size, capacity int
-		head, tail     *CacheNode
-		cache          map[int]*CacheNode
+		capacity   int // LRU 容量
+		head, tail *CacheNode
+		cache      map[int]*CacheNode
 	}
 )
 
 // NewLRUCache define
 func NewLRUCache(cap int) *LRUCache {
 	ca := &LRUCache{
-		size:     0,
 		capacity: cap,
 		head:     &CacheNode{0, 0, nil, nil},
 		tail:     &CacheNode{0, 0, nil, nil},
@@ -54,12 +53,10 @@ func (l *LRUCache) Put(key, value int) {
 	node := &CacheNode{key: key, val: value}
 	l.cache[key] = node
 	l.addToHead(node)
-	l.size++
-	if l.size > l.capacity {
+	if len(l.cache) > l.capacity {
 		// remote tail
 		rmd := l.removeTail()
 		delete(l.cache, rmd.key)
-		l.size--
 	}
 }
 
