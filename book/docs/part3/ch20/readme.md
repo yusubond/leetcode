@@ -2,8 +2,7 @@
 title: "第 15 章 并查集"
 ---
 
-
-## 并查集Union-Find
+## 第 15 章 并查集Union-Find
 
 ### 1、基本概念
 
@@ -32,13 +31,7 @@ title: "第 15 章 并查集"
 
 通常并查集的数据结构中有两个变量，parent和count。
 
-Parent 表示节点的关系；count 表示连通分量。
-
-初始化时，每个节点指向自己，连通分量就等于节点总数。
-
-合并操作，先判断两个节点的父结点是否相同，如果相同表示已经在同一个集合了，直接返回；否则将其中一个节点的父结点更新为另一个的父结点。
-
-查询操作，如果节点的父结点不是自己，那么一定要继续查找直到找到根节点。
+parent 表示节点之间的关系；count 表示连通分量。
 
 ```go
 type (
@@ -47,7 +40,15 @@ type (
 		count  int   // 存储连通分量
 	}
 )
+```
 
+
+
+初始化时，每个节点指向自己，表示每个节点都是独立的，没有亲戚关系；那么，连通分量count就等于节点总数。
+
+![image](./assets/unionfind_init.svg)
+
+```go
 // NewUnionFind define
 func NewUnionFind(n int) *UnionFind {
 	u := &UnionFind{
@@ -60,7 +61,13 @@ func NewUnionFind(n int) *UnionFind {
 	}
 	return u
 }
+```
 
+
+
+合并操作，先判断两个节点的父结点是否相同，如果相同表示已经在同一个集合了，直接返回；否则将其中一个节点的父结点更新为另一个的父结点。
+
+```go
 // Union define
 // merge x, y to the single set
 func (u *UnionFind) Union(x, y int) {
@@ -71,7 +78,13 @@ func (u *UnionFind) Union(x, y int) {
 	u.parent[yp] = xp
 	u.count--
 }
+```
 
+
+
+查询操作，如果节点的父结点不是自己，那么一定要继续查找直到找到根节点。
+
+```go
 // Find define
 // search the root of x
 func (u *UnionFind) Find(x int) int {
@@ -125,7 +138,7 @@ func (u *UnionFind) Find(x int) int {
 
 比如，现在我们有一棵较复杂的树和一个单元素的集合进行合并。
 
-图片
+![image](./assets/unionfind_rank.svg)
 
 如果我们可以选择的话，是把7的父结点设置为8好呢？还是把8的父结点设置为7好呢？
 
@@ -170,16 +183,3 @@ func (u *UnionFind) Union(x, y int) {
 为什么深度相同，新的根节点深度要加1？
 
 因为，本来都是根节点`root_x`和`root_y`，现在`root_x`变成了`root_y`的一个子节点，那么新的根节点`root_y`的深度当然要加1了。
-
-
-
-## 题目赏析
-
-第一类：并查集，求连通分量
-
-这类并查集，可有路径压缩和秩序优化的版本，便于快速查找。
-
-- 第 128 题：最长连续序列（也是求最大集合元素个数，思路不好想）
-- 第 130 题：被围绕的区域（连通分量，特殊的连通）
-- 第 323 题：无向图中连通分量的个数
-- 第 547 题：省份的数量（就是求连通分量的个数）
