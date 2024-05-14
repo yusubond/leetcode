@@ -19,7 +19,7 @@ func lengthOfLongestSubstring(s string) int {
     // 构造窗口
     for right < n {
         // 当窗口不在满足条件，即当前元素s[right]已经出现重复
-        // 增加left指针，使窗口缩写
+        // 增加left指针，使窗口缩小
         for len(list) != 0 && isContains(s[right], list) {
             list = list[1:]
             left++

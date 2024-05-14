@@ -15,22 +15,20 @@
 ```go
 // date 2022/09/27
 func containsNearbyDuplicate(nums []int, k int) bool {
-    size := len(nums)
-
-    start, end := 0, 0
-
-    for start < size {
-        end = start+1
-        for end - start <= k && end < size {
-            if nums[start] == nums[end] {
-                return true
-            }
-            end++
-        }
-        start++
-    }
-    
-    return false
+	n := len(nums)
+	left, right := 0, 0
+	for left < n {
+		// 以 left 为起点，向前查找 k 个
+		right = left + 1
+		for right-left <= k && right < n {
+			if nums[left] == nums[right] {
+				return true
+			}
+			right++
+		}
+		left++
+	}
+	return false
 }
 ```
 
