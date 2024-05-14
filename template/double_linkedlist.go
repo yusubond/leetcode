@@ -6,10 +6,12 @@ import (
 )
 
 type (
+	// DoubleListNode define
 	DoubleListNode struct {
 		val       int
 		pre, next *DoubleListNode
 	}
+	// DoubleLinkedList define
 	DoubleLinkedList struct {
 		size       int
 		head, tail *DoubleListNode
@@ -27,6 +29,7 @@ func NewDoubleLinkedList() *DoubleLinkedList {
 	return list
 }
 
+// AddFront define
 func (l *DoubleLinkedList) AddFront(node *DoubleListNode) {
 	node.pre = l.head
 	node.next = l.head.next
@@ -35,6 +38,7 @@ func (l *DoubleLinkedList) AddFront(node *DoubleListNode) {
 	l.size++
 }
 
+// AddRear define
 func (l *DoubleLinkedList) AddRear(node *DoubleListNode) {
 	node.pre = l.tail.pre
 	node.next = l.tail
@@ -43,7 +47,8 @@ func (l *DoubleLinkedList) AddRear(node *DoubleListNode) {
 	l.size++
 }
 
-func (l *DoubleLinkedList) RemoteFront() *DoubleListNode {
+// RemoveFront define
+func (l *DoubleLinkedList) RemoveFront() *DoubleListNode {
 	if l.size > 0 {
 		node := l.head.next
 		l.removeNode(node)
@@ -52,6 +57,7 @@ func (l *DoubleLinkedList) RemoteFront() *DoubleListNode {
 	return nil
 }
 
+// RemoveRear define
 func (l *DoubleLinkedList) RemoveRear() *DoubleListNode {
 	if l.size > 0 {
 		node := l.tail.pre
@@ -61,12 +67,14 @@ func (l *DoubleLinkedList) RemoveRear() *DoubleListNode {
 	return nil
 }
 
+// removeNode define
 func (l *DoubleLinkedList) removeNode(node *DoubleListNode) {
 	node.pre.next = node.next
 	node.next.pre = node.pre
 	l.size--
 }
 
+// Len define
 func (l *DoubleLinkedList) Len() int {
 	return l.size
 }
