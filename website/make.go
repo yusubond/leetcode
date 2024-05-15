@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	srcDoc = "../book/"
+	srcDoc     = "../book/"
+	srcPreFace = "../book/_index.md"
 
 	dstDoc   = "content/" // copy all src doc to dst doc
 	dstAsset = "static/img/"
@@ -35,7 +36,14 @@ func walkMd(path string, info os.FileInfo, err error) error {
 	// rules:
 	//   - replace ./assets to ../assets
 	if strings.HasSuffix(path, "md") {
-		data = bytes.Replace(data, []byte("./assets"), []byte("../../../../img"), -1)
+		if path == srcPreFace {
+			// for preface log png
+			data = bytes.Replace(data, []byte("./assets"), []byte("./img"), -1)
+		} else {
+			// for normal png
+			data = bytes.Replace(data, []byte("./assets"), []byte("../../../../img"), -1)
+		}
+
 		dst := dstDoc + strings.TrimPrefix(path, srcDoc)
 		fmt.Printf("walkmd: markdown writing %v\n", dst)
 		// create directory first
