@@ -32,7 +32,7 @@
 
 出队：如果为空，直接返回；如果 front == rear，那么只有一个元素，直接清空；否则 front++。
 
-
+![image](./assets/cir_queue.svg)
 
 ```go
 // date 2023/11/30

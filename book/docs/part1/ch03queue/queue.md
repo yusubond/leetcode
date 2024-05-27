@@ -1,6 +1,8 @@
+---
+title: "第 3 章 队列"
+---
+
 # Queue
-
-
 
 ## 1.基本定义
 
@@ -8,7 +10,7 @@
 
 队列有队头(head)和队尾(tail)，当有一个元素入队时，放入队尾；出队时，即取出队头元素。
 
-
+![image](./assets/queue.svg)
 
 基本操作包括：
 
@@ -23,31 +25,39 @@
 
 ## 2.队列的实现
 
-从时间复杂度角度而言，push(), pop(), front()，back(), empty()操作只需要O(1)的时间。从实现角度而言，队列的实现方式有两种，**数组和线性表**。
+从时间复杂度角度来说，`Enqueue`，`Dequeue`，`Front`和`Back`，`Empty`操作只需要O(1)的时间。从实现角度而言，队列的实现方式有两种，**数组和线性表**。
+
+下面以数组为例进行实现：
 
 ```go
 type (
+	// Queue define
+	// a basic queue
 	Queue struct {
 		val []int
 	}
 )
 
+// NewQueue define
 func NewQueue() *Queue {
 	return &Queue{
 		val: make([]int, 0, 1024),
 	}
 }
 
-func (q *Queue) Push(x int) {
+// Enqueue define
+func (q *Queue) Enqueue(x int) {
 	q.val = append(q.val, x)
 }
 
-func (q *Queue) Pop() {
+// Dequeue define
+func (q *Queue) Dequeue() {
 	if !q.Empty() {
 		q.val = q.val[1:]
 	}
 }
 
+// Front define
 func (q *Queue) Front() int {
 	if q.Empty() {
 		return -1
@@ -55,6 +65,7 @@ func (q *Queue) Front() int {
 	return q.val[0]
 }
 
+// Back define
 func (q *Queue) Back() int {
 	if q.Empty() {
 		return -1
@@ -62,13 +73,16 @@ func (q *Queue) Back() int {
 	return q.val[q.Size()-1]
 }
 
+// Empty define
 func (q *Queue) Empty() bool {
 	return len(q.val) == 0
 }
 
+// Size define
 func (q *Queue) Size() int {
 	return len(q.val)
 }
+
 ```
 
 

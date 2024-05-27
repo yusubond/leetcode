@@ -15,50 +15,57 @@
 
 分析：
 
-每次压栈的时候，都把已有的元素先出队，再入队。这样，队头元素永远都是最后压栈的这个。
+两个队列，入栈的时候倒一手。具体为：
+
+`recv`队列：维护 push 的数据，每次 push 时，先将新入栈的元素入队`recv`。如果`send`队列不为空，表示之前没有pop出所有的元素，所以需要将`send`队列的元素也依次入队`recv`。如此操作后，`send`队列为空，`recv`队列中最新元素在队头，次新的在队尾。
+
+然后，交换`recv`和`send`队列。
+
+pop 的时候，依次从`send`队列出队即可。
 
 ```go
 // date 2023/11/30
 type MyStack struct {
-    queue []int
+	recv []int
+	send []int
 }
-
 
 func Constructor() MyStack {
-    return MyStack{
-        queue: make([]int, 0, 16),
-    }
+	return MyStack{
+		recv: make([]int, 0),
+		send: make([]int, 0),
+	}
 }
 
-
-func (this *MyStack) Push(x int)  {
-    n := len(this.queue)
-    this.queue = append(this.queue, x)
-    i := 0
-    for i < n {
-        this.queue = append(this.queue, this.queue[i])
-        i++
-    }
-    this.queue = this.queue[n:]
+func (this *MyStack) Push(x int) {
+	this.recv = append(this.recv, x)
+	for len(this.send) > 0 {
+		this.recv = append(this.recv, this.send[0])
+		this.send = this.send[1:]
+	}
+	// exchange recv and send
+	this.recv, this.send = this.send, this.recv
 }
-
 
 func (this *MyStack) Pop() int {
-    res := this.queue[0]
-    this.queue = this.queue[1:]
-    return res
+	if this.Empty() {
+		return -1
+	}
+	x := this.send[0]
+	this.send = this.send[1:]
+	return x
 }
-
 
 func (this *MyStack) Top() int {
-    return this.queue[0]
+	if this.Empty() {
+		return -1
+	}
+	return this.send[0]
 }
-
 
 func (this *MyStack) Empty() bool {
-    return len(this.queue) == 0
+	return len(this.send) == 0
 }
-
 
 /**
  * Your MyStack object will be instantiated and called as such:
