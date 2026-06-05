@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>第 17 章 LRU 缓存 on Leet Book</title><link>https://subond.com/leetcode/docs/part3/ch22/</link><description>Recent content in 第 17 章 LRU 缓存 on Leet Book</description><generator>Hugo</generator><language>zh-cn</language><atom:link href="https://subond.com/leetcode/docs/part3/ch22/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://subond.com/leetcode/docs/part3/ch22/no.146_lru%E7%BC%93%E5%AD%98/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch22/no.146_lru%E7%BC%93%E5%AD%98/</guid><description>&lt;h2 id="146-lru-缓存-中等"&gt;146 LRU 缓存-中等&lt;a class="anchor" href="#146-lru-%e7%bc%93%e5%ad%98-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;请你设计并实现一个满足 LRU（最少最近使用）缓存约束的数据结构。&lt;/p&gt;
+&lt;p&gt;实现 LRUCache 类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;LRUCache(int capacity)&lt;/code&gt; 以正整数作为容量 capacity 初始化 LRU 缓存&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;int get(int key)&lt;/code&gt; 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;void put(int key, int value)&lt;/code&gt; 如果关键字 key 已经存在，则变更其数据值 value；如果不存在，则向缓存中插入该组&lt;code&gt;key-value&lt;/code&gt;。如果插入操作导致关键字数量超过 capacity，则应该逐出最久未使用的关键字。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;函数 get 和 put 必须在 O(1) 的平均时间复杂度运行。&lt;/p&gt;
+&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;这里重点理解 LRU 的机制。LRU（Least Recently Used）即，最近最少使用，其核心是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;最近。最近访问的要保留在缓存中。&lt;/li&gt;
+&lt;li&gt;最少。并不是值访问次数最少，而是很久没有访问，且超过缓存容量的时候，可以删除。比如容量为 2 的缓存。A 访问次数为100，最近一次访问是 B 数据，从访问次数为2，那么 新插入的数据会取代 A，而不是 B。因为最近访问的 B 数据位于队头，而 A 位于队尾。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;所谓，热数据也是这个道理，按访问时间，越是最近访问的，越是位于链表的头部。&lt;/p&gt;
+&lt;p&gt;要求 get 和 put 函数在 O(1) 时间内完成，那么考虑双向链表来实现。同时，用 head, tail 做头和尾的伪节点。这样在头部插入、去除尾部会很方便。&lt;/p&gt;</description></item><item><title>第 17 章 LRU 缓存</title><link>https://subond.com/leetcode/docs/part3/ch22/readme/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch22/readme/</guid><description>&lt;h1 id="第-17-章-lru缓存"&gt;第 17 章 LRU缓存&lt;a class="anchor" href="#%e7%ac%ac-17-%e7%ab%a0-lru%e7%bc%93%e5%ad%98"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;LRU 是 Least Recently Used 的缩写，即最近最少使用，是数据缓冲淘汰的一种常见机制，重点在于理解&lt;strong&gt;最近&lt;/strong&gt;和&lt;strong&gt;最少&lt;/strong&gt;两个关键词。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最近。即最近访问过的数据要留在缓冲区内。&lt;/li&gt;
+&lt;li&gt;最少。这里的最少并不是值总的访问次数最少，而是很久没有访问，如果超出缓冲容量，那么可以删除。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;比如容量为 2 的一个缓冲序列，历史上数据 A 被访问了 100 次，数据 B 被访问了 2 次，但最后一次访问是访问数据 B，那么当新的数据 C 需要缓存的时候，新插入的数据 C 会踢掉数据 A，而不是数据 B。&lt;/p&gt;
+&lt;p&gt;所以，&lt;strong&gt;从数据结构来讲，LRU 应该是一个链表，按访问时间，越是最近访问的，越靠近链表的头部&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;LRU 主要有两个方法&lt;code&gt;Get&lt;/code&gt;和&lt;code&gt;Put&lt;/code&gt;，要求&lt;code&gt;O(1)&lt;/code&gt;的时间复杂度，那么考虑双向链表来实现。具体为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用 head 和 tail 做头、尾的伪节点，便于做头部插入，尾部删除&lt;/li&gt;
+&lt;li&gt;利用 map 辅助存储，便于&lt;code&gt;O(1)&lt;/code&gt;查找&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;链表的节点既要存储 key，也要储存 value。这是因为当超过缓存容量时，要从双向链表中删除数据。&lt;/p&gt;
+&lt;p&gt;在双向链表中删除淘汰的 value，在 map 中删除淘汰出去的 value 对应的 key。&lt;/p&gt;
+&lt;h2 id="1结构定义"&gt;1、结构定义&lt;a class="anchor" href="#1%e7%bb%93%e6%9e%84%e5%ae%9a%e4%b9%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;type&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#75715e"&gt;// CacheNode define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#75715e"&gt;// key, val 存储缓存的键值对&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#75715e"&gt;// pre, next 指向双向链表的前驱和后驱节点&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;CacheNode&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;key&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;val&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;CacheNode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#75715e"&gt;// LRUCache define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;LRUCache&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;capacity&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; &lt;span style="color:#75715e"&gt;// LRU 容量&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;head&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;tail&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;CacheNode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;cache&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;map&lt;/span&gt;[&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;]&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;CacheNode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="2初始化"&gt;2、初始化&lt;a class="anchor" href="#2%e5%88%9d%e5%a7%8b%e5%8c%96"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;初始化的时候，创建两个伪节点 head 和 tail，便于在头部插入和尾部删除；同时收尾相连形成双向链表。&lt;/p&gt;</description></item></channel></rss>

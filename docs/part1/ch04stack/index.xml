@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>第 4 章 栈 on Leet Book</title><link>https://subond.com/leetcode/docs/part1/ch04stack/</link><description>Recent content in 第 4 章 栈 on Leet Book</description><generator>Hugo</generator><language>zh-cn</language><atom:link href="https://subond.com/leetcode/docs/part1/ch04stack/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.071_%E7%AE%80%E5%8C%96%E8%B7%AF%E5%BE%84/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.071_%E7%AE%80%E5%8C%96%E8%B7%AF%E5%BE%84/</guid><description>&lt;h2 id="71-简化路径-中等"&gt;71 简化路径-中等&lt;a class="anchor" href="#71-%e7%ae%80%e5%8c%96%e8%b7%af%e5%be%84-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给你一个字符串 &lt;code&gt;path&lt;/code&gt; ，表示指向某一文件或目录的 Unix 风格 &lt;strong&gt;绝对路径&lt;/strong&gt; （以 &lt;code&gt;'/'&lt;/code&gt; 开头），请你将其转化为更加简洁的规范路径。&lt;/p&gt;
+&lt;p&gt;在 Unix 风格的文件系统中，一个点（&lt;code&gt;.&lt;/code&gt;）表示当前目录本身；此外，两个点 （&lt;code&gt;..&lt;/code&gt;） 表示将目录切换到上一级（指向父目录）；两者都可以是复杂相对路径的组成部分。任意多个连续的斜杠（即，&lt;code&gt;'//'&lt;/code&gt;）都被视为单个斜杠 &lt;code&gt;'/'&lt;/code&gt; 。 对于此问题，任何其他格式的点（例如，&lt;code&gt;'...'&lt;/code&gt;）均被视为文件/目录名称。&lt;/p&gt;
+&lt;p&gt;请注意，返回的 &lt;strong&gt;规范路径&lt;/strong&gt; 必须遵循下述格式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;始终以斜杠 &lt;code&gt;'/'&lt;/code&gt; 开头。&lt;/li&gt;
+&lt;li&gt;两个目录名之间必须只有一个斜杠 &lt;code&gt;'/'&lt;/code&gt; 。&lt;/li&gt;
+&lt;li&gt;最后一个目录名（如果存在）&lt;strong&gt;不能&lt;/strong&gt; 以 &lt;code&gt;'/'&lt;/code&gt; 结尾。&lt;/li&gt;
+&lt;li&gt;此外，路径仅包含从根目录到目标文件或目录的路径上的目录（即，不含 &lt;code&gt;'.'&lt;/code&gt; 或 &lt;code&gt;'..'&lt;/code&gt;）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;返回简化后得到的 &lt;strong&gt;规范路径&lt;/strong&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：path = &amp;#34;/home/&amp;#34;
+输出：&amp;#34;/home&amp;#34;
+解释：注意，最后一个目录名后面没有斜杠。 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：path = &amp;#34;/../&amp;#34;
+输出：&amp;#34;/&amp;#34;
+解释：从根目录向上一级是不可行的，因为根目录是你可以到达的最高级。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：path = &amp;#34;/home//foo/&amp;#34;
+输出：&amp;#34;/home/foo&amp;#34;
+解释：在规范路径中，多个连续斜杠需要用一个斜杠替换。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：path = &amp;#34;/a/./b/../../c/&amp;#34;
+输出：&amp;#34;/c&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;还是入栈、出栈的思想。&lt;/p&gt;
+&lt;p&gt;先通过 strings 库函数，将字符串切分。&lt;/p&gt;
+&lt;p&gt;对每一部分进行判断，如果遇到 &lt;code&gt;..&lt;/code&gt; 出栈；如果不为空且不等于&lt;code&gt;.&lt;/code&gt;,表示当前是一个有效的目录，入栈。&lt;/p&gt;
+&lt;p&gt;最后，判断栈的大小，并将 stack 内容组成字符串。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.1019_%E9%93%BE%E8%A1%A8%E4%B8%AD%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E7%9A%84%E8%8A%82%E7%82%B9/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.1019_%E9%93%BE%E8%A1%A8%E4%B8%AD%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E7%9A%84%E8%8A%82%E7%82%B9/</guid><description>&lt;h2 id="1019-链表中的下一个更大的节点-中等"&gt;1019 链表中的下一个更大的节点-中等&lt;a class="anchor" href="#1019-%e9%93%be%e8%a1%a8%e4%b8%ad%e7%9a%84%e4%b8%8b%e4%b8%80%e4%b8%aa%e6%9b%b4%e5%a4%a7%e7%9a%84%e8%8a%82%e7%82%b9-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定一个长度为 &lt;code&gt;n&lt;/code&gt; 的链表 &lt;code&gt;head&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;对于列表中的每个节点，查找下一个 &lt;strong&gt;更大节点&lt;/strong&gt; 的值。也就是说，对于每个节点，找到它旁边的第一个节点的值，这个节点的值 &lt;strong&gt;严格大于&lt;/strong&gt; 它的值。&lt;/p&gt;
+&lt;p&gt;返回一个整数数组 &lt;code&gt;answer&lt;/code&gt; ，其中 &lt;code&gt;answer[i]&lt;/code&gt; 是第 &lt;code&gt;i&lt;/code&gt; 个节点( &lt;strong&gt;从1开始&lt;/strong&gt; )的下一个更大的节点的值。如果第 &lt;code&gt;i&lt;/code&gt; 个节点没有下一个更大的节点，设置 &lt;code&gt;answer[i] = 0&lt;/code&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://assets.leetcode.com/uploads/2021/08/05/linkedlistnext1.jpg" alt="img" /&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：head = [2,1,5]
+输出：[5,5,0]&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://assets.leetcode.com/uploads/2021/08/05/linkedlistnext2.jpg" alt="img" /&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：head = [2,7,4,3,5]
+输出：[7,0,5,5,0]&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;解法1：最朴素的解法就是两层循环，依次查找，找到就退出&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/21&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 两层查找&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for singly-linked list.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * type ListNode struct {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Val int
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Next *ListNode
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;nextLargerNodes&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;head&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;) []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;head&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &amp;gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;解法2：单调栈&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.1021_%E5%88%A0%E9%99%A4%E6%9C%80%E5%A4%96%E5%B1%82%E7%9A%84%E6%8B%AC%E5%8F%B7/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.1021_%E5%88%A0%E9%99%A4%E6%9C%80%E5%A4%96%E5%B1%82%E7%9A%84%E6%8B%AC%E5%8F%B7/</guid><description>&lt;h2 id="1021-删除最外层的括号-简单"&gt;1021 删除最外层的括号-简单&lt;a class="anchor" href="#1021-%e5%88%a0%e9%99%a4%e6%9c%80%e5%a4%96%e5%b1%82%e7%9a%84%e6%8b%ac%e5%8f%b7-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;有效括号字符串为空 &lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt;、&lt;code&gt;&amp;quot;(&amp;quot; + A + &amp;quot;)&amp;quot;&lt;/code&gt; 或 &lt;code&gt;A + B&lt;/code&gt; ，其中 &lt;code&gt;A&lt;/code&gt; 和 &lt;code&gt;B&lt;/code&gt; 都是有效的括号字符串，&lt;code&gt;+&lt;/code&gt; 代表字符串的连接。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;例如，&lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt;，&lt;code&gt;&amp;quot;()&amp;quot;&lt;/code&gt;，&lt;code&gt;&amp;quot;(())()&amp;quot;&lt;/code&gt; 和 &lt;code&gt;&amp;quot;(()(()))&amp;quot;&lt;/code&gt; 都是有效的括号字符串。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果有效字符串 &lt;code&gt;s&lt;/code&gt; 非空，且不存在将其拆分为 &lt;code&gt;s = A + B&lt;/code&gt; 的方法，我们称其为&lt;strong&gt;原语（primitive）&lt;/strong&gt;，其中 &lt;code&gt;A&lt;/code&gt; 和 &lt;code&gt;B&lt;/code&gt; 都是非空有效括号字符串。&lt;/p&gt;
+&lt;p&gt;给出一个非空有效字符串 &lt;code&gt;s&lt;/code&gt;，考虑将其进行原语化分解，使得：&lt;code&gt;s = P_1 + P_2 + ... + P_k&lt;/code&gt;，其中 &lt;code&gt;P_i&lt;/code&gt; 是有效括号字符串原语。&lt;/p&gt;
+&lt;p&gt;对 &lt;code&gt;s&lt;/code&gt; 进行原语化分解，删除分解中每个原语字符串的最外层括号，返回 &lt;code&gt;s&lt;/code&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;(()())(())&amp;#34;
+输出：&amp;#34;()()()&amp;#34;
+解释：
+输入字符串为 &amp;#34;(()())(())&amp;#34;，原语化分解得到 &amp;#34;(()())&amp;#34; + &amp;#34;(())&amp;#34;，
+删除每个部分中的最外层括号后得到 &amp;#34;()()&amp;#34; + &amp;#34;()&amp;#34; = &amp;#34;()()()&amp;#34;。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.1047_%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%89%80%E6%9C%89%E7%9B%B8%E9%82%BB%E9%87%8D%E5%A4%8D%E9%A1%B9/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.1047_%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%89%80%E6%9C%89%E7%9B%B8%E9%82%BB%E9%87%8D%E5%A4%8D%E9%A1%B9/</guid><description>&lt;h2 id="1047-删除字符串中的所有相邻重复项-简单"&gt;1047 删除字符串中的所有相邻重复项-简单&lt;a class="anchor" href="#1047-%e5%88%a0%e9%99%a4%e5%ad%97%e7%ac%a6%e4%b8%b2%e4%b8%ad%e7%9a%84%e6%89%80%e6%9c%89%e7%9b%b8%e9%82%bb%e9%87%8d%e5%a4%8d%e9%a1%b9-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给出由小写字母组成的字符串 &lt;code&gt;S&lt;/code&gt;，&lt;strong&gt;重复项删除操作&lt;/strong&gt;会选择两个相邻且相同的字母，并删除它们。&lt;/p&gt;
+&lt;p&gt;在 S 上反复执行重复项删除操作，直到无法继续删除。&lt;/p&gt;
+&lt;p&gt;在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：&amp;#34;abbaca&amp;#34;
+输出：&amp;#34;ca&amp;#34;
+解释：
+例如，在 &amp;#34;abbaca&amp;#34; 中，我们可以删除 &amp;#34;bb&amp;#34; 由于两字母相邻且相同，这是此时唯一可以执行删除操作的重复项。之后我们得到字符串 &amp;#34;aaca&amp;#34;，其中又只有 &amp;#34;aa&amp;#34; 可以执行重复项删除操作，所以最后的字符串为 &amp;#34;ca&amp;#34;。&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;入栈出栈思维。&lt;/p&gt;
+&lt;p&gt;如果栈不为空，且栈顶元素等于当前元素，直接出栈；否则入栈。&lt;/p&gt;
+&lt;p&gt;最终栈里面的元素就是唯一的。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/18&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;removeDuplicates&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;rune&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; string(&lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.150_%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.150_%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid><description>&lt;h2 id="150-逆波兰表达式求值-中等"&gt;150 逆波兰表达式求值-中等&lt;a class="anchor" href="#150-%e9%80%86%e6%b3%a2%e5%85%b0%e8%a1%a8%e8%be%be%e5%bc%8f%e6%b1%82%e5%80%bc-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给你一个字符串数组 &lt;code&gt;tokens&lt;/code&gt; ，表示一个根据 &lt;a href="https://baike.baidu.com/item/%e9%80%86%e6%b3%a2%e5%85%b0%e5%bc%8f/128437"&gt;逆波兰表示法&lt;/a&gt; 表示的算术表达式。&lt;/p&gt;
+&lt;p&gt;请你计算该表达式。返回一个表示表达式值的整数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;有效的算符为 &lt;code&gt;'+'&lt;/code&gt;、&lt;code&gt;'-'&lt;/code&gt;、&lt;code&gt;'*'&lt;/code&gt; 和 &lt;code&gt;'/'&lt;/code&gt; 。&lt;/li&gt;
+&lt;li&gt;每个操作数（运算对象）都可以是一个整数或者另一个表达式。&lt;/li&gt;
+&lt;li&gt;两个整数之间的除法总是 &lt;strong&gt;向零截断&lt;/strong&gt; 。&lt;/li&gt;
+&lt;li&gt;表达式中不含除零运算。&lt;/li&gt;
+&lt;li&gt;输入是一个根据逆波兰表示法表示的算术表达式。&lt;/li&gt;
+&lt;li&gt;答案及所有中间计算结果可以用 &lt;strong&gt;32 位&lt;/strong&gt; 整数表示。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：tokens = [&amp;#34;2&amp;#34;,&amp;#34;1&amp;#34;,&amp;#34;+&amp;#34;,&amp;#34;3&amp;#34;,&amp;#34;*&amp;#34;]
+输出：9
+解释：该算式转化为常见的中缀算术表达式为：((2 + 1) * 3) = 9&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：tokens = [&amp;#34;4&amp;#34;,&amp;#34;13&amp;#34;,&amp;#34;5&amp;#34;,&amp;#34;/&amp;#34;,&amp;#34;+&amp;#34;]
+输出：6
+解释：该算式转化为常见的中缀算术表达式为：(4 + (13 / 5)) = 6&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：tokens = [&amp;#34;10&amp;#34;,&amp;#34;6&amp;#34;,&amp;#34;9&amp;#34;,&amp;#34;3&amp;#34;,&amp;#34;+&amp;#34;,&amp;#34;-11&amp;#34;,&amp;#34;*&amp;#34;,&amp;#34;/&amp;#34;,&amp;#34;*&amp;#34;,&amp;#34;17&amp;#34;,&amp;#34;+&amp;#34;,&amp;#34;5&amp;#34;,&amp;#34;+&amp;#34;]
+输出：22
+解释：该算式转化为常见的中缀算术表达式为：
+ ((10 * (6 / ((9 + 3) * -11))) + 17) + 5
+= ((10 * (6 / (12 * -11))) + 17) + 5
+= ((10 * (6 / -132)) + 17) + 5
+= ((10 * 0) + 17) + 5
+= (0 + 17) + 5
+= 17 + 5
+= 22&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.155_%E6%9C%80%E5%B0%8F%E6%A0%88/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.155_%E6%9C%80%E5%B0%8F%E6%A0%88/</guid><description>&lt;h2 id="155-最小栈-中等"&gt;155 最小栈-中等&lt;a class="anchor" href="#155-%e6%9c%80%e5%b0%8f%e6%a0%88-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;设计一个支持 &lt;code&gt;push&lt;/code&gt; ，&lt;code&gt;pop&lt;/code&gt; ，&lt;code&gt;top&lt;/code&gt; 操作，并能在常数时间内检索到最小元素的栈。&lt;/p&gt;
+&lt;p&gt;实现 &lt;code&gt;MinStack&lt;/code&gt; 类:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;MinStack()&lt;/code&gt; 初始化堆栈对象。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;void push(int val)&lt;/code&gt; 将元素val推入堆栈。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;void pop()&lt;/code&gt; 删除堆栈顶部的元素。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;int top()&lt;/code&gt; 获取堆栈顶部的元素。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;int getMin()&lt;/code&gt; 获取堆栈中的最小元素。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：
+[&amp;#34;MinStack&amp;#34;,&amp;#34;push&amp;#34;,&amp;#34;push&amp;#34;,&amp;#34;push&amp;#34;,&amp;#34;getMin&amp;#34;,&amp;#34;pop&amp;#34;,&amp;#34;top&amp;#34;,&amp;#34;getMin&amp;#34;]
+[[],[-2],[0],[-3],[],[],[],[]]
+
+输出：
+[null,null,null,null,-3,null,0,-2]
+
+解释：
+MinStack minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+minStack.getMin(); --&amp;gt; 返回 -3.
+minStack.pop();
+minStack.top(); --&amp;gt; 返回 0.
+minStack.getMin(); --&amp;gt; 返回 -2.&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;因为要求在常数时间内检索到最小元素，所以考虑使用辅助栈。&lt;/p&gt;
+&lt;p&gt;数据栈 dataStack 保存所有的元素。小元素栈 minStack 保存当前栈中的最小元素。&lt;/p&gt;
+&lt;p&gt;入栈的时候，如果入栈元素 &lt;code&gt;x&lt;/code&gt; 小于等于 minStack 的栈顶元素那么把入栈元素 val 也放入 minStack 中。这样做是为了保证两个连续相同的元素都可以入小元素栈。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.224_%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.224_%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8/</guid><description>&lt;h2 id="224-基本计算器-困难"&gt;224 基本计算器-困难&lt;a class="anchor" href="#224-%e5%9f%ba%e6%9c%ac%e8%ae%a1%e7%ae%97%e5%99%a8-%e5%9b%b0%e9%9a%be"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给你一个字符串表达式 &lt;code&gt;s&lt;/code&gt; ，请你实现一个基本计算器来计算并返回它的值。&lt;/p&gt;
+&lt;p&gt;注意:不允许使用任何将字符串作为数学表达式计算的内置函数，比如 &lt;code&gt;eval()&lt;/code&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;1 + 1&amp;#34;
+输出：2&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34; 2-1 + 2 &amp;#34;
+输出：3&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;(1+(4+5+2)-3)+(6+8)&amp;#34;
+输出：23&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;还是入栈、出栈的思路，有几个点需要注意。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可能存在空格，需要跳过&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-&lt;/code&gt;是有效的，所以可能出现负负得正的情况，所以记录每次计算出来的结果&lt;/li&gt;
+&lt;li&gt;遇到左括号，需要重新计算，主要保存之前的结果和符号&lt;/li&gt;
+&lt;li&gt;遇到右括号，取出保存的结果和符号，更新当前结果&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/18&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;calculate&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;sign&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; &lt;span style="color:#75715e"&gt;// 保存加减状态&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;) &lt;span style="color:#75715e"&gt;// 保存括号外的中间结果和加减符号&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39; &amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;9&amp;#39;&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;0&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// find a num&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;base&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;10&lt;/span&gt;, int(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;0&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;9&amp;#39;&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;0&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;base&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; int(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;0&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;sign&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;+&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;sign&lt;/span&gt; = &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;-&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;sign&lt;/span&gt; = &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;(&amp;#39;&lt;/span&gt; { &lt;span style="color:#75715e"&gt;// 遇到左括号，保存之前的结果，重新计算&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;sign&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; = &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;sign&lt;/span&gt; = &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;)&amp;#39;&lt;/span&gt; { &lt;span style="color:#75715e"&gt;// 取出之前的结果和符号，计算&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;//res = res&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.394_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BC%96%E7%A0%81/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.394_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BC%96%E7%A0%81/</guid><description>&lt;h2 id="394-字符串编码-中等"&gt;394 字符串编码-中等&lt;a class="anchor" href="#394-%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%bc%96%e7%a0%81-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定一个经过编码的字符串，返回它解码后的字符串。&lt;/p&gt;
+&lt;p&gt;编码规则为: &lt;code&gt;k[encoded_string]&lt;/code&gt;，表示其中方括号内部的 &lt;code&gt;encoded_string&lt;/code&gt; 正好重复 &lt;code&gt;k&lt;/code&gt; 次。注意 &lt;code&gt;k&lt;/code&gt; 保证为正整数。&lt;/p&gt;
+&lt;p&gt;你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。&lt;/p&gt;
+&lt;p&gt;此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 &lt;code&gt;k&lt;/code&gt; ，例如不会出现像 &lt;code&gt;3a&lt;/code&gt; 或 &lt;code&gt;2[4]&lt;/code&gt; 的输入。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;3[a]2[bc]&amp;#34;
+输出：&amp;#34;aaabcbc&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;3[a2[c]]&amp;#34;
+输出：&amp;#34;accaccacc&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;2[abc]3[cd]ef&amp;#34;
+输出：&amp;#34;abcabccdcdcdef&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;abc3[cd]xyz&amp;#34;
+输出：&amp;#34;abccdcdcdxyz&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;这道题跟 224 类似，关键是遇到什么字符的时候，需要入栈；以及遇到什么字符开始出栈。&lt;/p&gt;
+&lt;p&gt;出栈的时候，要把内容一次性处理。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/19&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;decodeString&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;) &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#f92672"&gt;||&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;]&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;, string(&lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 遇到 &amp;#39;]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 说明前面有可以处理的字符和数字&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 开始出栈，先出栈 字符串&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;tmp&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;[&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;tmp&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;tmp&lt;/span&gt; &lt;span style="color:#75715e"&gt;// 连接字符&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 出栈 &amp;#39;[&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 出栈 数字&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;repeat&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt; = len(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;&lt;span style="color:#f92672"&gt;--&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;] &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;0&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;] &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;9&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;repeat&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;repeat&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 去掉数字&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;len(&lt;span style="color:#a6e22e"&gt;repeat&lt;/span&gt;)]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;repeatVal&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strconv&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Atoi&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;repeat&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;copyTmp&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;tmp&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;repeatVal&lt;/span&gt; &amp;gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;tmp&lt;/span&gt; &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;copyTmp&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;repeatVal&lt;/span&gt;&lt;span style="color:#f92672"&gt;--&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 将重复完成的字符串在入栈&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;tmp&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strStack&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.456_132%E6%A8%A1%E5%BC%8F/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.456_132%E6%A8%A1%E5%BC%8F/</guid><description>&lt;h2 id="456-132模式-中等"&gt;456 132模式-中等&lt;a class="anchor" href="#456-132%e6%a8%a1%e5%bc%8f-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给你一个整数数组 &lt;code&gt;nums&lt;/code&gt; ，数组中共有 &lt;code&gt;n&lt;/code&gt; 个整数。&lt;strong&gt;132 模式的子序列&lt;/strong&gt; 由三个整数 &lt;code&gt;nums[i]&lt;/code&gt;、&lt;code&gt;nums[j]&lt;/code&gt; 和 &lt;code&gt;nums[k]&lt;/code&gt; 组成，并同时满足：&lt;code&gt;i &amp;lt; j &amp;lt; k&lt;/code&gt; 和 &lt;code&gt;nums[i] &amp;lt; nums[k] &amp;lt; nums[j]&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;如果 &lt;code&gt;nums&lt;/code&gt; 中存在 &lt;strong&gt;132 模式的子序列&lt;/strong&gt; ，返回 &lt;code&gt;true&lt;/code&gt; ；否则，返回 &lt;code&gt;false&lt;/code&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：nums = [1,2,3,4]
+输出：false
+解释：序列中不存在 132 模式的子序列。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：nums = [3,1,4,2]
+输出：true
+解释：序列中有 1 个 132 模式的子序列： [1, 4, 2] 。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：nums = [-1,3,2,0]
+输出：true
+解释：序列中有 3 个 132 模式的的子序列：[-1, 3, 2]、[-1, 3, 0] 和 [-1, 2, 0] 。&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.496_%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E7%9A%84%E5%85%83%E7%B4%A01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.496_%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E7%9A%84%E5%85%83%E7%B4%A01/</guid><description>&lt;h2 id="496-下一个更大元素1-简单"&gt;496 下一个更大元素1-简单&lt;a class="anchor" href="#496-%e4%b8%8b%e4%b8%80%e4%b8%aa%e6%9b%b4%e5%a4%a7%e5%85%83%e7%b4%a01-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;nums1&lt;/code&gt; 中数字 &lt;code&gt;x&lt;/code&gt; 的 &lt;strong&gt;下一个更大元素&lt;/strong&gt; 是指 &lt;code&gt;x&lt;/code&gt; 在 &lt;code&gt;nums2&lt;/code&gt; 中对应位置 &lt;strong&gt;右侧&lt;/strong&gt; 的 &lt;strong&gt;第一个&lt;/strong&gt; 比 &lt;code&gt;x&lt;/code&gt; 大的元素。&lt;/p&gt;
+&lt;p&gt;给你两个 &lt;strong&gt;没有重复元素&lt;/strong&gt; 的数组 &lt;code&gt;nums1&lt;/code&gt; 和 &lt;code&gt;nums2&lt;/code&gt; ，下标从 &lt;strong&gt;0&lt;/strong&gt; 开始计数，其中&lt;code&gt;nums1&lt;/code&gt; 是 &lt;code&gt;nums2&lt;/code&gt; 的子集。&lt;/p&gt;
+&lt;p&gt;对于每个 &lt;code&gt;0 &amp;lt;= i &amp;lt; nums1.length&lt;/code&gt; ，找出满足 &lt;code&gt;nums1[i] == nums2[j]&lt;/code&gt; 的下标 &lt;code&gt;j&lt;/code&gt; ，并且在 &lt;code&gt;nums2&lt;/code&gt; 确定 &lt;code&gt;nums2[j]&lt;/code&gt; 的 &lt;strong&gt;下一个更大元素&lt;/strong&gt; 。如果不存在下一个更大元素，那么本次查询的答案是 &lt;code&gt;-1&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;返回一个长度为 &lt;code&gt;nums1.length&lt;/code&gt; 的数组 &lt;code&gt;ans&lt;/code&gt; 作为答案，满足 &lt;code&gt;ans[i]&lt;/code&gt; 是如上所述的 &lt;strong&gt;下一个更大元素&lt;/strong&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：nums1 = [4,1,2], nums2 = [1,3,4,2].
+输出：[-1,3,-1]
+解释：nums1 中每个值的下一个更大元素如下所述：
+- 4 ，用加粗斜体标识，nums2 = [1,3,4,2]。不存在下一个更大元素，所以答案是 -1 。
+- 1 ，用加粗斜体标识，nums2 = [1,3,4,2]。下一个更大元素是 3 。
+- 2 ，用加粗斜体标识，nums2 = [1,3,4,2]。不存在下一个更大元素，所以答案是 -1 。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.503_%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E7%9A%84%E5%85%83%E7%B4%A02/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.503_%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E7%9A%84%E5%85%83%E7%B4%A02/</guid><description>&lt;h2 id="503-下一个更大的元素2-中等"&gt;503 下一个更大的元素2-中等&lt;a class="anchor" href="#503-%e4%b8%8b%e4%b8%80%e4%b8%aa%e6%9b%b4%e5%a4%a7%e7%9a%84%e5%85%83%e7%b4%a02-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定一个循环数组 &lt;code&gt;nums&lt;/code&gt; （ &lt;code&gt;nums[nums.length - 1]&lt;/code&gt; 的下一个元素是 &lt;code&gt;nums[0]&lt;/code&gt; ），返回 &lt;em&gt;&lt;code&gt;nums&lt;/code&gt; 中每个元素的 &lt;strong&gt;下一个更大元素&lt;/strong&gt;&lt;/em&gt; 。&lt;/p&gt;
+&lt;p&gt;数字 &lt;code&gt;x&lt;/code&gt; 的 &lt;strong&gt;下一个更大的元素&lt;/strong&gt; 是按数组遍历顺序，这个数字之后的第一个比它更大的数，这意味着你应该循环地搜索它的下一个更大的数。如果不存在，则输出 &lt;code&gt;-1&lt;/code&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入: nums = [1,2,1]
+输出: [2,-1,2]
+解释: 第一个 1 的下一个更大的数是 2；
+数字 2 找不到下一个更大的数； 
+第二个 1 的下一个最大的数需要循环搜索，结果也是 2。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入: nums = [1,2,3,4,3]
+输出: [2,3,4,-1,4]&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;输入为循环数组，所以考虑把数组膨胀1倍，然后逆序遍历，求新数组的下一个更大元素。然后只返回结果集的前一半。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/18&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;nextGreaterElements&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;nums2&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;nums2&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;nums2&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;nums2&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;--&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;nums2&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;[:&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.682_%E6%A3%92%E7%90%83%E6%AF%94%E8%B5%9B/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.682_%E6%A3%92%E7%90%83%E6%AF%94%E8%B5%9B/</guid><description>&lt;h2 id="682-棒球比赛-简单"&gt;682 棒球比赛-简单&lt;a class="anchor" href="#682-%e6%a3%92%e7%90%83%e6%af%94%e8%b5%9b-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;你现在是一场采用特殊赛制棒球比赛的记录员。这场比赛由若干回合组成，过去几回合的得分可能会影响以后几回合的得分。&lt;/p&gt;
+&lt;p&gt;比赛开始时，记录是空白的。你会得到一个记录操作的字符串列表 &lt;code&gt;ops&lt;/code&gt;，其中 &lt;code&gt;ops[i]&lt;/code&gt; 是你需要记录的第 &lt;code&gt;i&lt;/code&gt; 项操作，&lt;code&gt;ops&lt;/code&gt; 遵循下述规则：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;整数 &lt;code&gt;x&lt;/code&gt; - 表示本回合新获得分数 &lt;code&gt;x&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;+&amp;quot;&lt;/code&gt; - 表示本回合新获得的得分是前两次得分的总和。题目数据保证记录此操作时前面总是存在两个有效的分数。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;D&amp;quot;&lt;/code&gt; - 表示本回合新获得的得分是前一次得分的两倍。题目数据保证记录此操作时前面总是存在一个有效的分数。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;C&amp;quot;&lt;/code&gt; - 表示前一次得分无效，将其从记录中移除。题目数据保证记录此操作时前面总是存在一个有效的分数。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;请你返回记录中所有得分的总和。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：ops = [&amp;#34;5&amp;#34;,&amp;#34;2&amp;#34;,&amp;#34;C&amp;#34;,&amp;#34;D&amp;#34;,&amp;#34;+&amp;#34;]
+输出：30
+解释：
+&amp;#34;5&amp;#34; - 记录加 5 ，记录现在是 [5]
+&amp;#34;2&amp;#34; - 记录加 2 ，记录现在是 [5, 2]
+&amp;#34;C&amp;#34; - 使前一次得分的记录无效并将其移除，记录现在是 [5].
+&amp;#34;D&amp;#34; - 记录加 2 * 5 = 10 ，记录现在是 [5, 10].
+&amp;#34;+&amp;#34; - 记录加 5 + 10 = 15 ，记录现在是 [5, 10, 15].
+所有得分的总和 5 + 10 + 15 = 30&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.739_%E6%AF%8F%E6%97%A5%E6%B8%A9%E5%BA%A6/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.739_%E6%AF%8F%E6%97%A5%E6%B8%A9%E5%BA%A6/</guid><description>&lt;h2 id="739-每日温度-中等"&gt;739 每日温度-中等&lt;a class="anchor" href="#739-%e6%af%8f%e6%97%a5%e6%b8%a9%e5%ba%a6-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定一个整数数组 &lt;code&gt;temperatures&lt;/code&gt; ，表示每天的温度，返回一个数组 &lt;code&gt;answer&lt;/code&gt; ，其中 &lt;code&gt;answer[i]&lt;/code&gt; 是指对于第 &lt;code&gt;i&lt;/code&gt; 天，下一个更高温度出现在几天后。如果气温在这之后都不会升高，请在该位置用 &lt;code&gt;0&lt;/code&gt; 来代替。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入: temperatures = [73,74,75,71,69,72,76,73]
+输出: [1,1,4,2,1,1,0,0]&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入: temperatures = [30,40,50,60]
+输出: [1,1,1,0]&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入: temperatures = [30,60,90]
+输出: [1,1,0]&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;解题思路&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;answer 数组表示下一个更高的温度出现在几天后，一种朴素的想法是从当前开始往后遍历，找第一个大于该元素的值。那么，也可以这样想，从当前元素开始，往前找，找到比它小的就更新。&lt;/p&gt;
+&lt;p&gt;用栈来维护元素的下标，出栈的条件是当前温度 cur 大于栈中下标所对应的温度，那么 cur 就可以用来更新 answer数组。&lt;/p&gt;
+&lt;p&gt;入栈，依次入栈就可以。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/21&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dailyTemperatures&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;temperatures&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;temperatures&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;temperatures&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &amp;gt; &lt;span style="color:#a6e22e"&gt;temperatures&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]] {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;preIdx&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;preIdx&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;preIdx&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 没有出栈之前，一直入栈，那么则说明 v 一直小于栈顶元素&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 栈是单调递减的，对应的数组也是单调递减的&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 栈维护的是温度单调递减&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 只要出现一个v比栈顶大的，那么栈里面比 v 小的都可以更新掉&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.856_%E6%8B%AC%E5%8F%B7%E7%9A%84%E5%88%86%E6%95%B0/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.856_%E6%8B%AC%E5%8F%B7%E7%9A%84%E5%88%86%E6%95%B0/</guid><description>&lt;h2 id="856-括号的分数-中等"&gt;856 括号的分数-中等&lt;a class="anchor" href="#856-%e6%8b%ac%e5%8f%b7%e7%9a%84%e5%88%86%e6%95%b0-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定一个平衡括号字符串 &lt;code&gt;S&lt;/code&gt;，按下述规则计算该字符串的分数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;()&lt;/code&gt; 得 1 分。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AB&lt;/code&gt; 得 &lt;code&gt;A + B&lt;/code&gt; 分，其中 A 和 B 是平衡括号字符串。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;(A)&lt;/code&gt; 得 &lt;code&gt;2 * A&lt;/code&gt; 分，其中 A 是平衡括号字符串。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入： &amp;#34;()&amp;#34;
+输出： 1&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入： &amp;#34;(())&amp;#34;
+输出： 2&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入： &amp;#34;()()&amp;#34;
+输出： 2&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入： &amp;#34;(()(()))&amp;#34;
+输出： 6&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;还是入栈，出栈的思路。&lt;/p&gt;
+&lt;p&gt;遇到&lt;code&gt;)&lt;/code&gt;开始出栈，通过栈中已有的元素来判断，题目中所说的三种情况：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果前一个为-1，即temp == 0，表示得1分&lt;/li&gt;
+&lt;li&gt;如果前一个不为-1，即 stack 中的得分是 A+B 形式，需要累计；并且需要扩大1倍&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/19&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;scoreOfParentheses&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;) &lt;span style="color:#75715e"&gt;// score stack&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;(&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; { &lt;span style="color:#75715e"&gt;// &amp;#39;)&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 取出之前的数据&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 如果紧挨着 -1，得分为1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 否则就是 A+B 形式, 求和&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;temp&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;temp&lt;/span&gt; &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 去掉 -1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;temp&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;temp&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.921_%E4%BD%BF%E6%8B%AC%E5%8F%B7%E6%9C%89%E6%95%88%E7%9A%84%E6%9C%80%E5%B0%91%E6%B7%BB%E5%8A%A0/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.921_%E4%BD%BF%E6%8B%AC%E5%8F%B7%E6%9C%89%E6%95%88%E7%9A%84%E6%9C%80%E5%B0%91%E6%B7%BB%E5%8A%A0/</guid><description>&lt;h2 id="921-使括号有效的最少添加-简单"&gt;921 使括号有效的最少添加-简单&lt;a class="anchor" href="#921-%e4%bd%bf%e6%8b%ac%e5%8f%b7%e6%9c%89%e6%95%88%e7%9a%84%e6%9c%80%e5%b0%91%e6%b7%bb%e5%8a%a0-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;只有满足下面几点之一，括号字符串才是有效的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;它是一个空字符串，或者&lt;/li&gt;
+&lt;li&gt;它可以被写成 &lt;code&gt;AB&lt;/code&gt; （&lt;code&gt;A&lt;/code&gt; 与 &lt;code&gt;B&lt;/code&gt; 连接）, 其中 &lt;code&gt;A&lt;/code&gt; 和 &lt;code&gt;B&lt;/code&gt; 都是有效字符串，或者&lt;/li&gt;
+&lt;li&gt;它可以被写作 &lt;code&gt;(A)&lt;/code&gt;，其中 &lt;code&gt;A&lt;/code&gt; 是有效字符串。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;给定一个括号字符串 &lt;code&gt;s&lt;/code&gt; ，在每一次操作中，你都可以在字符串的任何位置插入一个括号&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;例如，如果 &lt;code&gt;s = &amp;quot;()))&amp;quot;&lt;/code&gt; ，你可以插入一个开始括号为 &lt;code&gt;&amp;quot;(()))&amp;quot;&lt;/code&gt; 或结束括号为 &lt;code&gt;&amp;quot;())))&amp;quot;&lt;/code&gt; 。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;返回 &lt;em&gt;为使结果字符串 &lt;code&gt;s&lt;/code&gt; 有效而必须添加的最少括号数&lt;/em&gt;。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;())&amp;#34;
+输出：1&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;(((&amp;#34;
+输出：3&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;这个问题跟第 20 题（有效括号）类似，第 20 题是判断一个字符串是否是有效的括号，通过对左括号入栈，右括号出栈的操作，判断最后栈是否为空来判断括号是否有效。&lt;/p&gt;
+&lt;p&gt;这个题目也是类似，能出栈的时候就出栈，不能出栈了，表示需要添加一个，直接计数返回即可。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/18&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;minAddToMakeValid&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;rune&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;(&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;)&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/no.946_%E9%AA%8C%E8%AF%81%E6%A0%88%E5%BA%8F%E5%88%97/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/no.946_%E9%AA%8C%E8%AF%81%E6%A0%88%E5%BA%8F%E5%88%97/</guid><description>&lt;h2 id="946-验证栈序列-中等"&gt;946 验证栈序列-中等&lt;a class="anchor" href="#946-%e9%aa%8c%e8%af%81%e6%a0%88%e5%ba%8f%e5%88%97-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定 &lt;code&gt;pushed&lt;/code&gt; 和 &lt;code&gt;popped&lt;/code&gt; 两个序列，每个序列中的 &lt;strong&gt;值都不重复&lt;/strong&gt;，只有当它们可能是在最初空栈上进行的推入 push 和弹出 pop 操作序列的结果时，返回 &lt;code&gt;true&lt;/code&gt;；否则，返回 &lt;code&gt;false&lt;/code&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：pushed = [1,2,3,4,5], popped = [4,5,3,2,1]
+输出：true
+解释：我们可以按以下顺序执行：
+push(1), push(2), push(3), push(4), pop() -&amp;gt; 4,
+push(5), pop() -&amp;gt; 5, pop() -&amp;gt; 3, pop() -&amp;gt; 2, pop() -&amp;gt; 1&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：pushed = [1,2,3,4,5], popped = [4,3,5,1,2]
+输出：false
+解释：1 不能在 2 之前弹出。&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;思路就是按照入栈队列依次入栈，取栈顶元素看看是不是在出栈序列中，如果在出栈。&lt;/p&gt;
+&lt;p&gt;如果入栈序列和出栈序列能够契合，那么出栈的指针就会走到最后，否则不会。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/18&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;validateStackSequences&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;pushed&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;popped&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;j&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;pushed&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;pushed&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;j&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;popped&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;j&lt;/span&gt;] {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;j&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;j&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/stack_midstack/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/stack_midstack/</guid><description>&lt;h1 id="middle-stack"&gt;Middle Stack&lt;a class="anchor" href="#middle-stack"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;设计并实现一种特殊栈结构，具有以下四种操作，且四种操作的时间复杂度均为O(1)。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Push() which adds an element to the top of stack.&lt;/li&gt;
+&lt;li&gt;Pop() which removes an element from top of stack.&lt;/li&gt;
+&lt;li&gt;GetMiddle() which will return middle element of the stack.&lt;/li&gt;
+&lt;li&gt;DeleteMiddle() which will delete the middle element.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;思路分析：&lt;/p&gt;
+&lt;p&gt;栈的底层实现是利用数组或线性表来进行构建的。对于Push(),Pop()和GetMiddle()操作，数组可满足O(1)时间复杂度，但是DeleteMiddle()设计元素的移动，数组无法满足。&lt;/p&gt;
+&lt;p&gt;同样，单链表也无法满足在两个方向（push和pop）上的中间元素的移动。&lt;/p&gt;
+&lt;p&gt;因此，我们利用双向链表来实现这一特殊的栈结构。&lt;/p&gt;
+&lt;p&gt;具体为：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;保存一个 mid 节点，永远指向双向链表中的中间节点&lt;/li&gt;
+&lt;li&gt;利用节点 pre 和 next 指针，可实现&lt;code&gt;O(1)&lt;/code&gt;的删除和查找&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="middlestack结构定义"&gt;MiddleStack结构定义&lt;a class="anchor" href="#middlestack%e7%bb%93%e6%9e%84%e5%ae%9a%e4%b9%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;type&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;StackNode&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;StackNode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;MiddleStack&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;top&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;StackNode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;mid&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;StackNode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;cnt&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;NewMiddleStack&lt;/span&gt;() &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;MiddleStack&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;MiddleStack&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;top&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;mid&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;cnt&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="push"&gt;Push&lt;a class="anchor" href="#push"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src="../../../../img/midstack_push.svg" alt="image" /&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/stack_to_queue/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/stack_to_queue/</guid><description>&lt;h1 id="队列与栈的有限操作间的转换"&gt;队列与栈的有限操作间的转换&lt;a class="anchor" href="#%e9%98%9f%e5%88%97%e4%b8%8e%e6%a0%88%e7%9a%84%e6%9c%89%e9%99%90%e6%93%8d%e4%bd%9c%e9%97%b4%e7%9a%84%e8%bd%ac%e6%8d%a2"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;已知Stack类及其3个方法Push()、Pop()和 Count()，请用2个Stack实现Queue类的入队(Enqueue)、出队(Dequeue)方法以及判空(Empty)操作。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注意，这里假定Pop()操作可以获得元素的值&lt;/em&gt;。&lt;/p&gt;
+&lt;p&gt;这个题目主要考察对基本数据结构的理解，以及操作的转换。&lt;/p&gt;
+&lt;p&gt;思路分析：&lt;/p&gt;
+&lt;p&gt;两个栈A和B，栈A提供入队操作，栈B提供出队操作，算法如下：&lt;/p&gt;
+&lt;p&gt;1）如果栈B不为空，直接弹出栈B的元素；
+2）如果栈B为空，则依次弹出栈A的元素，放入栈B中，再弹出栈B的元素.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Using Stack implement the Queue&amp;#39;s Operations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Stack&amp;#39;s Operations: s.push(x) s.pop() s.size()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Queue&amp;#39;s Operations: q.enqueue(x) q.dequeue() q.empty()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;type&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;MyQueue&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;stackA&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;MyStack&lt;/span&gt; &lt;span style="color:#75715e"&gt;// 用于入队&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;stackB&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;MyStack&lt;/span&gt; &lt;span style="color:#75715e"&gt;// 用于出队&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// NewMyQueue define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;NewMyQueue&lt;/span&gt;() &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;MyQueue&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;MyQueue&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;stackA&lt;/span&gt;: &lt;span style="color:#a6e22e"&gt;NewMyStack&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;stackB&lt;/span&gt;: &lt;span style="color:#a6e22e"&gt;NewMyStack&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// EnQueue define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;q&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;MyQueue&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;EnQueue&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stackA&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// DeQueue define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;q&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;MyQueue&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;DeQueue&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stackB&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Size&lt;/span&gt;() &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stackA&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Size&lt;/span&gt;() &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;			&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stackA&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Pop&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;			&lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stackB&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stackB&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Pop&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// IsEmpty define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;q&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;MyQueue&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;IsEmpty&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stackA&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Size&lt;/span&gt;() &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;stackB&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Size&lt;/span&gt;() &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;栈的三个操作实现如下：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch04stack/stack_twostack/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/stack_twostack/</guid><description>&lt;h1 id="two-stack"&gt;Two Stack&lt;a class="anchor" href="#two-stack"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;利用数组Array实现一种双栈数据结构twoStack，towStack满足以下功能：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;push1(int x)：向栈1压入元素x&lt;/li&gt;
+&lt;li&gt;push2(int x)：向栈2压入元素x&lt;/li&gt;
+&lt;li&gt;pop1()：删除栈1中的栈顶元素，并返回删除的元素值&lt;/li&gt;
+&lt;li&gt;pop2()：删除栈2中的栈顶元素，并返回删除的元素值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注意：实现twoStack的过程中尽量保证空间效率。&lt;/p&gt;
+&lt;p&gt;思路分析：&lt;/p&gt;
+&lt;p&gt;方法1：共有1个数组，对半分。&lt;/p&gt;
+&lt;p&gt;将数组分为两部分，前&lt;code&gt;[0,n/2]&lt;/code&gt;用于栈1，后&lt;code&gt;[n/2+1, n]&lt;/code&gt;用于栈2，但这样分配存在一个问题，当其中一个栈已满时，另一个栈可能还有可用的空间，造成空间上的浪费。&lt;/p&gt;
+&lt;p&gt;方法2：还是共用1个数组，动态维护两个栈的栈顶。&lt;/p&gt;
+&lt;p&gt;具体为，分别将&lt;code&gt;0&lt;/code&gt;和&lt;code&gt;n-1&lt;/code&gt;作为两个栈的栈底，从数组两端向中间存储数据，当两个栈的栈顶&lt;code&gt;top1&lt;/code&gt;和&lt;code&gt;top2&lt;/code&gt;相等时，栈已满。&lt;/p&gt;
+&lt;p&gt;下面是方法2的实现。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;package&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;template&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;type&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;TwoStack&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;top1&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;top2&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;NewTwoStack&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;size&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TwoStack&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TwoStack&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;top1&lt;/span&gt;: &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;top2&lt;/span&gt;: &lt;span style="color:#a6e22e"&gt;size&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;: make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;size&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;size&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TwoStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Push1&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; !&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;IsFull&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top1&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top1&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TwoStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Push2&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; !&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;IsFull&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top2&lt;/span&gt;&lt;span style="color:#f92672"&gt;--&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top2&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TwoStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Pop1&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top1&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top1&lt;/span&gt;&lt;span style="color:#f92672"&gt;--&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TwoStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Pop2&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top2&lt;/span&gt; &amp;lt; len(&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top2&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top2&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;t&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TwoStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;IsFull&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top1&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;t&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;top2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>第 4 章 栈</title><link>https://subond.com/leetcode/docs/part1/ch04stack/stack/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/stack/</guid><description>&lt;h1 id="第-4-章-栈"&gt;第 4 章 栈&lt;a class="anchor" href="#%e7%ac%ac-4-%e7%ab%a0-%e6%a0%88"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;h2 id="1栈"&gt;1.栈&lt;a class="anchor" href="#1%e6%a0%88"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;栈是一种 LIFO (Last In First Out) 的数据结构。&lt;/p&gt;
+&lt;p&gt;根据栈中元素总个数是否固定，可分为固定大小栈和动态大小栈。&lt;/p&gt;
+&lt;p&gt;固定大小栈：顾名思义，栈有固定大小，不能动态增长和收缩。如果栈已满并尝试向其添加元素，会发生上溢错误；如果栈已空并尝试从中删除元素，会发生下溢错处。&lt;/p&gt;
+&lt;p&gt;动态大小栈：栈的大小可动态增长和收缩。&lt;/p&gt;
+&lt;h2 id="2基本操作"&gt;2.基本操作&lt;a class="anchor" href="#2%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;push(x)：将元素x加入到栈中&lt;/li&gt;
+&lt;li&gt;pop()：弹出栈顶元素，但&lt;strong&gt;不会返回弹出元素的值&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;top()：取出栈顶元素，但&lt;strong&gt;不会弹出栈顶元素&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;isEmpty()：判断栈是否为空，当栈为空时，返回true&lt;/li&gt;
+&lt;li&gt;isFull()：判断栈是否已满，当栈已满时，返回 true&lt;/li&gt;
+&lt;li&gt;size()：返回栈中的元素个数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="3栈的实现"&gt;3.栈的实现&lt;a class="anchor" href="#3%e6%a0%88%e7%9a%84%e5%ae%9e%e7%8e%b0"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;从时间复杂度角度而言，push(), pop(), top()，empty()操作只需要O(1)的时间。从实现角度而言，栈的的实现方式有两种，&lt;strong&gt;数组和线性表&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;下面实现固定大小的栈。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;type&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;cap&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;NewFixedSizeStack&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;cap&lt;/span&gt;: &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt;: make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Push define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; !&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;IsFull&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Pop define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Pop&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; !&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;IsEmpty&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Top define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Top&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; !&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;IsEmpty&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// IsEmpty define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;IsEmpty&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt;) &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// IsFull define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;IsFull&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt;) &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;cap&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Size define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Size&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;val&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="4栈的优点和缺点"&gt;4.栈的优点和缺点&lt;a class="anchor" href="#4%e6%a0%88%e7%9a%84%e4%bc%98%e7%82%b9%e5%92%8c%e7%bc%ba%e7%82%b9"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;栈的优点：&lt;/p&gt;</description></item><item><title>第 4.2 节 栈的反转</title><link>https://subond.com/leetcode/docs/part1/ch04stack/stack_reverse/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch04stack/stack_reverse/</guid><description>&lt;h1 id="42-栈的反转"&gt;4.2 栈的反转&lt;a class="anchor" href="#42-%e6%a0%88%e7%9a%84%e5%8f%8d%e8%bd%ac"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;利用迭代思想，实现栈的反转，只能使用push(),pop(),empty(),size()操作。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;栈： 栈：
+4 &amp;lt;- top 1 &amp;lt;- top
+3 反转后 2
+2 3
+1 4&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;思路分析：&lt;/p&gt;
+&lt;p&gt;栈的标准&lt;code&gt;push&lt;/code&gt;是向栈顶压入新元素，如果将push()改为向栈底压入新元素，那么就可以利用empty(),pop()来递归实现栈的反转。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// pushBottom define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;pushBottom&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;IsEmpty&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	} &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;temp&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Top&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Pop&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;pushBottom&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;temp&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Reverse define&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;FixedSizeStack&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Reverse&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; !&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;IsEmpty&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Top&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Pop&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Reverse&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;pushBottom&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item></channel></rss>
