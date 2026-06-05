@@ -1,5 +1,6 @@
 ---
 title: "第 2 部分 进阶部分"
+bookCollapseSection: true
 ---
 
 # 第 2 部分 进阶部分

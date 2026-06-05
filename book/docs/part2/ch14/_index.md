@@ -1,5 +1,6 @@
 ---
 title: "第 10 章 广度优先搜索"
+bookCollapseSection: true
 ---
 
 # 第 10 章 广度优先搜索

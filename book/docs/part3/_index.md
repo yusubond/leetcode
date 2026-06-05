@@ -1,5 +1,6 @@
 ---
 title: "第 3 部分 算法进阶"
+bookCollapseSection: true
 ---
 
 # 第 3 部分 算法进阶

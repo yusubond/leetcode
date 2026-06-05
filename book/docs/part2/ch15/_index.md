@@ -1,5 +1,6 @@
 ---
 title: "第 11 章 深度优先搜索"
+bookCollapseSection: true
 ---
 
 # 第 11 章 深度优先搜索

@@ -1,5 +1,6 @@
 ---
 title: "第 18 章 LFU 缓存"
+bookCollapseSection: true
 ---
 
 

@@ -1,5 +1,6 @@
 ---
 title: "第 13 章 滑动窗口"
+bookCollapseSection: true
 ---
 
 # 第 13 章 滑动窗口

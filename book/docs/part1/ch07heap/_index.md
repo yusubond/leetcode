@@ -1,5 +1,6 @@
 ---
 title: "第 7 章 堆"
+bookCollapseSection: true
 ---
 
 

@@ -1,5 +1,6 @@
 ---
 title: "第 1 部分 基础数据结构"
+bookCollapseSection: true
 ---
 
 # 第 1 部分 基础数据结构

@@ -1,5 +1,6 @@
 ---
 title: "第 20 章 二叉索引树"
+bookCollapseSection: true
 ---
 
 

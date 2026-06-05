@@ -1,5 +1,6 @@
 ---
 title: "第 4 章 栈"
+bookCollapseSection: true
 ---
 
 

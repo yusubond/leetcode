@@ -1,5 +1,6 @@
 ---
 title: "第 14 章 动态规划"
+bookCollapseSection: true
 ---
 
 

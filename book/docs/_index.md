@@ -1,5 +1,6 @@
 ---
 title: "Leet Book"
+bookCollapseSection: true
 ---
 
 # 第一部分 基础

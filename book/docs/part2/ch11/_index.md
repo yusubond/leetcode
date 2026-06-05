@@ -1,5 +1,6 @@
 ---
 title: "第 7 章 二分查找"
+bookCollapseSection: true
 ---
 
 

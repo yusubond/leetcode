@@ -1,5 +1,6 @@
 ---
 title: "第 8 章 排序算法"
+bookCollapseSection: true
 ---
 
 

@@ -1,5 +1,6 @@
 ---
 title: "第 5 章 字符串" 
+bookCollapseSection: true
 ---
 
 

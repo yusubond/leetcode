@@ -1,5 +1,6 @@
 ---
 title: "第 1 章 数组"
+bookCollapseSection: true
 ---
 
 # 第 1 章 数组

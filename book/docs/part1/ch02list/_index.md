@@ -1,5 +1,6 @@
 ---
 title: "第 2 章 链表"
+bookCollapseSection: true
 ---
 
 # 第 2 章 链表

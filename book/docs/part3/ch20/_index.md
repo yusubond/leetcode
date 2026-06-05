@@ -1,5 +1,6 @@
 ---
 title: "第 15 章 并查集"
+bookCollapseSection: true
 ---
 
 # 第 15 章 并查集

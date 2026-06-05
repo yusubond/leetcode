@@ -1,5 +1,6 @@
 ---
 title: "第 6 章 二叉树"
+bookCollapseSection: true
 ---
 
 

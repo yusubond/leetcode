@@ -1,5 +1,6 @@
 ---
 title: "第 3 章 队列"
+bookCollapseSection: true
 ---
 
 

@@ -1,5 +1,6 @@
 ---
 title: "第 16 章 线段树"
+bookCollapseSection: true
 ---
 
 
