@@ -1,10 +1,16 @@
-package template
+---
+title: "双向链表"
+---
 
-import (
-	"fmt"
-	"strings"
-)
+# 双向链表
 
+## 1.结构定义
+
+双向链表节点的一般包括`pre`和`next`指针，分别指向节点的上一个节点和下一个节点。
+
+双向链表一般包含`head`和`tail`两个伪节点，以及`size`表示链表中节点的个数。
+
+```go
 type (
 	// DoubleListNode define
 	DoubleListNode struct {
@@ -17,7 +23,13 @@ type (
 		head, tail *DoubleListNode
 	}
 )
+```
 
+
+
+**初始化**
+
+```go
 func NewDoubleLinkedList() *DoubleLinkedList {
 	list := &DoubleLinkedList{
 		size: 0,
@@ -28,7 +40,13 @@ func NewDoubleLinkedList() *DoubleLinkedList {
 	list.tail.pre = list.head
 	return list
 }
+```
 
+
+
+## 2.双向链表的操作
+
+```go
 // AddFront define
 func (l *DoubleLinkedList) AddFront(node *DoubleListNode) {
 	node.pre = l.head
@@ -78,20 +96,11 @@ func (l *DoubleLinkedList) removeNode(node *DoubleListNode) {
 func (l *DoubleLinkedList) Len() int {
 	return l.size
 }
+```
 
-func (l *DoubleLinkedList) Show() {
-	k := l.size
-	str := make([]string, 0, k)
-	if k > 0 {
-		fmt.Printf("total node: %d\n", k)
-	}
-	pre := l.head.next
-	for k > 0 {
-		str = append(str, fmt.Sprintf("%d", pre.val))
-		pre = pre.next
-		k--
-	}
-	if len(str) != 0 {
-		fmt.Printf("list: %s\n", strings.Join(str, "<->"))
-	}
-}
+
+
+![image](./assets/double_list_add_front.png)
+
+
+
