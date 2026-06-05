@@ -1,4 +1,4 @@
-baseURL = 'https://subond.com/leetbook'
+baseURL = 'https://subond.com/leetcode'
 languageCode = 'zh-cn'
 title = 'Leet Book'
 theme = "book"
