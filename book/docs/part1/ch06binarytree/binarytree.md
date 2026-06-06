@@ -23,7 +23,7 @@ title: "第 6 章 二叉树"
 参见题目：
 
 - [二叉树的最大深度](./No.104_二叉树的最大深度.md)
-- [二叉树的最小深度](./No.104_二叉树的最大深度.md)
+- [二叉树的最小深度](./No.111_二叉树的最大深度.md)
 
 
 
@@ -62,24 +62,32 @@ func preorderTraversal(root *TreeNode) []int {
 // 迭代版
 // 前序遍历：root->left->right
 func preorderTraversal(root *TreeNode) []int {
-    res := make([]int, 0)
-    if root == nil { return res }
-    stack := make([]*TreeNode, 0)
-    for root != nil || len(stack) != 0 {
-        // find root and left
-        for root != nil {
-            res = append(res, root.Val)  // 先将根节点加入结果集
-            stack = append(stack, root)  // 将遍历过的结点加入栈，后序出栈依次访问结点的右子树
-            root = root.Left             // 遍历当前结点的左子树
-        }
-        // find the right
-        if len(queue) != 0 {
-            root = stack[len(stack)-1]
-            stack = stack[:len(stack)-1]
-            root = root.Right
-        }
-    }
-    return res
+	res := make([]int, 0, 16)
+	if root == nil {
+		return res
+	}
+
+	stack := make([]*TreeNode, 0, 16)
+
+	for root != nil || len(stack) != 0 {
+		// push the left first
+		for root != nil {
+			res = append(res, root.Val)
+
+			stack = append(stack, root)
+			root = root.Left
+		}
+
+		// pop the last left one
+		if len(stack) != 0 {
+			root = stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+
+			root = root.Right
+		}
+	}
+
+	return res
 }
 ```
 
@@ -318,6 +326,8 @@ func levelOrder(root *TreeNode) [][]int {
 - [199 二叉树的右视图，取层序遍历最后一个节点](./No.199_二叉树的右视图.md)
 
 - [404 左叶子之和](./No.404_左叶子之和.md)
+
+- [515 在每个树行中找最大值](./No.515_在每个树行中找最大值.md)
 
   
 

@@ -46,20 +46,25 @@ func maxDepth(root *TreeNode) int {
 // 时间复杂度O(N)，空间复杂度O(NlogN)
 // 自顶向下的递归
 func maxDepth(root *TreeNode) int {
-    var dfs func(root *TreeNode, depth int) int
-    dfs = func(root *TreeNode, depth int) int {
-        if root == nil {
-            return depth
-        }
-        depth++
-        l, r := dfs(root.Left, depth), dfs(root.Right, depth)
-        if l > r {
-            return l
-        }
-        return r
-    }
+	var maxDepth int
+	var dfs func(root *TreeNode, depth int)
 
-    return dfs(root, 0)
+	dfs = func(root *TreeNode, depth int) {
+		if root == nil {
+			return
+		}
+		depth += 1
+		if depth > maxDepth {
+			maxDepth = depth
+		}
+
+		dfs(root.Left, depth)
+		dfs(root.Right, depth)
+	}
+
+	dfs(root, 0)
+
+	return maxDepth
 }
 ```
 
