@@ -44,5 +44,34 @@ func constructMaximumBinaryTree(nums []int) *TreeNode {
     root.Right = constructMaximumBinaryTree(nums[idx+1:])
     return root
 }
+
+
+// date 2024/10/10
+// 补充 dfs 函数版本
+func constructMaximumBinaryTree(nums []int) *TreeNode {
+    var dfs func(left, right int) *TreeNode
+
+    // [left, right)
+    dfs = func(left, right int) *TreeNode {
+        if left >= right {
+            return nil
+        }
+
+        idx := left
+        for i := left+1; i < right; i++ {
+            if nums[idx] < nums[i] {
+                idx = i
+            }
+        }
+
+        root := &TreeNode{Val: nums[idx]}
+        root.Left = dfs(left, idx)
+        root.Right = dfs(idx+1, right)
+
+        return root
+    }
+
+    return dfs(0, len(nums))
+}
 ```
 
