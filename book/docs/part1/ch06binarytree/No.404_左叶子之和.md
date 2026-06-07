@@ -6,7 +6,7 @@
 
 
 
-分析：
+分析：先判断是叶子节点，再判断其是前驱节点的左子树
 
 ```go
 // date 2023/10/24
@@ -19,28 +19,23 @@
  * }
  */
 func sumOfLeftLeaves(root *TreeNode) int {
-    var res int
+	var bfs func(root, pre *TreeNode)
+	var res int
 
-    var dfs func(root *TreeNode, isLeft bool)
-    dfs = func(root *TreeNode, isLeft bool) {
-        if root == nil {
-            return
-        }
-        if root.Left == nil && root.Right == nil && isLeft {
-            res += root.Val
-            return
-        }
-        if root.Left != nil {
-            dfs(root.Left, true)
-        }
-        if root.Right != nil {
-            dfs(root.Right, false)
-        }
-    }
+	bfs = func(root, pre *TreeNode) {
+		if root == nil {
+			return
+		}
+		if root.Left == nil && root.Right == nil && pre != nil && pre.Left == root {
+			res += root.Val
+		}
 
-    dfs(root, false)
+		bfs(root.Left, root)
+		bfs(root.Right, root)
+	}
 
-    return res
+	bfs(root, nil)
+
+	return res
 }
 ```
-

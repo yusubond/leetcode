@@ -80,10 +80,10 @@ func preorderTraversal(root *TreeNode) []int {
 
 		// pop the last left one
 		if len(stack) != 0 {
-			root = stack[len(stack)-1]
+			cru = stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
 
-			root = root.Right
+			root = cur.Right
 		}
 	}
 
@@ -139,15 +139,18 @@ func inorderTraversal(root *TreeNode) []int {
     stack := make([]*TreeNode, 0, 16)
     res := make([]int, 0, 16)
     for root != nil || len(stack) != 0 {
+		// push all the left node into stack
         for root != nil {
             stack = append(stack, root)
             root = root.Left
         }
+
+		// pop the last one
         if len(stack) != 0 {
-            root = stack[len(stack)-1]
+            cur = stack[len(stack)-1]
             stack = stack[:len(stack)-1]
-            res = append(res, root.Val)
-            root = root.Right
+            res = append(res, cur.Val)
+            root = cur.Right
         }
     }
     return res
@@ -194,13 +197,19 @@ func postorderTraversal(root *TreeNode) []int {
 
 迭代算法：
 
-迭代遍历的时候依然需要 stack 结构来保存已经遍历过的节点；同时借助 pre 指针保存上次出栈的节点，用于判断当前节点是否同时具有左右子树，还是只有单个子树。
+迭代遍历的时候依然需要 stack 结构来保存已经遍历过的节点；同时借助 pre 指针保存上次出栈的节点，用于判断当前出栈的节点其左右子树是否已经遍历过。
 
 1. 先将根节点入栈，循环遍历栈是否为空
-2. 出栈，取出当前节点
-   1. 如果当前节点没有左右子树，则为叶子节点，直接加入结果集
-   2. 其次判断上次出栈的节点是否是当前节点的左右子树，如果是，表明当前节点的子树已经处理完毕，也需要加入结果集【这里依赖的是左右子树的入栈，因为在栈中左右子树不具备前继关系，至于根节点具备】
-   3. 依次检查当前节点的右子树，左子树，重复1,2
+2. 出栈，取出栈顶节点，分支判断：1）是否可以加入结果集；2）继续入栈
+   
+   分支 1：
+   
+   - 如果当前节点没有左右子树，则为叶子节点，直接加入结果集
+   - 上次出栈的节点 pre 是否为本次出栈节点 cur 的左子树或右子树，如果是，表明 cur 节点的左右子树均处理完毕，可加入结果集
+   
+   分支 2：
+   
+   - 非分支 1 的情况，表明当前节点 cur 的左右子树还没有处理完，直接入栈即可；因为是在出栈时机判断结果，所以入栈时先右后左
 
 ```go
 // 迭代版
@@ -215,7 +224,7 @@ func postorderTraversal(root *TreeNode) []int {
         // 出栈 当前结点
         cur = stack[len(stack)-1]
         // 如果当前结点为叶子结点，则直接加入结果集
-        // 如果当前结点不是叶子结点，但是上次遍历结点为当前结点的左右子树时(说明当前结点只有单个子树，且子树已经处理完毕)，也加入结果集
+        // 如果当前结点不是叶子结点，但是上次遍历结点为当前结点的左右子树时(说明子树已经处理完毕)，也加入结果集
         if cur.Left == nil && cur.Right ==  nil || pre != nil && (pre == cur.Left || pre == cur.Right) {
             res = append(res, cur.Val)
             // 出栈，继续检查
