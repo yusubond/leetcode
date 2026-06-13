@@ -68,13 +68,13 @@ LFU 是 Least Frequently Used 的缩写，即最不经常、最少使用，也�
 
 如果你开始考虑排序算法，那么你的思考方向就偏离了最佳答案。排序至少`O(logN)`。
 
-回过头去看 LFU 的原理，你会发现它**只关心最小频次，其他频次之间的顺序不需要排序。**
+再次看 LFU 的原理，你会发现它**只关心最小频次，其他频次之间的顺序不需要排序。**
 
-因为，数据存在的时候，直接更新频次就好；*只有数据不存在，新插入数据导致旧数据删除的时候，才会看数据的频次，且只看最小频次的数据*。
+因为，数据存在的时候，直接更新频次就好；*只有数据不存在，新插入数据导致超出容量，对旧数据删除时，才会看数据的频次，且只看最小频次的数据*。
 
 
 
-我们可以选择 min 变量保存最小频次，淘汰时读取这个值找到要删除的数据。
+因此，我们可以选 minFrequency 变量保存最小频次，淘汰时读取这个值找到要删除的数据。
 
 相同频次的数据，按先后顺序排序，这个特点双向表插入动作已经体现了。
 
@@ -82,7 +82,9 @@ LFU 是 Least Frequently Used 的缩写，即最不经常、最少使用，也�
 
 还是用 map，map 的 key 为访问频次，value 为该频次下双向链表。
 
-当超过缓存容量时，需要删除，先找到最小频次 min，再从 map 中找到 min 对应的双向链表，从该链表的表尾删除一个数据即可，这就解决了 LFU 的删除操作。
+当超过缓存容量进行数据删除时，先找到最小频次 min，再从 map 中找到 min 对应的双向链表，从该链表的表尾删除一个数据即可，这就解决了 LFU 的删除操作。
+
+所以，LFU 有两个 map，一个维护全量 Node；一个维护同频次的双向链表。
 
 
 
@@ -100,7 +102,7 @@ type (
 	}
 	// LFUList define
 	LFUList struct {
-		size       int
+		size       int // the total nodes in lfu list
 		head, tail *LFUNode
 	}
 	// LFUCache define
@@ -108,9 +110,51 @@ type (
 		cache    map[int]*LFUNode // key is node key
 		list     map[int]*LFUList // key is frequency
 		capacity int
-		min      int
+		minFreq  int
 	}
 )
+
+// 双向链表及其辅助函数
+// NewLFUList new a double linked list
+func NewLFUList() *LFUList {
+	list := &LFUList{
+		size: 0,
+		head: &LFUNode{0, 0, 0, nil, nil},
+		tail: &LFUNode{0, 0, 0, nil, nil},
+	}
+	list.head.next = list.tail
+	list.tail.pre = list.head
+	return list
+}
+
+// addToHead define
+// node is update or new, so insert to front
+// 新节点肯定是被访问或者新插入的
+func (l *LFUList) addToHead(node *LFUNode) {
+	node.pre = l.head
+	node.next = l.head.next
+
+	l.head.next.pre = node
+	l.head.next = node
+	l.size++
+}
+
+// removeFromTail remove the tail node
+func (l *LFUList) removeFromTail() *LFUNode {
+	node := l.tail.pre
+	l.removeNode(node)
+	return node
+}
+
+func (l *LFUList) removeNode(node *LFUNode) {
+	node.pre.next = node.next
+	node.next.pre = node.pre
+	l.size--
+}
+
+func (l *LFUList) isEmpty() bool {
+	return l.size == 0
+}
 ```
 
 `LFUNode`存储具体的 key-value 信息，同时 frequency 记录访问频次。
@@ -137,19 +181,26 @@ func (l *LFUCache) Get(key int) int {
 	if !ok {
 		return -1
 	}
-	// first remote from the old frequency, then move to the new double list
-	l.list[node.frequency].removeNode(node)
+
+	// hit: the node frequency++
+	// so move the node from frequency to frequency+1
+	oFreq := node.frequency
+	nFreq := node.frequency + 1
 	node.frequency++
-	if _, ok = l.list[node.frequency]; !ok {
-		l.list[node.frequency] = NewLFUList()
+
+	l.list[oFreq].removeNode(node)
+
+	if _, ok = l.list[nFreq]; !ok {
+		l.list[nFreq] = NewLFUList()
 	}
-	oldList := l.list[node.frequency]
-	oldList.addToFront(node)
+	l.list[nFreq].addToHead(node)
 
 	// if l.min is empty update
-	if node.frequency-1 == l.min {
-		if minList, ok := l.list[l.min]; !ok || minList.isEmpty() {
-			l.min = node.frequency
+	// 因为前面对 old frequency 的双向链表进行了节点删除
+	// 所以当 oFreq == minFreq 的时候，minFreq 所在的双向链表有可能不存在或者为空，此时 minFreq 要更新为 nFreq
+	if oFreq == l.minFreq {
+		if minList, ok := l.list[l.minFreq]; !ok || minList.isEmpty() {
+			l.minFreq = nFreq
 		}
 	}
 	return node.val
@@ -184,22 +235,22 @@ func (l *LFUCache) Put(key, value int) {
 	// not exist
 	// 如果不存在且缓冲满了，需要删除
 	if l.capacity == len(l.cache) {
-		minList := l.list[l.min]
-		rmd := minList.removeFromRear()
+		minList := l.list[l.minFreq]
+		rmd := minList.removeFromTail()
 		delete(l.cache, rmd.key)
 	}
 
 	// new node, insert to map
 	node := &LFUNode{key: key, val: value, frequency: 1}
-	// the min change to 1, once create a new node
-	l.min = 1
-	if _, ok := l.list[l.min]; !ok {
-		l.list[l.min] = NewLFUList()
-	}
-	oldList := l.list[l.min]
-	oldList.addToFront(node)
 	// insert node to all cache
 	l.cache[key] = node
+
+	// the min change to 1, once create a new node
+	l.minFreq = 1
+	if _, ok := l.list[l.minFreq]; !ok {
+		l.list[l.minFreq] = NewLFUList()
+	}
+	l.list[l.minFreq].addToHead(node)
 }
 ```
 

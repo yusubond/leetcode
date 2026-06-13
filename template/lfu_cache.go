@@ -19,7 +19,7 @@ type (
 		cache    map[int]*LFUNode // key is node key
 		list     map[int]*LFUList // key is frequency
 		capacity int
-		min      int
+		minFreq  int
 	}
 )
 
@@ -38,7 +38,7 @@ func NewLFUList() *LFUList {
 // addToHead define
 // node is update or new, so insert to front
 // 新节点肯定是被访问或者新插入的
-func (l *LFUList) addToFront(node *LFUNode) {
+func (l *LFUList) addToHead(node *LFUNode) {
 	node.pre = l.head
 	node.next = l.head.next
 
@@ -47,7 +47,8 @@ func (l *LFUList) addToFront(node *LFUNode) {
 	l.size++
 }
 
-func (l *LFUList) removeFromRear() *LFUNode {
+// removeFromTail remove the tail node
+func (l *LFUList) removeFromTail() *LFUNode {
 	node := l.tail.pre
 	l.removeNode(node)
 	return node
@@ -66,7 +67,7 @@ func (l *LFUList) isEmpty() bool {
 func NewLFUCache(cap int) *LFUCache {
 	return &LFUCache{
 		capacity: cap,
-		min:      0,
+		minFreq:  0,
 		cache:    make(map[int]*LFUNode),
 		list:     make(map[int]*LFUList),
 	}
@@ -87,22 +88,22 @@ func (l *LFUCache) Put(key, value int) {
 	// not exist
 	// 如果不存在且缓冲满了，需要删除
 	if l.capacity == len(l.cache) {
-		minList := l.list[l.min]
-		rmd := minList.removeFromRear()
+		minList := l.list[l.minFreq]
+		rmd := minList.removeFromTail()
 		delete(l.cache, rmd.key)
 	}
 
 	// new node, insert to map
 	node := &LFUNode{key: key, val: value, frequency: 1}
-	// the min change to 1, once create a new node
-	l.min = 1
-	if _, ok := l.list[l.min]; !ok {
-		l.list[l.min] = NewLFUList()
-	}
-	oldList := l.list[l.min]
-	oldList.addToFront(node)
 	// insert node to all cache
 	l.cache[key] = node
+
+	// the min change to 1, once create a new node
+	l.minFreq = 1
+	if _, ok := l.list[l.minFreq]; !ok {
+		l.list[l.minFreq] = NewLFUList()
+	}
+	l.list[l.minFreq].addToHead(node)
 }
 
 func (l *LFUCache) Get(key int) int {
@@ -110,19 +111,26 @@ func (l *LFUCache) Get(key int) int {
 	if !ok {
 		return -1
 	}
-	// first remote from the old frequency, then move to the new double list
-	l.list[node.frequency].removeNode(node)
+
+	// hit: the node frequency++
+	// so move the node from frequency to frequency+1
+	oFreq := node.frequency
+	nFreq := node.frequency + 1
 	node.frequency++
-	if _, ok = l.list[node.frequency]; !ok {
-		l.list[node.frequency] = NewLFUList()
+
+	l.list[oFreq].removeNode(node)
+
+	if _, ok = l.list[nFreq]; !ok {
+		l.list[nFreq] = NewLFUList()
 	}
-	oldList := l.list[node.frequency]
-	oldList.addToFront(node)
+	l.list[nFreq].addToHead(node)
 
 	// if l.min is empty update
-	if node.frequency-1 == l.min {
-		if minList, ok := l.list[l.min]; !ok || minList.isEmpty() {
-			l.min = node.frequency
+	// 因为前面对 old frequency 的双向链表进行了节点删除
+	// 所以当 oFreq == minFreq 的时候，minFreq 所在的双向链表有可能不存在或者为空，此时 minFreq 要更新为 nFreq
+	if oFreq == l.minFreq {
+		if minList, ok := l.list[l.minFreq]; !ok || minList.isEmpty() {
+			l.minFreq = nFreq
 		}
 	}
 	return node.val
