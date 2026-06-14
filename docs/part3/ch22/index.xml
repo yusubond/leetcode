@@ -149,7 +149,25 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * obj := Constructor(capacity);
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * param_1 := obj.Get(key);
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * obj.Put(key,value);
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>第 17 章 LRU 缓存</title><link>https://subond.com/leetcode/docs/part3/ch22/lru_cache/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch22/lru_cache/</guid><description>&lt;h1 id="第-17-章-lru缓存"&gt;第 17 章 LRU缓存&lt;a class="anchor" href="#%e7%ac%ac-17-%e7%ab%a0-lru%e7%bc%93%e5%ad%98"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>LFU 缓存</title><link>https://subond.com/leetcode/docs/part3/ch22/lfu_cache/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch22/lfu_cache/</guid><description>&lt;h1 id="lfu缓存"&gt;LFU缓存&lt;a class="anchor" href="#lfu%e7%bc%93%e5%ad%98"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;h2 id="1什么是lfu"&gt;1、什么是LFU&lt;a class="anchor" href="#1%e4%bb%80%e4%b9%88%e6%98%aflfu"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;LFU 是 Least Frequently Used 的缩写，即最近最少使用频次淘汰，也是一种常见缓存淘汰机制，核心逻辑是谁被访问次数少，先淘汰谁。&lt;/p&gt;
+&lt;p&gt;所以，对每个缓存数据都带有一个访问计数器。&lt;/p&gt;
+&lt;p&gt;根据 LFU 的策略，每访问一次都需要更新该数据的访问计数器，并把数据移到按访问计数器从大到小排序的合适位置。&lt;/p&gt;
+&lt;p&gt;举个例子，一个容量为 3 个缓存器，当前缓存器中的数据及其计数器分别是：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 A 计数器为23
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 B 计数器为12
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 C 计数器为12&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;插入数据 B，发现缓存中有 B，那么 B 的计数器加1，并移到按数据计数器排序的位置；&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 A 计数器为23
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 B 计数器为13
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 C 计数器为12&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;插入数据 D，发现缓存中没有 D，插入 D 将导致容量超过，那么计数器为12的数据 C，会被淘汰；数据 D 放在数据 B 的后面，计数器为1。&lt;/p&gt;
+&lt;p&gt;此时，缓存器中的数据及其计数器分别是：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 A 计数器为23
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 B 计数器为13
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 D 计数器为1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="2lfu的淘汰机制"&gt;2、LFU的淘汰机制&lt;a class="anchor" href="#2lfu%e7%9a%84%e6%b7%98%e6%b1%b0%e6%9c%ba%e5%88%b6"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;这里有一个 LRU 特别的地方。如果淘汰的数据有多个相同的计数器，那么选择最靠近尾部的数据，即从尾部删除。&lt;/p&gt;
+&lt;p&gt;&lt;img src="../../../../img/lfu_cache.png" alt="image" /&gt;&lt;/p&gt;
+&lt;p&gt;比如上图中数据 A、B、C的访问次数相同，都是 1，新插入的数据 F 不在缓存中，那么要淘汰 A，并把 F 放到数据 C 的前面。也就是说&lt;strong&gt;相同访问次数，按照新旧顺序排列，淘汰最旧的数据。&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>LRU 缓存</title><link>https://subond.com/leetcode/docs/part3/ch22/lru_cache/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch22/lru_cache/</guid><description>&lt;h1 id="lru缓存"&gt;LRU缓存&lt;a class="anchor" href="#lru%e7%bc%93%e5%ad%98"&gt;#&lt;/a&gt;&lt;/h1&gt;
 &lt;p&gt;LRU 是 Least Recently Used 的缩写，即最近最少使用，是数据缓冲淘汰的一种常见机制，重点在于理解&lt;strong&gt;最近&lt;/strong&gt;和&lt;strong&gt;最少&lt;/strong&gt;两个关键词。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;最近。即最近访问过的数据要留在缓冲区内。&lt;/li&gt;
@@ -181,22 +199,4 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;cache&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;map&lt;/span&gt;[&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;]&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;CacheNode&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="2初始化"&gt;2、初始化&lt;a class="anchor" href="#2%e5%88%9d%e5%a7%8b%e5%8c%96"&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;初始化的时候，创建两个伪节点 head 和 tail，便于在头部插入和尾部删除；同时收尾相连形成双向链表。&lt;/p&gt;</description></item><item><title>第18 章 LFU 缓存</title><link>https://subond.com/leetcode/docs/part3/ch22/lfu_cache/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch22/lfu_cache/</guid><description>&lt;h1 id="lfu缓存的概念和设计"&gt;LFU缓存的概念和设计&lt;a class="anchor" href="#lfu%e7%bc%93%e5%ad%98%e7%9a%84%e6%a6%82%e5%bf%b5%e5%92%8c%e8%ae%be%e8%ae%a1"&gt;#&lt;/a&gt;&lt;/h1&gt;
-&lt;h2 id="1什么是lfu"&gt;1、什么是LFU&lt;a class="anchor" href="#1%e4%bb%80%e4%b9%88%e6%98%aflfu"&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;LFU 是 Least Frequently Used 的缩写，即最近最少使用频次淘汰，也是一种常见缓存淘汰机制，核心逻辑是谁被访问次数少，先淘汰谁。&lt;/p&gt;
-&lt;p&gt;所以，对每个缓存数据都带有一个访问计数器。&lt;/p&gt;
-&lt;p&gt;根据 LFU 的策略，每访问一次都需要更新该数据的访问计数器，并把数据移到按访问计数器从大到小排序的合适位置。&lt;/p&gt;
-&lt;p&gt;举个例子，一个容量为 3 个缓存器，当前缓存器中的数据及其计数器分别是：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 A 计数器为23
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 B 计数器为12
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 C 计数器为12&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;插入数据 B，发现缓存中有 B，那么 B 的计数器加1，并移到按数据计数器排序的位置；&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 A 计数器为23
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 B 计数器为13
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 C 计数器为12&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;插入数据 D，发现缓存中没有 D，插入 D 将导致容量超过，那么计数器为12的数据 C，会被淘汰；数据 D 放在数据 B 的后面，计数器为1。&lt;/p&gt;
-&lt;p&gt;此时，缓存器中的数据及其计数器分别是：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 A 计数器为23
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 B 计数器为13
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;数据 D 计数器为1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="2lfu的淘汰机制"&gt;2、LFU的淘汰机制&lt;a class="anchor" href="#2lfu%e7%9a%84%e6%b7%98%e6%b1%b0%e6%9c%ba%e5%88%b6"&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;这里有一个 LRU 特别的地方。如果淘汰的数据有多个相同的计数器，那么选择最靠近尾部的数据，即从尾部删除。&lt;/p&gt;
-&lt;p&gt;&lt;img src="../../../../img/lfu_cache.png" alt="image" /&gt;&lt;/p&gt;
-&lt;p&gt;比如上图中数据 A、B、C的访问次数相同，都是 1，新插入的数据 F 不在缓存中，那么要淘汰 A，并把 F 放到数据 C 的前面。也就是说&lt;strong&gt;相同访问次数，按照新旧顺序排列，淘汰最旧的数据。&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;初始化的时候，创建两个伪节点 head 和 tail，便于在头部插入和尾部删除；同时收尾相连形成双向链表。&lt;/p&gt;</description></item></channel></rss>
