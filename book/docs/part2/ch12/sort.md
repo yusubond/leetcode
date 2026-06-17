@@ -89,6 +89,10 @@ func quickSort(nums []int, left, right int) {
 }
 
 func division(nums []int, left, right int) int {
+  // 选取 left 碰上部分有序会超时，因此随机选取基值
+  r := rand.Intn(right-left) + left
+  swap(nums, left, i)
+  
   base := nums[left]
   for left < right {
     for left < right && nums[right] >= base { right-- }
@@ -98,6 +102,10 @@ func division(nums []int, left, right int) int {
     nums[left] = base
   }
   return left
+}
+
+func swap(nums []int, i, j int) {
+  nums[i], nums[j] = nums[j], nums[i]
 }
 ```
 
