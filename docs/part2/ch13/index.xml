@@ -768,46 +768,4 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;backtrack&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;graph&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;], []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;{&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;})
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch13/readme/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch13/readme/</guid><description>&lt;h2 id="回溯算法"&gt;回溯算法&lt;a class="anchor" href="#%e5%9b%9e%e6%ba%af%e7%ae%97%e6%b3%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;回溯算法和二叉树的 DFS 类似，本质上是一种暴力穷举算法。&lt;/p&gt;
-&lt;p&gt;抽象地说，解决一个回溯问题，实际上就是遍历一颗决策树的过程，树的每个叶子节点存放着一个合法答案。&lt;/p&gt;
-&lt;p&gt;我们把整棵树遍历一遍，把叶子节点上的答案全部收集起来，就能得到所有的合法答案。&lt;/p&gt;
-&lt;p&gt;站在回溯决策树的一个节点上，你只需要思考三个问题：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;路径：那些已经做出的选择&lt;/li&gt;
-&lt;li&gt;选择列表：就是你当前可以做的选择&lt;/li&gt;
-&lt;li&gt;结束条件：到达决策树的底层，无法再做选择的条件&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;代码方面，回溯算法的基本框架是：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;result&lt;/span&gt; = make([][]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;backtrace&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;选择列表&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;路径&lt;/span&gt;) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;满足结束条件&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;result&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;result&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;path&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;选择&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;选择列表&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;做出选择&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;backtrace&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;路径&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;选择列表&lt;/span&gt;) &lt;span style="color:#75715e"&gt;// 或者叫 待选择列表&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="相关题目"&gt;相关题目&lt;a class="anchor" href="#%e7%9b%b8%e5%85%b3%e9%a2%98%e7%9b%ae"&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;第一类：很经典的回溯算法&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第 39 题，组合总和，【重点看，很经典】&lt;/li&gt;
-&lt;li&gt;第 40 题，组合总和，不可重复使用【重点看，很经典】&lt;/li&gt;
-&lt;li&gt;第 46 题，全排列，【重点看，很经典】&lt;/li&gt;
-&lt;li&gt;第 77 题，组合&lt;/li&gt;
-&lt;li&gt;第 78 题，子集&lt;/li&gt;
-&lt;li&gt;第 90 题，子集2，结果去重&lt;/li&gt;
-&lt;li&gt;第 216 题，组合总和3，不可重复，和为目标值【很经典】&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;第二类：重在理解 DFS&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第 17 题，电话号码的的字母组合&lt;/li&gt;
-&lt;li&gt;第 22 题，括号生产&lt;/li&gt;
-&lt;li&gt;第 79 题，单词搜索&lt;/li&gt;
-&lt;li&gt;第 93 题，复原IP地址&lt;/li&gt;
-&lt;li&gt;第 494 题，目标和，顺序递归回溯&lt;/li&gt;
-&lt;li&gt;第 784 字母大小写全排列，顺序递归回溯&lt;/li&gt;
-&lt;li&gt;第 797 题，所有可能的路径，图算法【很基本，看看】&lt;/li&gt;
-&lt;/ul&gt;</description></item></channel></rss>
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item></channel></rss>
