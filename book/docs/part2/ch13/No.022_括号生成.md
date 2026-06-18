@@ -36,27 +36,26 @@
 ```go
 // date 2023/12/26
 func generateParenthesis(n int) []string {
-    res := make([]string, 0, 16)
+	res := make([]string, 0, 16)
 
-    var backtrack func(left, right int, temp string)
-    backtrack = func(left, right int, temp string) {
-        if left == 0 && right == 0 {
-            res = append(res, temp)
-            return
-        }
-        
-        if left > 0 {
-            backtrack(left-1, right, temp+"(")
-        }
-      	// left < right 保证左括号个数大于右括号个数
-        if right > 0 && left < right {
-            backtrack(left, right-1, temp+")")
-        }
-    }
+	var dfs func(open, close int, temp string)
+	dfs = func(open, close int, temp string) {
+		if len(temp) == 2*n {
+			res = append(res, temp)
+			return
+		}
+		if open < n {
+			dfs(open+1, close, temp+"(")
+		}
+    // open > close 闭括号只能补在一个开括号后面
+		if open > close {
+			dfs(open, close+1, temp+")")
+		}
+	}
 
-    backtrack(n, n, "")
+	dfs(0, 0, "")
 
-    return res
+	return res
 }
 ```
 

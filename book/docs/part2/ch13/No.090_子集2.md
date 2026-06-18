@@ -24,57 +24,42 @@
 
 
 
-分析：
+**解题思路**
 
-这道题跟 78 题类似，两者的区别是：
+这道题是路径探索类的回溯，通过剪枝去重，控制进入回溯的时机。
 
-78 题，给定的数组中元素不重复，返回所有的子集
-
-这道题，给定的数组中元素有重复，返回所有子集，要求子集去重。
-
-核心思路还是回溯，增加两个辅助条件：
-
-1. 回溯前，对数组进行排序，方便回溯的时候跳过重复元素
-2. 回溯过程中，剪枝优化。剪枝的关键是初次遍历不剪枝，下一次的时候，如果元素跟前一个元素相同，直接跳过回溯。
-
-
+剪枝的关键是初次遍历不剪枝，下一次的时候，如果元素跟前一个元素相同，直接跳过回溯。
 
 ```go
 // date 2023/12/26
 func subsetsWithDup(nums []int) [][]int {
-    res := make([][]int, 0, 16)
+	res := make([][]int, 0, 16)
+	n := len(nums)
 
-    var backtrack func(start int, temp []int)
-    backtrack = func(start int, temp []int) {
-        one := make([]int, len(temp))
-        copy(one, temp)
-        res = append(res, one)
+	var backtrack func(int, []int)
+	backtrack = func(start int, path []int) {
+		one := make([]int, len(path))
+		copy(one, path)
+		res = append(res, one)
 
-        for i := start; i < len(nums); i++ {
-            // 去重的关键，本次不去重，下一次去重
-            for i < len(nums) && i > start && nums[i] == nums[i-1] {
-                i++
-                continue
-            }
-            // 注意判断，去重后是否越界
-            if i >= len(nums) {
-                break
-            }
+		for i := start; i < n; i++ {
+			if i > start && nums[i] == nums[i-1] {
+				continue
+			}
 
+			path = append(path, nums[i])
+			backtrack(i+1, path)
+			path = path[:len(path)-1]
+		}
+	}
 
-            temp = append(temp, nums[i])
-            backtrack(i+1, temp)
-            temp = temp[:len(temp)-1]
-        }
-    }
+	sort.Slice(nums, func(i, j int) bool {
+		return nums[i] < nums[j]
+	})
 
-    sort.Slice(nums, func(i, j int) bool {
-        return nums[i] < nums[j]
-    })
+	backtrack(0, []int{})
 
-    backtrack(0, []int{})
-
-    return res
+	return res
 }
 ```
 
