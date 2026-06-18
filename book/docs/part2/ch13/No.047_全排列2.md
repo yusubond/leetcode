@@ -23,49 +23,48 @@
 
 
 
-
-
 **解题思路**
 
-回溯算法，去重。
+本题也是回溯算法，通过剪枝去重即可，剪枝逻辑是原数组排序后，相同元素的全排列取第一个即可。
 
 ```go
 // date 2023/11/07
 func permuteUnique(nums []int) [][]int {
-    res := make([][]int, 0, 1024)
-    vis := make(map[int]bool)
-    n := len(nums)
+	res := make([][]int, 0, 16)
 
-    temp := make([]int, 0, 16)
+	var backtrack func([]int, []int)
+	// uv unVisited
+	backtrack = func(uv []int, path []int) {
+		if len(uv) == 0 {
+			one := make([]int, len(path))
+			copy(one, path)
+			res = append(res, one)
+			return
+		}
 
-    var backtrack func(idx int)
-    backtrack = func(idx int) {
-        if idx == n {
-            res = append(res, append([]int{}, temp...))
-            return
-        }
-        for i, v := range nums {
-            // vis[i] 已经填充过的，不再填充
-            // i > 0 && nums[i-1] == && !vis[i-1]
-            // 相同元素，及时没填充过，也不需要填充
-            if i > 0 && nums[i-1] == v && !vis[i-1] || vis[i] {
-                continue
-            }
-            temp = append(temp, v)
-            vis[i] = true
-            backtrack(idx+1)
-            vis[i] = false
-            temp = temp[:len(temp)-1]
-        }
-    }
+		for i, v := range uv {
+			// 剪枝去重: 当 当前元素与其前驱元素相同时，取一次结果即可
+			if i > 0 && uv[i] == uv[i-1] {
+				continue
+			}
+			// pick up v
+			path = append(path, v)
+			unUsed := make([]int, 0, len(uv))
+			unUsed = append(unUsed, uv[:i]...)
+			unUsed = append(unUsed, uv[i+1:]...)
+			backtrack(unUsed, path)
 
-    sort.Slice(nums, func(i,j int) bool {
-        return nums[i] < nums[j]
-    })
+			path = path[:len(path)-1]
+		}
+	}
 
-    backtrack(0)
+	sort.Slice(nums, func(i, j int) bool {
+		return nums[i] < nums[j]
+	})
 
-    return res
+	backtrack(nums, []int{})
+
+	return res
 }
 ```
 
