@@ -13,70 +13,85 @@
 
 分析：
 
-直接递推。遇到障碍物，直接复用上一个值，或者变成零。
+经典二维动态规划，状态转移：
 
-注意，初始化的时候，遇到障碍物也要变成零。
+`dp[i][j] = 0`，若 `grid[i][j] == 1`（障碍物）；
+`dp[i][j] = dp[i-1][j] + dp[i][j-1]`，否则。
+
+关键在初始化：第一行、第一列一旦遇到障碍物，其后所有格子都不可达，必须 `break`，而不是逐个判断为 0（否则障碍物之后的格子会被错误地设成 1）。
 
 
 ```go
-// date 2023/11/11
+// date 2026/06/18
 func uniquePathsWithObstacles(obstacleGrid [][]int) int {
     m := len(obstacleGrid)
-    if m == 0 {
-        return 0
-    }
     n := len(obstacleGrid[0])
     dp := make([][]int, m)
-    for i := 0; i < m; i++ {
+    for i := range dp {
         dp[i] = make([]int, n)
-        if i == 0 {
-            for j := 0; j < n; j++ {
-                if obstacleGrid[i][j] == 1 {
-                    dp[i][j] = 0
-                } else {
-                    dp[i][j] = 1
-                }
-            }
-        }
-    }
-    for i := 0; i < m; i++ {
-        if obstacleGrid[i][0] == 1 {
-            dp[i][0] = 0
-        } else {
-            dp[i][0] = 1
-        }
     }
 
+    // 初始化第一行：遇到障碍物就 break，后面全为 0
+    for j := 0; j < n; j++ {
+        if obstacleGrid[0][j] == 1 {
+            break
+        }
+        dp[0][j] = 1
+    }
+    // 初始化第一列：同理
     for i := 0; i < m; i++ {
-        for j := 0; j < n; j++ {
+        if obstacleGrid[i][0] == 1 {
+            break
+        }
+        dp[i][0] = 1
+    }
+
+    for i := 1; i < m; i++ {
+        for j := 1; j < n; j++ {
             if obstacleGrid[i][j] == 1 {
-                continue
-            }
-            if i > 0 && j > 0 {
-                if obstacleGrid[i-1][j] == 1 {
-                    dp[i][j] = dp[i][j-1]
-                } else if obstacleGrid[i][j-1] == 1 {
-                    dp[i][j] = dp[i-1][j]
-                } else if obstacleGrid[i-1][j] == 1 && obstacleGrid[i][j-1] == 1 {
-                    dp[i][j] = 0
-                } else {
-                    dp[i][j] = dp[i-1][j] + dp[i][j-1]
-                }
-            } else if i > 0 {
-                if obstacleGrid[i-1][j] == 1 {
-                    dp[i][j] = 0
-                } else {
-                    dp[i][j] = dp[i-1][j]
-                }
-            } else if j > 0 {
-                if obstacleGrid[i][j-1] == 1 {
-                    dp[i][j] = 0
-                } else {
-                    dp[i][j] = dp[i][j-1]
-                }
+                dp[i][j] = 0
+            } else {
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
             }
         }
     }
     return dp[m-1][n-1]
 }
 ```
+
+
+空间优化（滚动数组压缩到一维，空间 O(n)）：
+
+`dp[i][j]` 只依赖「上一行同列」和「本行前一列」，故可用一维数组滚动。设 `dp[0] = 1` 作为哨兵，简化第一行的 `dp[j] += dp[j-1]`；遇到障碍物直接置 0。
+
+```go
+// date 2026/06/18
+func uniquePathsWithObstacles1D(obstacleGrid [][]int) int {
+    m, n := len(obstacleGrid), len(obstacleGrid[0])
+    dp := make([]int, n)
+
+    dp[0] = 1 // 哨兵：方便第一行 dp[j] += dp[j-1]
+    for i := 0; i < m; i++ {
+        for j := 0; j < n; j++ {
+            if obstacleGrid[i][j] == 1 {
+                dp[j] = 0
+            } else if j > 0 {
+                // dp[j](更新后) = dp[j](更新前) + dp[j-1]  <- 滚动的来源
+                // dp[j-1] <- 左方
+                // dp[j](更新前) <- 上方
+                dp[j] += dp[j-1]
+            }
+            // j == 0 时，dp[j] 继承上一行的值（遇障碍已被置 0）
+        }
+    }
+    return dp[n-1]
+}
+```
+
+关于一维 `dp[j]` 的两点关键：
+
+- **小结**：`dp[j]` 更新**前**是「上方」`dp[i-1][j]`，更新**后**变成「当前」`dp[i][j]`；而 `dp[j-1]` 因从左到右更新已是「左方」`dp[i][j-1]`。故一句 `dp[j] += dp[j-1]` 即 `dp[i][j] = dp[i-1][j] + dp[i][j-1]`。哨兵 `dp[0]=1` 是起点 `dp[0][0]=1` 的种子，并顺着第一列向下流。（方向绝不能反过来——从右到左会破坏这个对齐。）
+
+- **`j == 0` 的特殊性**：第一列只能「从上方」来，没有「左方」，递推退化为 `dp[i][0] = dp[i-1][0]`。代码里 `j==0` 时两个分支都不进——非障碍就原封不动继承上一行的值，正好实现该递推；障碍则置 0。
+
+复杂度：时间 O(m·n)，空间 O(n)。

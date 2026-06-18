@@ -20,15 +20,17 @@
 ```go
 // date 2023/11/07
 func uniquePaths(m int, n int) int {
+  	// m row, n col
+  	// dp[i][j] 走到坐标i,j的总解法
     dp := make([][]int, m)
     for i := 0; i < m; i++ {
         dp[i] = make([]int, n)
     }
-	// 第 0 行，只能一直向右走，所以均为1
+	// 0 col, just move down
     for i := 0; i < m; i++ {
         dp[i][0] = 1
     }
-	// 第 0 列，只能一直向下走，所以均为1
+	// 0 row, just move right
     for j := 0; j < n; j++ {
         dp[0][j] = 1
     }

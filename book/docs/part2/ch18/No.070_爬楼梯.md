@@ -31,7 +31,7 @@ func climbStairs(n int) int {
 
 
 
-## 动归的泛化写法
+## 动规的泛化写法
 
 ```go
 // 递推公式 dp[i] 表示第 i 个台阶有多少种走法
