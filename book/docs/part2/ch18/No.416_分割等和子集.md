@@ -24,42 +24,115 @@
 
 
 
+分析：
 
+**一、把问题翻译成「子集和」**
 
-**解题思路**
+「能否分成和相等的两份」⟺ **能否从数组里选出若干元素，使其和等于 `totalSum / 2`**。
 
-```sh
-// true 表示能够从数组中选取若干个元素，使其和为 target
-dp[target] = true or false
+- 总和 `totalSum` 为**奇数** → 直接返回 false（两个相等的整数之和必为偶数）；
+- 否则令 `target = totalSum / 2`，问题归约为：**存在子集和恰好等于 target 吗？**
+
+这正是最经典的 0-1 背包可行性问题。
+
+**二、DP 思想：对每个元素做「选 / 不选」**
+
+定义状态：`dp[i][j]` = 只考虑前 i 个元素时，能否凑出和恰好为 j。对第 i 个元素 `v = nums[i-1]`，只有两种选择：
+
+| 选择 | 含义 | 凑出 j 的条件 |
+|------|------|--------------|
+| **不选** v | 凑 j 完全靠前 i−1 个元素 | `dp[i-1][j]` |
+| **选** v | 前 i−1 个得先凑出 `j−v`，再加 v | `j >= v` 且 `dp[i-1][j-v]` |
+
+两者满足其一即可，于是得到状态转移方程：
+
 ```
+dp[i][j] = dp[i-1][j] || (j >= v && dp[i-1][j-v])
+```
+
+base case：
+
+- `dp[i][0] = true`：任何前缀都能凑出和 0（空集）；
+- `dp[0][j] = false`（j>0）：一个元素都不取，凑不出正数。
+
+**三、手动填表（nums=[1,5,11,5], target=11）**
+
+每引入一个元素，就把它加到「上一行所有 ✅ 的列」上，得到新的可凑出的和：
+
+| 前 i 个 \ 和 j | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0（空）| ✅ |  |  |  |  |  |  |  |  |  |  |  |
+| 1（+1）| ✅ | ✅ |  |  |  |  |  |  |  |  |  |  |
+| 2（+5）| ✅ | ✅ |  |  |  | ✅ | ✅ |  |  |  |  |  |
+| 3（+11）| ✅ | ✅ |  |  |  | ✅ | ✅ |  |  |  |  | ✅ |
+| 4（+5）| ✅ | ✅ |  |  |  | ✅ | ✅ |  |  |  | ✅ | ✅ |
+
+第 3 行 `dp[3][11]` 已经是 ✅（对应子集 `{11}`），即可返回 true。
+
+> DP 在做的事其实是：穷举所有「选/不选」组合，但用一张二维表把重复子问题记下来，避免了暴力 DFS 的 `2ⁿ` 指数爆炸。
+
+**四、方法一：一维 DP（最优）**
+
+由于 `dp[i][j]` 只依赖上一行 `dp[i-1][*]`，可以用一维数组原地滚动更新：
+
+```
+dp[j] = dp[j] || dp[j-v]
+```
+
+内层循环必须**逆序**（j 从 target 递减到 v）。否则同一个 v 会在本轮被重复计入（退化成「完全背包」）；逆序才能保证读到的 `dp[j-v]` 是「上一层」的旧值。
 
 ```go
 // date 2024/02/29
 func canPartition(nums []int) bool {
-    total, maxV := getSumAndMax(nums)
-    if total%2 == 1 {
+    totalSum := 0
+    for _, num := range nums {
+        totalSum += num
+    }
+    if totalSum%2 == 1 { // 奇数和不可能平分
         return false
     }
-    target := total >> 1
-    if maxV > target {
-        return false
-    }
-    if maxV == target {
-        return true
-    }
-    n := len(nums)
-    // dp[i][j]
-    // 0 <= i <= n
-    dp := make([][]bool, n+1)
-    for i := 0; i <= n; i++ {
-        dp[i] = make([]bool, target+1)
-    }
-    dp[0][0] = true
+    target := totalSum / 2
 
-    for i := 1; i < n+1; i++ {
-        // cur elem v
+    // dp[j] 表示能否凑出和 j
+    dp := make([]bool, target+1)
+    dp[0] = true // 空集和为 0
+    for _, num := range nums {
+        for j := target; j >= num; j-- { // 逆序：每个数只用一次
+            dp[j] = dp[j] || dp[j-num]
+        }
+    }
+    return dp[target]
+}
+```
+
+- 时间复杂度 `O(n·target)`，空间复杂度 `O(target)`。
+
+**五、方法二：二维 DP（便于理解转移）**
+
+如果想直接对着转移方程 `dp[i][j] = dp[i-1][j] || dp[i-1][j-v]` 写代码，二维表最直观：
+
+```go
+// date 2024/02/29
+func canPartition2D(nums []int) bool {
+    totalSum := 0
+    for _, num := range nums {
+        totalSum += num
+    }
+    if totalSum%2 == 1 {
+        return false
+    }
+    target := totalSum / 2
+    n := len(nums)
+
+    dp := make([][]bool, n+1)
+    for i := range dp {
+        dp[i] = make([]bool, target+1)
+        dp[i][0] = true // 任何前缀都能凑出和 0
+    }
+
+    for i := 1; i <= n; i++ {
         v := nums[i-1]
-        for j := 1; j < target+1; j++ {
+        for j := 1; j <= target; j++ {
             if j < v {
                 dp[i][j] = dp[i-1][j]
             } else {
@@ -67,23 +140,20 @@ func canPartition(nums []int) bool {
             }
         }
     }
-
     return dp[n][target]
-}
-
-func getSumAndMax(nums []int) (int, int) {
-    if len(nums) == 1 {
-        return nums[0], nums[0]
-    }
-    res := 0
-    max := nums[0]
-    for _, v := range nums {
-        res += v
-        if v > max {
-            max = v
-        }
-    }
-    return res, max
 }
 ```
 
+> 原实现里的 `maxV > target → false` 剪枝可以保留（单个元素超过 target 必无解），但不是必须的——DP 本身也会算出 false。
+
+**六、和 494 目标和是同一套模板**
+
+416、494、经典背包都是 0-1 背包，骨架完全相同，**只是聚合方式不同**：
+
+| 问题 | 转移 | 聚合 | base |
+|------|------|------|------|
+| 416 能否凑出 | `dp[j] = dp[j] \|\| dp[j-v]` | 可行性（或） | `dp[0] = true` |
+| 494 凑出方案数 | `dp[j] += dp[j-v]` | 方案数（加） | `dp[0] = 1` |
+| 背包最大价值 | `dp[j] = max(dp[j], dp[j-v]+val)` | 最值（max） | `dp[0] = 0` |
+
+都是**逆序遍历**、都是 `dp[j] ⊕ dp[j-v]`、都是 `O(n·target)`。记住这一个模板，所有「从一堆数里选若干个凑目标」的问题都能套。
