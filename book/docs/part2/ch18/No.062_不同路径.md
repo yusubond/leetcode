@@ -43,3 +43,29 @@ func uniquePaths(m int, n int) int {
     return dp[m-1][n-1]
 }
 ```
+
+
+空间优化（滚动数组压缩到一维，空间 O(n)）：
+
+`dp[i][j] = dp[i-1][j] + dp[i][j-1]` 只依赖「上一行同列」与「本行前一列」，可用一维数组滚动：`dp[j]` 更新前是「上方」`dp[i-1][j]`，`dp[j-1]` 更新后已是「左方」`dp[i][j-1]`，于是 `dp[j] += dp[j-1]` 一句即可（与 No.063 同一套技巧，只是这里没有障碍物）。
+
+```go
+// date 2026/06/20
+func uniquePaths1D(m int, n int) int {
+    dp := make([]int, n)
+    for j := 0; j < n; j++ { // 第一行：只有一种走法（一直向右）
+        dp[j] = 1
+    }
+    for i := 1; i < m; i++ {
+        for j := 1; j < n; j++ {
+            dp[j] += dp[j-1]
+            //   ↑      ↑
+            // 上方 dp[i-1][j]（更新前）+ 左方 dp[i][j-1]（已更新）
+            // j == 0 时 dp[0] 不变 = 1（第一列只有一种走法：一直向下）
+        }
+    }
+    return dp[n-1]
+}
+```
+
+复杂度：时间 O(m·n)，空间 O(n)。
