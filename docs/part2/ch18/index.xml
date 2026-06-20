@@ -437,9 +437,9 @@ mincost[0][0] = cost[0][0]&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="算法实现"&gt;�
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你两个单词 word1 和 word2， 请返回将 word1 转换成 word2 所使用的最少操作数 。&lt;/p&gt;
 &lt;p&gt;你可以对一个单词进行如下三种操作：&lt;/p&gt;
-&lt;p&gt;插入一个字符
-删除一个字符
-替换一个字符&lt;/p&gt;
+&lt;p&gt;插入一个字符&lt;/p&gt;
+&lt;p&gt;删除一个字符&lt;/p&gt;
+&lt;p&gt;替换一个字符&lt;/p&gt;
 &lt;p&gt;分析：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/11/07&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;minDistance&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;word1&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;word2&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
