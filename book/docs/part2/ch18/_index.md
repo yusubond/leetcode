@@ -9,7 +9,6 @@ bookCollapseSection: true
 
 - [14.1 动态规划](./readme.md)
 - [14.2 子集和问题](./01_subset_sum.md)
-- [14.3 最长递增子序列](./longestincreasingsub.md)
 - [14.4 求组合数](./求组合数的题型和解法.md)
 
 
@@ -92,3 +91,10 @@ func minDistance1D(word1 string, word2 string) int {
 - 72 题：编辑距离
 - 1143 题：最长公共子序列
 
+
+
+**最优子结构**
+
+- 322 题：零钱兑换【硬币无限用，问是否可凑出一个目标值】
+- 518 题：零钱兑换 2【硬币无限用，给定目标值，问总组合数】
+- 
