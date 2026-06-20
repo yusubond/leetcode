@@ -6989,9 +6989,9 @@ word2： p q
 &lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = [-10,9,20,null,null,15,7]
 输出：42
 解释：最优路径是 15 -&amp;gt; 20 -&amp;gt; 7 ，路径和为 15 + 20 + 7 = 42&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;解题思路&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这道题可用 BFS 解。&lt;/p&gt;
+&lt;p&gt;这道题可用 DFS 解。&lt;/p&gt;
 &lt;p&gt;所谓路径，就是树中节点可以连接起来，且有起点和终点。所以对于某个节点而言，最大路径和就是其节点值加上左右子树的最大路径和。&lt;/p&gt;
-&lt;p&gt;需要注意的是，BFS 返回的时候，选取左右子树其中最大的即可，因为要有起点或者终点。&lt;/p&gt;
+&lt;p&gt;需要注意的是，DFS 返回的时候，选取左右子树其中最大的即可，因为要有起点或者终点。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2024/01/16&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for a binary tree node.
@@ -7002,33 +7002,27 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * }
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;maxPathSum&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;math&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;MinInt32&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;math&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;MinInt64&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;bfs&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;bfs&lt;/span&gt; = &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 	&lt;span style="color:#75715e"&gt;// 如果左右子树的总和为负数，可以不加入路径&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; max(&lt;span style="color:#a6e22e"&gt;bfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;), &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; max(&lt;span style="color:#a6e22e"&gt;bfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;), &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;sum&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; = max(&lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;sum&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#75715e"&gt;// dfs 求包含 root 节点的单边路径最大值&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt; = &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;			&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; max(&lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;), &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; max(&lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;), &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; max(&lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#75715e"&gt;// left &amp;lt;-&amp;gt; root &amp;lt;-&amp;gt; right: is one full path, so update ans&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; = max(&lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;right&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;bfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#75715e"&gt;// return must be single path, left or right&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; max(&lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; max(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;y&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &amp;gt; &lt;span style="color:#a6e22e"&gt;y&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;y&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.129_%E6%B1%82%E6%A0%B9%E8%8A%82%E7%82%B9%E5%88%B0%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E6%95%B0%E5%AD%97%E4%B9%8B%E5%92%8C/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.129_%E6%B1%82%E6%A0%B9%E8%8A%82%E7%82%B9%E5%88%B0%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E6%95%B0%E5%AD%97%E4%B9%8B%E5%92%8C/</guid><description>&lt;h2 id="129-求从根节点到叶子节点数字之和-中等"&gt;129 求从根节点到叶子节点数字之和-中等&lt;a class="anchor" href="#129-%e6%b1%82%e4%bb%8e%e6%a0%b9%e8%8a%82%e7%82%b9%e5%88%b0%e5%8f%b6%e5%ad%90%e8%8a%82%e7%82%b9%e6%95%b0%e5%ad%97%e4%b9%8b%e5%92%8c-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;给你一个二叉树的根节点 root ，树中每个节点都存放有一个 0 到 9 之间的数字。
 每条从根节点到叶节点的路径都代表一个数字：&lt;/p&gt;
@@ -13572,7 +13566,27 @@ mincost[0][0] = cost[0][0]&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="算法实现"&gt;�
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18/no.139_%E5%8D%95%E8%AF%8D%E6%8B%86%E5%88%86/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18/no.139_%E5%8D%95%E8%AF%8D%E6%8B%86%E5%88%86/</guid><description>&lt;h2 id="139-单次拆分-中等"&gt;139 单次拆分-中等&lt;a class="anchor" href="#139-%e5%8d%95%e6%ac%a1%e6%8b%86%e5%88%86-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18/no.123_%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18/no.123_%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA3/</guid><description>&lt;h2 id="123-买卖股票的最佳时机3"&gt;123 买卖股票的最佳时机3&lt;a class="anchor" href="#123-%e4%b9%b0%e5%8d%96%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e4%bd%b3%e6%97%b6%e6%9c%ba3"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定一个数组 prices，它的第 i 个元素是一支给定股票在第 i 天的价格。&lt;/p&gt;
+&lt;p&gt;设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。&lt;/p&gt;
+&lt;p&gt;注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。&lt;/p&gt;
+&lt;p&gt;分析：&lt;/p&gt;
+&lt;p&gt;最多 2 笔交易，每笔都是&amp;quot;先买后卖&amp;quot;。把交易进度拆成 4 个状态，用 4 个变量记录到达每个状态时的最大累计利润，一天一天往后推：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;buy1：第 1 次买入后的最大利润（持仓，利润为负的买入价）&lt;/li&gt;
+&lt;li&gt;sell1：第 1 次卖出后的最大利润（第 1 笔完成）&lt;/li&gt;
+&lt;li&gt;buy2：第 2 次买入后的最大利润（含第 1 笔收益）&lt;/li&gt;
+&lt;li&gt;sell2：第 2 次卖出后的最大利润（第 2 笔完成）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对每一天价格 p，每个状态都取&amp;quot;维持原状 vs 今天操作&amp;quot;的较大值：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;buy1 = max(buy1, -p)&lt;/code&gt;：第 1 次买，选最低买入价&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sell1 = max(sell1, buy1 + p)&lt;/code&gt;：第 1 次卖&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;buy2 = max(buy2, sell1 - p)&lt;/code&gt;：第 2 次买，带着第 1 笔收益去买&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sell2 = max(sell2, buy2 + p)&lt;/code&gt;：第 2 次卖，即最终答案&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;初始化用第 0 天：&lt;code&gt;buy1 = buy2 = -prices[0]&lt;/code&gt;，&lt;code&gt;sell1 = sell2 = 0&lt;/code&gt;。答案是 &lt;code&gt;sell2&lt;/code&gt;（它也覆盖了只做 1 笔或 0 笔的情况）。同一天先买后卖净利润为 0，所以顺序更新是安全的。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18/no.139_%E5%8D%95%E8%AF%8D%E6%8B%86%E5%88%86/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18/no.139_%E5%8D%95%E8%AF%8D%E6%8B%86%E5%88%86/</guid><description>&lt;h2 id="139-单次拆分-中等"&gt;139 单次拆分-中等&lt;a class="anchor" href="#139-%e5%8d%95%e6%ac%a1%e6%8b%86%e5%88%86-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个字符串 s 和一个字符串列表 wordDict 作为字典。请你判断是否可以利用字典中出现的单词拼接出 s 。&lt;/p&gt;
 &lt;p&gt;注意：不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。&lt;/p&gt;
@@ -13770,38 +13784,7 @@ dp[i] = max(dp[i], dp[j]+1)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;算法 1：标准�
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;算法2：贪心+二分查找&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18/no.322_coin_change/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18/no.322_coin_change/</guid><description>&lt;h2 id="322-coin-change-零钱兑换"&gt;322 Coin Change [零钱兑换]&lt;a class="anchor" href="#322-coin-change-%e9%9b%b6%e9%92%b1%e5%85%91%e6%8d%a2"&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;1.&lt;a href="#%e9%97%ae%e9%a2%98%e5%ae%9a%e4%b9%89"&gt;问题定义&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;2.&lt;a href="#%e6%9c%80%e4%bc%98%e5%ad%90%e7%bb%93%e6%9e%84%e8%a7%a3%e6%b3%95"&gt;最优子结构解法&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;3.&lt;a href="#%e9%87%8d%e5%8f%a0%e5%ad%90%e9%97%ae%e9%a2%98%e8%a7%a3%e6%b3%95"&gt;重叠子问题解法&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="问题定义"&gt;问题定义&lt;a class="anchor" href="#%e9%97%ae%e9%a2%98%e5%ae%9a%e4%b9%89"&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;给定一个值M，和一组硬币面值的集合，问将硬币组合值为M的情况一共有几种，不考虑硬币的顺序问题。&lt;/p&gt;
-&lt;p&gt;例如，值为4，硬币面值为{1,2,3}。那么，一共有四种情况。{1,1,1,1}、{1,1,2}、{1,3}和{2,2}。&lt;/p&gt;
-&lt;p&gt;变相问题：&lt;/p&gt;
-&lt;p&gt;给定一个int数组A，数组中元素互不重复，给定一个数x，求所有求和能得到x的数字组合，组合中的元素来自A，可重复使用&lt;/p&gt;
-&lt;h3 id="最优子结构解法"&gt;最优子结构解法&lt;a class="anchor" href="#%e6%9c%80%e4%bc%98%e5%ad%90%e7%bb%93%e6%9e%84%e8%a7%a3%e6%b3%95"&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;L(set, n, sum)表示（值为sum，硬币面值集合为set, n为硬币面值的个数）硬币的组合情况数量
-L(set, n, sum) = L(set, n - 1, sum) // 不包含面值为set[n]的硬币
- + L(set, n, sum - set[n - 1]); //至少包含一个面值为set[n-1]的硬币
-
-边界条件，即递归结束条件
-if(sum == 0)
- return 1
-if(sum &amp;lt; 0)
- return 0;
-if(n &amp;lt;= 0 &amp;amp;&amp;amp; sum &amp;gt;= 1)
- return 0;&lt;/code&gt;&lt;/pre&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-cpp" data-lang="cpp"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 简易版
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;CoinChange&lt;/span&gt;(&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; coin[], &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; n, &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; sum) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt;(sum &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt;(sum &lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt;(n &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sum &lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; CoinChange(coin, n &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;, sum) &lt;span style="color:#f92672"&gt;+&lt;/span&gt; CoinChange(coin, n, sum &lt;span style="color:#f92672"&gt;-&lt;/span&gt; coin[n &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]);
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="http://on64c9tla.bkt.clouddn.com/Algorithm/coin_change.png" alt="硬币兑换" /&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18/no.322_%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18/no.322_%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/</guid><description>&lt;h2 id="322-零钱兑换-中等"&gt;322 零钱兑换-中等&lt;a class="anchor" href="#322-%e9%9b%b6%e9%92%b1%e5%85%91%e6%8d%a2-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;算法2：贪心+二分查找&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18/no.322_%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18/no.322_%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/</guid><description>&lt;h2 id="322-零钱兑换-中等"&gt;322 零钱兑换-中等&lt;a class="anchor" href="#322-%e9%9b%b6%e9%92%b1%e5%85%91%e6%8d%a2-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。&lt;/p&gt;
 &lt;p&gt;计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。&lt;/p&gt;
