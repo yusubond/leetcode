@@ -7,8 +7,11 @@
 你可以对一个单词进行如下三种操作：
 
 插入一个字符
+
 删除一个字符
+
 替换一个字符
+
 
 
 分析：
@@ -57,3 +60,43 @@ func min(x, y int) int {
 ```
 
 ![image](./assets/img72.png)
+
+
+空间优化（滚动数组压缩到一维，空间 O(n)）：
+
+`dp[i][j]` 依赖三个邻居：上方 `dp[i-1][j]`、左方 `dp[i][j-1]`、**左上角** `dp[i-1][j-1]`。前两个用一维数组滚动时很好处理（和 No.064 同理：`dp[j]` 更新前是上方值，`dp[j-1]` 更新后是左方值）。但**左上角 `dp[i-1][j-1]` 会在 `dp[j-1]` 被覆盖后丢失**，必须额外用一个变量 `prev` 在覆盖前把它存下来——这是编辑距离滚动数组与最小路径和的关键区别。
+
+```go
+// date 2026/06/20
+func minDistance1D(word1 string, word2 string) int {
+    m, n := len(word1), len(word2)
+    dp := make([]int, n+1)
+    for j := 0; j <= n; j++ { // 第 0 行：word1 为空，需插入 j 个字符
+        dp[j] = j
+    }
+
+    for i := 1; i <= m; i++ {
+        prev := dp[0] // dp[i-1][j-1]，初始为上一行第 0 列
+        dp[0] = i     // 第 0 列：word2 为空，需删光 word1 前 i 个字符
+        for j := 1; j <= n; j++ {
+            temp := dp[j] // 更新前的 dp[j] = 上一行 dp[i-1][j]（上方值），先存下来
+            if word1[i-1] == word2[j-1] {
+                dp[j] = prev // 相等，直接继承左上角，无需操作
+            } else {
+                dp[j] = min(dp[j], dp[j-1], prev) + 1
+                //         ↑        ↑          ↑
+                //       上方      左方      左上方
+                //  dp[j]    本行未覆盖 → 上一行 dp[i-1][j]
+                //  dp[j-1]  本行已覆盖 → 本行   dp[i][j-1]
+                //  prev     上一行左上 dp[i-1][j-1]
+            }
+            prev = temp // 本轮旧 dp[j] 成为下一列 (j+1) 的左上角
+        }
+    }
+    return dp[n]
+}
+```
+
+> `min` 用 Go 1.21+ 内置函数即可（支持多参数）；旧版本需自行定义。
+
+复杂度：时间 O(m·n)，空间 O(n)。
