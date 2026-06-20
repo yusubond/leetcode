@@ -34,11 +34,11 @@
 
 **解题思路**
 
-这道题可用 BFS 解。
+这道题可用 DFS 解。
 
 所谓路径，就是树中节点可以连接起来，且有起点和终点。所以对于某个节点而言，最大路径和就是其节点值加上左右子树的最大路径和。
 
-需要注意的是，BFS 返回的时候，选取左右子树其中最大的即可，因为要有起点或者终点。
+需要注意的是，DFS 返回的时候，选取左右子树其中最大的即可，因为要有起点或者终点。
 
 ```go
 // date 2024/01/16
@@ -51,33 +51,27 @@
  * }
  */
 func maxPathSum(root *TreeNode) int {
-    ans := math.MinInt32
+	ans := math.MinInt64
 
-    var bfs func(root *TreeNode) int
-    bfs = func(root *TreeNode) int {
-        if root == nil {
-            return 0
-        }
-      	// 如果左右子树的总和为负数，可以不加入路径
-        left := max(bfs(root.Left), 0)
-        right := max(bfs(root.Right), 0)
-        
-        sum := root.Val + left + right
-        ans = max(ans, sum)
+	// dfs 求包含 root 节点的单边路径最大值
+	var dfs func(root *TreeNode) int
+	dfs = func(root *TreeNode) int {
+		if root == nil {
+			return 0
+		}
+		left := max(dfs(root.Left), 0)
+		right := max(dfs(root.Right), 0)
 
-        return root.Val + max(left, right)
-    }
+		// left <-> root <-> right: is one full path, so update ans
+		ans = max(ans, root.Val+left+right)
 
-    bfs(root)
+		// return must be single path, left or right
+		return root.Val + max(left, right)
+	}
 
-    return ans
-}
+	dfs(root)
 
-func max(x, y int) int {
-    if x > y {
-        return x
-    }
-    return y
+	return ans
 }
 ```
 
