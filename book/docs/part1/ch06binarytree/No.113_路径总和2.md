@@ -10,65 +10,11 @@
 
 分析：
 
-算法1:
+深度优先搜索+回溯算法，`path` 记录已经遍历过的节点值。
 
-这里采用深度优先搜索，当遍历到叶子节点且节点的值等于剩下的值，那么就直接追加结果，并返回。如果不是，递归遍历左右子树。
-
-但是这里的写法相对麻烦一些，因为是自底向上的递推；其实可以采用自顶向下的递推，利用path记录已经遍历过的节点。详见算法2。
-
-```go
-// date 2022/10/24
-func pathSum(root *TreeNode, targetSum int) [][]int {
-    var dfs func(root *TreeNode, v int) ([][]int, bool)
-    dfs = func(root *TreeNode, v int) ([][]int, bool) {
-        if root == nil {
-            return nil, false
-        }
-        res := make([][]int, 0, 16)
-        if root.Left == nil && root.Right == nil && root.Val == v {
-            t := []int{root.Val}
-            res = append(res, t)
-            return res, true
-        }
-        v -= root.Val
-        l, ok1 := dfs(root.Left, v)
-        r, ok2 := dfs(root.Right, v)
-        if ok1 {
-            for i := 0; i < len(l); i++ {
-                t := make([]int, 0, 16)
-                t = append(t, root.Val)
-                t = append(t, l[i]...)
-                res = append(res, t)
-            }
-        }
-        if ok2 {
-            for i := 0; i < len(r); i++ {
-                t := make([]int, 0, 16)
-                t = append(t, root.Val)
-                t = append(t, r[i]...)
-                res = append(res, t)
-            }
-        }
-        if ok1 || ok2 {
-            return res, true
-        }
-        return nil, false
-    }
-
-    asn, _ := dfs(root, targetSum)
-    return asn
-}
-```
-
-
-
-算法2：【推荐该算法】
-
-同样采用深度优先搜索，`path` 记录已经遍历过的节点值。
-
-1. 当遍历到节点时，直接追加值到path中
-2. 如果遇到叶子节点且满足条件，直接将path追加到最终结果，
-3. 因为每次遍历，整个路径会变化，因为需要返回前将1中增加的值去掉。
+1. 当遍历节点时，直接追加值到 path 中
+2. 如果遇到叶子节点且满足条件，直接将 path 追加到最终结果，注意深拷贝。
+3. 因为每次遍历，整个路径会变化，撤销当前选择即可。
 
 ```go
 // date 2022/10/24
