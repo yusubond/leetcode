@@ -58,44 +58,45 @@
 ```go
 // date 2022/09/14
 func threeSum(nums []int) [][]int {
-    ans := make([][]int, 0, 16)
-    sort.Slice(nums, func(i, j int) bool {
-        return nums[i] < nums[j]
-    })
+	ans := make([][]int, 0, 16)
 
-    n := len(nums)
-    for i := 0; i < n; i++ {
-        // case 0
-        if nums[i] > 0 {
-            break
-        }
-        // case 1
-        if i > 0 && nums[i] == nums[i-1] {
-            continue
-        }
-        left := i+1
-        right := n-1
-        for left < right {
-            sum := nums[i] + nums[left] + nums[right]
-            if sum < 0 {
-                left++
-            } else if sum > 0 {
-                right--
-            } else if sum == 0 {
-                ans = append(ans, []int{nums[i], nums[left], nums[right]})
-                for left < right && nums[left] == nums[left+1] {
-                    left++
-                }
-                for left < right && nums[right] == nums[right-1] {
-                    right--
-                }
-                left++
-                right--
-            }
-        }
-    }
+	sort.Ints(nums)
 
-    return ans
+	n := len(nums)
+
+	for i := 0; i < n; i++ {
+		if nums[i] > 0 {
+			break
+		}
+		// 排序后，重复元素，取第一个元素的解即可
+		if i > 0 && nums[i] == nums[i-1] {
+			continue
+		}
+		left, right := i+1, n-1
+		for left < right {
+			sum := nums[i] + nums[left] + nums[right]
+			if sum < 0 {
+				left++
+			} else if sum > 0 {
+				right--
+			} else if sum == 0 {
+				one := []int{nums[i], nums[left], nums[right]}
+				ans = append(ans, one)
+
+				left++
+				for left < right && nums[left] == nums[left-1] {
+					left++
+				}
+
+				right--
+				for left < right && nums[right] == nums[right+1] {
+					right--
+				}
+			}
+		}
+	}
+
+	return ans
 }
 ```
 
