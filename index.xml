@@ -5823,11 +5823,6 @@ word2： p q
 &lt;p&gt;参见题目：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;101—对称二叉树，递归，或者迭代两个树&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/binarytree_symmetric/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/binarytree_symmetric/</guid><description>&lt;h2 id="对称二叉树"&gt;对称二叉树&lt;a class="anchor" href="#%e5%af%b9%e7%a7%b0%e4%ba%8c%e5%8f%89%e6%a0%91"&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;如果一棵二叉树关于根结点左右对称，则称为对称二叉树，也称为镜像二叉树。&lt;/p&gt;
-&lt;p&gt;参见题目：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;101—对称二叉树，递归，或者迭代两个树&lt;/li&gt;
 &lt;/ul&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/bit/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/bit/</guid><description>&lt;h1 id="二叉索引树"&gt;二叉索引树&lt;a class="anchor" href="#%e4%ba%8c%e5%8f%89%e7%b4%a2%e5%bc%95%e6%a0%91"&gt;#&lt;/a&gt;&lt;/h1&gt;
 &lt;h3 id="6-binary-indexed-tree-二叉索引树"&gt;6 Binary Indexed Tree [二叉索引树]&lt;a class="anchor" href="#6-binary-indexed-tree-%e4%ba%8c%e5%8f%89%e7%b4%a2%e5%bc%95%e6%a0%91"&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;h4 id="结构介绍"&gt;结构介绍&lt;a class="anchor" href="#%e7%bb%93%e6%9e%84%e4%bb%8b%e7%bb%8d"&gt;#&lt;/a&gt;&lt;/h4&gt;
@@ -6177,7 +6172,7 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;isSameTree&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;) &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;isSameTree&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.101_%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%95%B0/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.101_%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%95%B0/</guid><description>&lt;h2 id="101-对称二叉树-简单"&gt;101 对称二叉树-简单&lt;a class="anchor" href="#101-%e5%af%b9%e7%a7%b0%e4%ba%8c%e5%8f%89%e6%a0%91-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.101_%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.101_%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91/</guid><description>&lt;h2 id="101-对称二叉树-简单"&gt;101 对称二叉树-简单&lt;a class="anchor" href="#101-%e5%af%b9%e7%a7%b0%e4%ba%8c%e5%8f%89%e6%a0%91-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个二叉树的根节点 &lt;code&gt;root&lt;/code&gt; ， 检查它是否轴对称。&lt;/p&gt;
 &lt;p&gt;轴对称的意思是节点关于整棵树的根节点 root 对称。&lt;/p&gt;
