@@ -81,3 +81,52 @@ func nextGreaterElement(nums1 []int, nums2 []int) []int {
 }
 ```
 
+### 图解：单调栈执行过程
+
+以 `nums2 = [1,3,4,2]` 为例，逆序遍历时单调栈的变化（栈从底向上画，栈顶在上方；蓝色为栈中元素，绿色为当前元素记录到的答案）：
+
+![image](./assets/next_greater_stack.svg)
+
+最终得到 `map = {1:3, 3:4, 4:-1, 2:-1}`，再依次用 `nums1` 中的元素去 map 里取值即可。
+
+### 写法二：正序遍历（对比）
+
+正序遍历也能做，思路反过来：维护一个**单调递减栈**存放「还没找到下一个更大元素的值」。遍历到的新元素 `v` 一旦比栈顶大，它就是栈顶那些元素的下一个更大元素——把它们逐个弹出并记录答案。
+
+```go
+// date 2026/06/21
+// 正序写法：遇到更大的元素，就把它作为栈顶元素的「下一个更大元素」
+func nextGreaterElementForward(nums1 []int, nums2 []int) []int {
+    // 单调递减栈：存放尚未找到下一个更大元素的值
+    stack := make([]int, 0, 16)
+    // next[v] = v 在 nums2 中的下一个更大元素
+    next := make(map[int]int, 16)
+
+    for _, v := range nums2 {
+        // v 比栈顶大 → v 是栈顶这些元素的下一个更大元素
+        for len(stack) > 0 && v > stack[len(stack)-1] {
+            top := stack[len(stack)-1]
+            stack = stack[:len(stack)-1]
+            next[top] = v
+        }
+        stack = append(stack, v)
+    }
+    // 栈中剩余的元素都没有下一个更大元素
+    for len(stack) > 0 {
+        next[stack[len(stack)-1]] = -1
+        stack = stack[:len(stack)-1]
+    }
+
+    ans := make([]int, len(nums1))
+    for i, v := range nums1 {
+        ans[i] = next[v] // nums1 是 nums2 的子集，next[v] 必然存在
+    }
+    return ans
+}
+```
+
+两种写法复杂度相同，均为 O(n + m) 时间、O(n) 空间。区别只在于「方向」：
+
+- **逆序**：先看右边有什么（栈里装的就是答案候选），贴合「右侧第一个更大」的直觉；
+- **正序**：右边来了一个更大的，回头给左边结算，更接近「事件驱动」的思路（后续 [No.503 下一个更大元素 II](./No.503_下一个更大的元素2.md) 也常用这种写法）。
+
