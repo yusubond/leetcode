@@ -167,43 +167,7 @@ func (this *MyHashMap) Remove(key int)  {
 - 常数时间插入，删除和获取
 - 146 LRU缓存机制【M】
 
-#### 1 两数之和
 
-思路分析：
-
-利用哈希映射原理。先将数组中所有的元素存入map中(相同的元素值，取index较大的一个，后序判断需要)，然后遍历数组，并判断target-value是否在map中。如果map存在，并且index不一样则找到结果。
-
-```go
-// date
-func twoSum(nums []int, target int) []int {
-  res := make([]int, 2)
-  m := make(m[int]int, len(nums))
-  for index, v := range nums {
-    m[v] = index
-  }
-  for i, v := range nums {
-    if j, ok := m[target-v]; ok && i != j {
-       res[0], res[1] = i, j
-       break
-    }
-  }
-  return res
-}
-// date 2019/12/30
-// 上一版的优化，上一版中需要遍历数组两次，而实际上可以只遍历一次，如下
-func twoSum(nums []int, target int) []int {
-  res := make([]int, 2)
-  m := make(map[int]int)
-  for i, v := range nums {
-    if j, ok := m[target-v]; ok {
-      res[0], res[1] = j, i
-      break
-    }
-    m[v] = i
-  }
-  return res
-}
-```
 
 #### 202 快乐数
 
@@ -335,56 +299,6 @@ func (this *TwoSum) Find(value int) bool {
 
 
 
-#### 349 两个数组的交集
-
-思路分析：两个数组中均可能存在重复元素，所以在第二个数组中找到后需要删除key。
-
-```go
-func intersection(nums1, nums2 []int) []int {
-  res := make([]int, 0)
-  m := make(map[int]struct{})
-  for _, v := range nums1 {
-    if _, ok := m[v]; !ok {
-      m[v] = struct{}{}
-    }
-  }
-  for _, v := range nums2 {
-    if _, ok := m[v]; ok {
-      res = append(res, v)
-      delete(m, v)
-    }
-  }
-  return res
-}
-```
-
-#### 350 两个数组的交集 II
-
-题目：
-
-![截屏2019-12-0722.20.47](/Users/subond/Documents/MyLife/leetcode/截屏2019-12-0722.20.47.png)
-
-```go
-func intersect(nums1, nums2 []int) []int {
-  res := make([]int, 0)
-  m := make(map[int]int)
-  for _, v := range nums1 {
-    if _, ok := m[v]; ok {
-      m[v]++
-    } else {
-      m[v] = 1
-    }
-  }
-  for _, v := range nums2 {
-    if c, ok := m[v]; ok && c >= 1 {
-      res = append(res, v)
-      m[v]--
-    }
-  }
-  return res
-}
-```
-
 #### 存在重复元素II
 
 ```go
@@ -406,9 +320,7 @@ func containsNearByDuplicate(nums []int, k int) bool {
 
 将树的节点进行先序遍历，并存储。【即序列化】，然后判断是否出现过。
 
-```go
-func 
-```
+
 
 
 
