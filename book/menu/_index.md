@@ -28,4 +28,6 @@ headless: true
   - [第 19 章 字典树]({{< relref "../docs/part3/ch24/" >}})
   - [第 20 章 二叉索引树]({{< relref "../docs/part3/ch25/" >}})
   - [第 21 章 图]({{< relref "../docs/part3/ch26/" >}})
+- [第 4 部分 数据库与SQL]({{< relref "../docs/part4/" >}})
+  - [第 22 章 SQL]({{< relref "../docs/part4/ch27sql/" >}})
 
