@@ -52,19 +52,21 @@
 // 第一种方案：辅助栈stackMin只保留当前栈中的最小值，即辅助栈和数据栈stackData长度不相等
 type MinStack struct {
 	data []int
-	min  []int
+	minV  []int
 }
 
 func Constructor() MinStack {
 	return MinStack{
 		data: make([]int, 0, 64),
-		min:  make([]int, 0, 64),
+		minV:  make([]int, 0, 64),
 	}
 }
 
 func (this *MinStack) Push(val int) {
-	if len(this.min) == 0 || val <= this.min[len(this.min)-1] {
-		this.min = append(this.min, val)
+  // 注意 <= 因为相同大小的元素可入栈多次
+  s2 := len(this.minV)
+  if s2 == 0 || val <= this.minV[s2-1] {
+		this.minV = append(this.min, val)
 	}
 	this.data = append(this.data, val)
 }
@@ -74,9 +76,9 @@ func (this *MinStack) Pop() {
 	if s1 <= 0 {
 		return
 	}
-	s2 := len(this.min)
-	if s2 > 0 && this.min[s2-1] == this.data[s1-1] {
-		this.min = this.min[:s2-1]
+	s2 := len(this.minV)
+	if s2 > 0 && this.minV[s2-1] == this.data[s1-1] {
+		this.minV = this.miVV[:s2-1]
 	}
 
 	this.data = this.data[:s1-1]
@@ -91,54 +93,11 @@ func (this *MinStack) Top() int {
 }
 
 func (this *MinStack) GetMin() int {
-	s2 := len(this.min)
+	s2 := len(this.minV)
 	if s2 <= 0 {
 		return 0
 	}
-	return this.min[s2-1]
-}
-
-// 第二种方案：辅助栈stackMin随时保留当前栈的最小值，保持和数据栈stackData长度相等
-type MinStack struct {
-    stackData []int
-    stackMin []int
-}
-
-
-/** initialize your data structure here. */
-func Constructor() MinStack {
-    return MinStack{
-        stackData: make([]int, 0),
-        stackMin: make([]int, 0),
-    }
-}
-
-
-func (this *MinStack) Push(x int)  {
-    if len(this.stackMin) == 0 || this.stackMin[len(this.stackMin)-1] >= x {
-        this.stackMin = append(this.stackMin, x)
-    } else {
-        this.stackMin = append(this.stackMin, this.stackMin[len(this.stackMin)-1])
-    }
-    this.stackData = append(this.stackData, x)
-}
-
-
-func (this *MinStack) Pop()  {
-    if len(this.stackData) <= 0 {return}
-    this.stackData = this.stackData[:len(this.stackData)-1]
-    this.stackMin = this.stackMin[:len(this.stackMin)-1]
-}
-
-
-func (this *MinStack) Top() int {
-    return this.stackData[len(this.stackData)-1]
-}
-
-
-func (this *MinStack) GetMin() int {
-    if len(this.stackMin) <= 0 { return 0 }
-    return this.stackMin[len(this.stackMin)-1]
+	return this.minV[s2-1]
 }
 ```
 
