@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>第 22 章 SQL on Leet Book</title><link>https://subond.com/leetcode/docs/part4/ch27sql/</link><description>Recent content in 第 22 章 SQL on Leet Book</description><generator>Hugo</generator><language>zh-cn</language><atom:link href="https://subond.com/leetcode/docs/part4/ch27sql/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</guid><description>&lt;h2 id="177-第n高的薪水-中等"&gt;177 第N高的薪水-中等&lt;a class="anchor" href="#177-%e7%ac%acn%e9%ab%98%e7%9a%84%e8%96%aa%e6%b0%b4-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;表：&lt;code&gt;Employee&lt;/code&gt;&lt;/p&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;Column Name&lt;/th&gt;
+ &lt;th&gt;Type&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;id&lt;/td&gt;
+ &lt;td&gt;int&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;salary&lt;/td&gt;
+ &lt;td&gt;int&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;code&gt;id&lt;/code&gt; 是该表的主键（列中的值互不相同）。该表的每一行都包含有关员工工资的信息。&lt;/p&gt;
+&lt;p&gt;编写一个解决方案查询 &lt;code&gt;Employee&lt;/code&gt; 表中第 &lt;code&gt;n&lt;/code&gt; 高的&lt;strong&gt;不同&lt;/strong&gt;工资。如果少于 &lt;code&gt;n&lt;/code&gt; 个不同工资，查询结果应该为 &lt;code&gt;null&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解题思路&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;核心难点有三个：① &lt;strong&gt;去重&lt;/strong&gt;（&lt;code&gt;DISTINCT&lt;/code&gt;，相同工资算同一名次）；② 当不足 &lt;code&gt;n&lt;/code&gt; 个不同工资时要返回 &lt;strong&gt;null&lt;/strong&gt;；③ MySQL 的 &lt;code&gt;LIMIT&lt;/code&gt; 不能直接写 &lt;code&gt;N-1&lt;/code&gt; 表达式，需要用变量中转。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;LIMIT + OFFSET。对不同工资降序排列，取第 &lt;code&gt;n&lt;/code&gt; 个（即跳过 &lt;code&gt;n-1&lt;/code&gt; 个）。最经典、面试常考的写法，详见解法1。&lt;/li&gt;
+&lt;li&gt;DENSE_RANK 窗口函数。用 &lt;code&gt;DENSE_RANK()&lt;/code&gt; 给不同工资编号（相同的并列、序号不跳号），取 &lt;code&gt;rnk = n&lt;/code&gt;。写法直观，详见解法2。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为什么外层再套一层 &lt;code&gt;SELECT&lt;/code&gt;：函数 &lt;code&gt;RETURNS INT&lt;/code&gt; 要返回单值；内层 &lt;code&gt;LIMIT 1 OFFSET M&lt;/code&gt; 取不到行时结果为 &lt;code&gt;NULL&lt;/code&gt;，外层 &lt;code&gt;SELECT&lt;/code&gt; 把它变成标量返回，正好满足「不足 n 个返回 null」。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-sql" data-lang="sql"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;-- date 2026/06/21
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;-- 解法1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;-- LIMIT + OFFSET（变量中转 N-1）
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;CREATE&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;FUNCTION&lt;/span&gt; getNthHighestSalary(N INT) &lt;span style="color:#66d9ef"&gt;RETURNS&lt;/span&gt; INT
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;BEGIN&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;DECLARE&lt;/span&gt; M INT;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;SET&lt;/span&gt; M &lt;span style="color:#f92672"&gt;=&lt;/span&gt; N &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#75715e"&gt;-- MySQL 的 LIMIT/OFFSET 不能直接用表达式，必须用变量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;RETURN&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;SELECT&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;SELECT&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;DISTINCT&lt;/span&gt; salary
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;FROM&lt;/span&gt; Employee
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;ORDER&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;BY&lt;/span&gt; salary &lt;span style="color:#66d9ef"&gt;DESC&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;LIMIT&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;OFFSET&lt;/span&gt; M
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; )
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; );
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;END&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-sql" data-lang="sql"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;-- date 2026/06/21
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;-- 解法2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;-- DENSE_RANK() 窗口函数
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;CREATE&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;FUNCTION&lt;/span&gt; getNthHighestSalary(N INT) &lt;span style="color:#66d9ef"&gt;RETURNS&lt;/span&gt; INT
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;BEGIN&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;RETURN&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;SELECT&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;DISTINCT&lt;/span&gt; salary
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;FROM&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;SELECT&lt;/span&gt; salary,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; DENSE_RANK() OVER (&lt;span style="color:#66d9ef"&gt;ORDER&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;BY&lt;/span&gt; salary &lt;span style="color:#66d9ef"&gt;DESC&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;AS&lt;/span&gt; rnk
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;FROM&lt;/span&gt; Employee
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ) t
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;WHERE&lt;/span&gt; rnk &lt;span style="color:#f92672"&gt;=&lt;/span&gt; N
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; );
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;END&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;补充一个&lt;strong&gt;不用 function 的普通查询&lt;/strong&gt;写法（参数 &lt;code&gt;n&lt;/code&gt; 直接代入）：&lt;/p&gt;</description></item></channel></rss>
