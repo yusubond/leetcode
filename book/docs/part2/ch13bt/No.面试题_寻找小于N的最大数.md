@@ -200,41 +200,38 @@ func findMaxNumber(nums []int, k int) int {
 - **时间复杂度**：O(m × n)，其中 m 是 k 的位数（≤10），n 是 nums 的长度（≤10）。实际上 m 和 n 都很小，几乎是常数时间。
 - **空间复杂度**：O(m + n)，用于存储候选字符串和哈希集合。
 
-### 七、为什么这题放在回溯章节？
+### 七、回溯视角的两种实现
 
-本题虽然可以用贪心算法高效解决，但它的思考过程天然是回溯的：
+本题虽然可以用贪心算法高效解决，但它的思考过程天然是回溯的。下面给出两种不同思路的回溯实现。
 
-1. **决策树**：每一位都要做选择（从 nums 中选一个数字）
-2. **约束条件**：结果必须 < k（剪枝条件）
-3. **回溯行为**：当前选择导致无法满足约束时，回退到上一位，尝试更小的数字
+#### 方法一：逐位决策 DFS（tight/free 状态机）
 
-实际上，如果用 DFS 来实现：
+这种写法和 902 题数位 DP 同构。按位递归，用 `tight` 标记当前前缀是否与 k "紧贴"，从大到小尝试数字，找到的第一个合法结果就是答案：
 
 ```go
-// DFS 回溯版本（更具回溯章节风格）
+// 逐位 DFS —— 与数位 DP 同构，O(m×n)
 func findMaxNumberDFS(nums []int, k int) int {
     sort.Ints(nums)
     s := strconv.Itoa(k)
-    
+    m := len(s)
+
     var ans int
-    // hasMax 标记是否已找到答案（从大到小搜，第一个就是最大）
-    
     var dfs func(pos int, tight bool, path []byte) bool
     dfs = func(pos int, tight bool, path []byte) bool {
-        if pos == len(s) {
+        if pos == m {
             val, _ := strconv.Atoi(string(path))
             if val < k {
                 ans = val
-                return true // 找到答案
+                return true
             }
             return false
         }
-        // 如果不紧贴，当前位可选的范围不受限
+        // tight 为 true 时，当前位不能超过 s[pos]
         limit := byte('9')
         if tight {
             limit = s[pos]
         }
-        // 从大到小尝试（贪心：先试大的）
+        // 从大到小尝试，第一个合法结果即最大
         for i := len(nums) - 1; i >= 0; i-- {
             d := byte('0' + nums[i])
             if d > limit {
@@ -245,19 +242,18 @@ func findMaxNumberDFS(nums []int, k int) int {
             if dfs(pos+1, nextTight, path) {
                 return true
             }
-            path = path[:len(path)-1] // 回溯
+            path = path[:len(path)-1] // 回溯：撤销选择
         }
         return false
     }
-    
-    // 尝试 m 位数字
-    dfs(0, true, []byte{})
-    if ans > 0 {
+
+    // 先尝试 m 位数字
+    if dfs(0, true, []byte{}) {
         return ans
     }
-    // 兜底：少一位
-    if len(s) > 1 {
-        path := make([]byte, len(s)-1)
+    // 兜底：少一位，全填最大数字
+    if m > 1 {
+        path := make([]byte, m-1)
         for i := range path {
             path[i] = byte('0' + nums[len(nums)-1])
         }
@@ -268,7 +264,112 @@ func findMaxNumberDFS(nums []int, k int) int {
 }
 ```
 
-DFS 版本更直观地体现了回溯思想：每一位尝试候选数字（从大到小），找到第一个合法完整数字就返回。贪心版本是 DFS 的"压缩"——省去了真正的递归，直接算出每个降级点的结果。
+#### 方法二：数字构造回溯（`k = k - 1` 技巧）
+
+另一种更直观的回溯思路：不按位置，而是不断往末尾追加数字（`path*10 + num`），通过剪枝 `path > k` 来缩小搜索空间。
+
+**核心技巧**：先把 `k` 减 1，将「严格小于 k」转化为「≤ k-1」，这样终止条件从 `< k` 变成了 `== k-1`（可直接 return）。
+
+```go
+// 数字构造回溯 —— path*10+num 逐位拼接
+// 更贴近"枚举所有可能的数字"的直觉
+func findMaxNumberBuild(nums []int, k int) int {
+    sort.Ints(nums) // 排序保证一致性，虽不减少搜索空间但是好习惯
+    k = k - 1       // 核心技巧：严格小于 k → ≤ k-1
+    if k < 0 {
+        return -1
+    }
+
+    // 检查 0 是否在 nums 中（用于判断 path=0 是否合法）
+    hasZero := false
+    for _, num := range nums {
+        if num == 0 {
+            hasZero = true
+            break
+        }
+    }
+
+    ans := -1
+    var backtrack func(path int)
+    backtrack = func(path int) {
+        // 剪枝：超过上限，停止搜索
+        if path > k {
+            return
+        }
+        // 恰好等于上限，直接就是最优解
+        if path == k {
+            ans = path
+            return
+        }
+        // 更新当前最优（path=0 仅在 nums 含 0 时才合法）
+        if path > ans && (path > 0 || hasZero) {
+            ans = path
+        }
+        // 尝试往末尾追加每一个数字
+        for _, num := range nums {
+            // 跳过前导零：避免 0*10+0=0 造成无限递归
+            if path == 0 && num == 0 {
+                continue
+            }
+            // 注意：直接传表达式，不修改 path 本身
+            backtrack(path*10 + num)
+        }
+    }
+
+    backtrack(0)
+    return ans
+}
+```
+
+**易错点**：
+
+1. **`path` 不能修改后不恢复**。错误写法：
+   ```go
+   path = path*10 + num    // ❌ 改完不恢复
+   backtrack(path)         // 下轮循环用的还是改过的值
+   ```
+   正确写法是直接传表达式 `backtrack(path*10 + num)`，`path` 保持原值，回溯自然发生。
+
+2. **前导零导致无限递归**。当 `nums` 包含 0 时，`0*10+0 = 0`，递归回到起点永不终止。用 `if path == 0 && num == 0 { continue }` 跳过。
+
+3. **`ans` 初始值设为 -1**，且 `path=0` 只在 nums 含 0 时才视为合法。否则 `nums=[2], k=2` 会错误返回 0 而非 -1。
+
+4. **`k = k - 1` 边界**。当 k 较小时（如 k=1），k-1=0，搜索空间很小。若 k=0，k-1=-1，直接返回 -1。
+
+5. **排序不减少搜索空间，但降序是好习惯**。Build 方法的剪枝 `path > k` 对每个前缀的判定与遍历顺序无关——无论升序还是降序，访问的节点总数完全相同。但将 nums 降序排列有两个好处：① 更早找到较大的 `ans`，接近 k-1 的值会被优先探索；② 与贪心和 DFS 方法保持输入一致性（它们需要排序）。所以实际代码中建议先 `sort.Ints(nums)`。
+
+#### 两种回溯方法对比
+
+| | 方法一：逐位 DFS | 方法二：数字构造 |
+|---|---|---|
+| **思路** | 按位决策，tight 标记是否受限 | 不断追加数字，`k-1` 简化边界 |
+| **回溯方式** | `path = append; ...; path = path[:len-1]` | `backtrack(path*10+num)` 自动回溯 |
+| **搜索方向** | 从大到小（贪心），找到立即返回 | 从小到大枚举，遍历完才得最优 |
+| **时间复杂度** | O(m×n)，找到即停 | O(合法数字个数)，指数级 |
+| **适用场景** | k 很大（10^9）也能跑 | k 较小或 nums 很少时直观 |
+| **风格** | 偏向 DP 思维 | 偏向纯回溯枚举 |
+
+方法一是方法二的「压缩版」——省去了对不可能前缀的搜索。但方法二更直观地展示了回溯的本质：从空串出发，每次追加一个数字，不满足就回退。面试中两种都可以讲，先讲方法二建立直觉，再优化到方法一展示进阶。
+
+#### `k = k - 1` 能用于前两种方法吗？
+
+不能。原因如下：
+
+**1. 字符串位数会变化。** 贪心降级和逐位 DFS 都依赖 k 的字符串表示来做逐位决策。`k=100` 时 `s="100"` 有 3 位，而 `k-1=99` 时 `s="99"` 只有 2 位。位数一变，整个降级点枚举逻辑就被打乱了——本来要找 3 位数中的最大值，结果变成了找 2 位数中的最大值，而 2 位数的情况已经在兜底逻辑中覆盖了。
+
+**2. 比较方式根本不同。**
+
+| | 贪心 / 逐位 DFS | 数字构造（Build） |
+|---|---|---|
+| **比较对象** | 逐位比较字符（`s[p]` vs `digit`） | 整体比较数值（`path` vs `k`） |
+| **保证 `< k` 的方式** | 构造保证：降级点选 `< s[p]` 的数字 | 运行时剪枝：`if path > k { return }` |
+| **`k-1` 的作用** | 无——不需要数值比较 | 有——把 `< k` 变成 `≤ k-1`，可以直接 `==` 命中 |
+
+贪心算法中，候选数字 `< k` 由构造过程保证（降级点选了比 `k[p]` 小的数字），不需要事后用数值检查。`k-1` 在这里帮不上忙。
+
+**3. 即使位数不变，收益也微乎其微。** 当 `k-1` 和 `k` 位数相同时（比如 `k=555 → 554`），贪心算法里唯一的区别是把 `largestLess < s[p]` 改成 `largestLess ≤ s'[p]`。这相当于把 `==` 的情况从「继续匹配下一位」变成了「在当前位置终止并填 max」。结果一样，没有加速。
+
+**一句话总结**：`k = k - 1` 是专门为数值比较型回溯准备的工具，对于基于字符串逐位决策的方法不适用。
 
 ### 八、同类题对比
 
