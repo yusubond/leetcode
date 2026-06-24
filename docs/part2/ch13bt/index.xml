@@ -778,4 +778,48 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;backtrack&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;graph&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;], []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;{&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;})
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch13bt/no.%E9%9D%A2%E8%AF%95%E9%A2%98_%E5%AF%BB%E6%89%BE%E5%B0%8F%E4%BA%8En%E7%9A%84%E6%9C%80%E5%A4%A7%E6%95%B0/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch13bt/no.%E9%9D%A2%E8%AF%95%E9%A2%98_%E5%AF%BB%E6%89%BE%E5%B0%8F%E4%BA%8En%E7%9A%84%E6%9C%80%E5%A4%A7%E6%95%B0/</guid><description>&lt;h2 id="寻找小于n的最大数"&gt;寻找小于N的最大数&lt;a class="anchor" href="#%e5%af%bb%e6%89%be%e5%b0%8f%e4%ba%8en%e7%9a%84%e6%9c%80%e5%a4%a7%e6%95%b0"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定一个整数数组 &lt;code&gt;nums&lt;/code&gt;，里面仅包含 0-9 的数字，再给定一个整数 &lt;code&gt;k&lt;/code&gt;，求 &lt;code&gt;nums&lt;/code&gt; 能组成的小于 &lt;code&gt;k&lt;/code&gt; 的最大数。每个数字可以使用任意次数。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;示例 1&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;nums = [4, 3], k = 433
+ans = 344&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;示例 2&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;nums = [1, 0], k = 100
+ans = 11&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
+&lt;h3 id="一与-902-题的对比"&gt;一、与 902 题的对比&lt;a class="anchor" href="#%e4%b8%80%e4%b8%8e-902-%e9%a2%98%e7%9a%84%e5%af%b9%e6%af%94"&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;这道题和 &lt;a href="https://subond.com/leetcode/docs/part2/ch18dp/no.902_%E6%9C%80%E5%A4%A7%E4%B8%BAn%E7%9A%84%E6%95%B0%E5%AD%97%E7%BB%84%E5%90%88/"&gt;902. 最大为 N 的数字组合&lt;/a&gt; 非常相似，但有两点关键区别：&lt;/p&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;&lt;/th&gt;
+ &lt;th&gt;902 题&lt;/th&gt;
+ &lt;th&gt;本题&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;strong&gt;目标&lt;/strong&gt;&lt;/td&gt;
+ &lt;td&gt;求&lt;strong&gt;个数&lt;/strong&gt;（计数）&lt;/td&gt;
+ &lt;td&gt;求&lt;strong&gt;最大数&lt;/strong&gt;（构造）&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;strong&gt;条件&lt;/strong&gt;&lt;/td&gt;
+ &lt;td&gt;≤ n（小于等于）&lt;/td&gt;
+ &lt;td&gt;&amp;lt; k（严格小于）&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;strong&gt;输入&lt;/strong&gt;&lt;/td&gt;
+ &lt;td&gt;digits 为字符串数组&lt;/td&gt;
+ &lt;td&gt;nums 为整数数组&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;strong&gt;核心方法&lt;/strong&gt;&lt;/td&gt;
+ &lt;td&gt;数学计数 / 数位 DP&lt;/td&gt;
+ &lt;td&gt;贪心 + 回溯构造&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;902 是「有多少个」，本题是「最大的那个是谁」。前者是 DP 计数问题，后者更贴近回溯搜索。&lt;/p&gt;
+&lt;h3 id="二核心思路寻找降级点"&gt;二、核心思路：寻找「降级点」&lt;a class="anchor" href="#%e4%ba%8c%e6%a0%b8%e5%bf%83%e6%80%9d%e8%b7%af%e5%af%bb%e6%89%be%e9%99%8d%e7%ba%a7%e7%82%b9"&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;要让结果小于 k 且尽可能大，策略是：&lt;strong&gt;结果的前缀尽量和 k 相同，在某个位置&amp;quot;降级&amp;quot;（选一个比 k 对应位更小的数字），之后全填最大数字&lt;/strong&gt;。&lt;/p&gt;</description></item></channel></rss>
