@@ -10163,8 +10163,17 @@ word2： p q
 &lt;li&gt;每行的第一个整数大于前一行的最后一个整数。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;给你一个整数 &lt;code&gt;target&lt;/code&gt; ，如果 &lt;code&gt;target&lt;/code&gt; 在矩阵中，返回 &lt;code&gt;true&lt;/code&gt; ；否则，返回 &lt;code&gt;false&lt;/code&gt; 。&lt;/p&gt;
-&lt;p&gt;分析：&lt;/p&gt;
-&lt;p&gt;先对每一行的第一个元素进行 LastEqualOrSmaller 二分查找，找到相应的行，然后在进行 FirstEqual 查找。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
+输出：true&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13
+输出：false&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;关键观察&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;两个条件合起来意味着：每行内部有序，且行与行首尾相接（行首 &amp;gt; 上行行尾），所以把所有行首尾拼接后仍是&lt;strong&gt;全局有序&lt;/strong&gt;的。于是整张矩阵可“展平”为一个长度 &lt;code&gt;m·n&lt;/code&gt; 的有序一维数组，问题退化为一维数组的二分查找。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;题目为“非严格递增”（可能有重复）。对于“判断 target 是否存在”，含重复的有序数组二分依然成立，故两解法均适用。&lt;/p&gt;
+&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;解法 1：两次二分（先定位行，再行内查找）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;先对每行首元素做 LastEqualOrSmaller 二分，找到唯一可能包含 target 的行；再在该行内做 FirstEqual 二分。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/04&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;searchMatrix&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;matrix&lt;/span&gt; [][]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;target&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;m&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;matrix&lt;/span&gt;)
@@ -10195,7 +10204,7 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch11binsearch/no.081_%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%842/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch11binsearch/no.081_%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%842/</guid><description>&lt;h2 id="81-搜索旋转排序数组2-中等"&gt;81 搜索旋转排序数组2-中等&lt;a class="anchor" href="#81-%e6%90%9c%e7%b4%a2%e6%97%8b%e8%bd%ac%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%842-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;解法 2：展平一维二分（推荐）&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch11binsearch/no.081_%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%842/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch11binsearch/no.081_%E6%90%9C%E7%B4%A2%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%842/</guid><description>&lt;h2 id="81-搜索旋转排序数组2-中等"&gt;81 搜索旋转排序数组2-中等&lt;a class="anchor" href="#81-%e6%90%9c%e7%b4%a2%e6%97%8b%e8%bd%ac%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%842-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;已知存在一个按非降序排列的整数数组 &lt;code&gt;nums&lt;/code&gt; ，数组中的值不必互不相同。&lt;/p&gt;
 &lt;p&gt;在传递给函数之前，&lt;code&gt;nums&lt;/code&gt; 在预先未知的某个下标 &lt;code&gt;k&lt;/code&gt;（&lt;code&gt;0 &amp;lt;= k &amp;lt; nums.length&lt;/code&gt;）上进行了 &lt;strong&gt;旋转&lt;/strong&gt; ，使数组变为 &lt;code&gt;[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]&lt;/code&gt;（下标 &lt;strong&gt;从 0 开始&lt;/strong&gt; 计数）。例如， &lt;code&gt;[0,1,2,4,4,4,5,6,6,7]&lt;/code&gt; 在下标 &lt;code&gt;5&lt;/code&gt; 处经旋转后可能变为 &lt;code&gt;[4,5,6,6,7,0,1,2,4,4]&lt;/code&gt; 。&lt;/p&gt;
@@ -10356,10 +10365,18 @@ word2： p q
 &lt;li&gt;每行的元素从左到右升序排列。&lt;/li&gt;
 &lt;li&gt;每列的元素从上到下升序排列。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;分析：&lt;/p&gt;
-&lt;p&gt;因为矩阵是每行升序，每列升序，所以可以以右上角的元素为基准。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 5
+输出：true&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 20
+输出：false&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;关键观察（与 LC 74 的根本区别）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;240 只保证“行升序、列升序”，但&lt;strong&gt;行首不一定大于上一行行尾&lt;/strong&gt;（例如 &lt;code&gt;[[1,4],[2,5]]&lt;/code&gt; 中第二行首元素 &lt;code&gt;2&lt;/code&gt; 小于第一行末元素 &lt;code&gt;4&lt;/code&gt;）。因此整张矩阵&lt;strong&gt;不能展平成一维有序数组&lt;/strong&gt;，无法像 &lt;a href="https://subond.com/leetcode/docs/part2/ch11binsearch/no.074_%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5/"&gt;No.074&lt;/a&gt; 那样直接二分；必须利用“行列双有序”这一结构。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解法 1：Z 字查找（右上角出发，最优）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;因为矩阵行升序、列升序，可以以右上角的元素为基准。&lt;/p&gt;
 &lt;p&gt;如果右上角元素大于目标值，那么这一列不会有答案；&lt;/p&gt;
 &lt;p&gt;如果右上角元素小于目标值，那么这一行不会有答案；&lt;/p&gt;
+&lt;p&gt;每一步排除一行或一列，共 m+n 步内完成。&lt;code&gt;O(m+n)&lt;/code&gt; 已是该矩阵结构下的渐近下界（adversary 论证：最坏情况必须检查 Ω(m+n) 个元素），故无法从渐近意义上超越。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/05&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;searchMatrix&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;matrix&lt;/span&gt; [][]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;target&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;m&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;matrix&lt;/span&gt;)
@@ -10376,7 +10393,7 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch11binsearch/no.268_%E4%B8%A2%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch11binsearch/no.268_%E4%B8%A2%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97/</guid><description>&lt;h2 id="268-丢失的数字"&gt;268 丢失的数字&lt;a class="anchor" href="#268-%e4%b8%a2%e5%a4%b1%e7%9a%84%e6%95%b0%e5%ad%97"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;解法 2：逐行二分（备选，可剪枝）&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch11binsearch/no.268_%E4%B8%A2%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch11binsearch/no.268_%E4%B8%A2%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97/</guid><description>&lt;h2 id="268-丢失的数字"&gt;268 丢失的数字&lt;a class="anchor" href="#268-%e4%b8%a2%e5%a4%b1%e7%9a%84%e6%95%b0%e5%ad%97"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给定一个包含 &lt;code&gt;[0, n]&lt;/code&gt; 中 &lt;code&gt;n&lt;/code&gt; 个数的数组 &lt;code&gt;nums&lt;/code&gt; ，找出 &lt;code&gt;[0, n]&lt;/code&gt; 这个范围内没有出现在数组中的那个数。&lt;/p&gt;
 &lt;p&gt;分析：&lt;/p&gt;
@@ -11166,29 +11183,20 @@ void Split(struct Node* head, struct Node** front, struct Node** back) {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch12sort/no.179_%E6%9C%80%E5%A4%A7%E6%95%B0/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch12sort/no.179_%E6%9C%80%E5%A4%A7%E6%95%B0/</guid><description>&lt;h2 id="179-最大数-中等"&gt;179 最大数-中等&lt;a class="anchor" href="#179-%e6%9c%80%e5%a4%a7%e6%95%b0-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;给定一组非负整数 &lt;code&gt;nums&lt;/code&gt;，重新排列每个数的顺序（每个数不可拆分）使之组成一个最大的整数。&lt;/p&gt;
 &lt;p&gt;**注意：**输出结果可能非常大，所以你需要返回一个字符串而不是整数。&lt;/p&gt;
-&lt;p&gt;分析：&lt;/p&gt;
-&lt;p&gt;对数组进行字母表排序。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2026.06.21&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;largestNumber&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;str&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;, len(&lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt;))
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;strconv&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Itoa&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#75715e"&gt;// sort num 符合字母表排序&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;sort&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Slice&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;, &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;j&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;][&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;j&lt;/span&gt;][&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;] {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;			&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;]&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;j&lt;/span&gt;] &amp;gt; &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;j&lt;/span&gt;]&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &amp;gt; &lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;j&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	})
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strings&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Join&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;str&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;0&amp;#39;&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;0&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch12sort/no.912_%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch12sort/no.912_%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/</guid><description>&lt;h2 id="912-排序数组-中等"&gt;912 排序数组-中等&lt;a class="anchor" href="#912-%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%84-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：nums = [10,2]
+输出：&amp;#34;210&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：nums = [3,30,34,5,9]
+输出：&amp;#34;9534330&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;解题思路&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;核心是&lt;strong&gt;自定义排序&lt;/strong&gt;。两个数 &lt;code&gt;a&lt;/code&gt;、&lt;code&gt;b&lt;/code&gt; 谁该排前面，取决于拼接后哪个更大：若 &lt;code&gt;a+b &amp;gt; b+a&lt;/code&gt;（字符串拼接），则 &lt;code&gt;a&lt;/code&gt; 排在 &lt;code&gt;b&lt;/code&gt; 前。排完序后依次拼接即可。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不能直接按字典序排序：&lt;code&gt;&amp;quot;3&amp;quot;&lt;/code&gt; 与 &lt;code&gt;&amp;quot;30&amp;quot;&lt;/code&gt; 拼接时 &lt;code&gt;&amp;quot;330&amp;quot; &amp;gt; &amp;quot;303&amp;quot;&lt;/code&gt;，故 &lt;code&gt;3&lt;/code&gt; 应在 &lt;code&gt;30&lt;/code&gt; 前；而字典序 &lt;code&gt;&amp;quot;3&amp;quot; &amp;lt; &amp;quot;30&amp;quot;&lt;/code&gt; 会得到错误顺序。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;全零边界&lt;/strong&gt;：若排序后首位仍是 &lt;code&gt;'0'&lt;/code&gt;，说明所有数都是 &lt;code&gt;0&lt;/code&gt;，直接返回 &lt;code&gt;&amp;quot;0&amp;quot;&lt;/code&gt;，避免出现 &lt;code&gt;&amp;quot;000...&amp;quot;&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;为什么这个排序规则可用（传递性）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;把拼接视为数值：&lt;code&gt;a+b = a·10^len(b) + b&lt;/code&gt;。比较 &lt;code&gt;a+b&lt;/code&gt; 与 &lt;code&gt;b+a&lt;/code&gt; 等价于比较&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;a / (10^len(a) - 1) 与 b / (10^len(b) - 1)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;即把每个数看作“无限循环小数”形式的有理数（如 &lt;code&gt;3&lt;/code&gt; ↔ &lt;code&gt;0.333…&lt;/code&gt;，&lt;code&gt;30&lt;/code&gt; ↔ &lt;code&gt;0.3030…&lt;/code&gt;），再比较这些有理数的大小。有理数比较是全序关系，天然满足传递性，因此可放心交给排序使用。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch12sort/no.912_%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch12sort/no.912_%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/</guid><description>&lt;h2 id="912-排序数组-中等"&gt;912 排序数组-中等&lt;a class="anchor" href="#912-%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%84-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个整数数组 &lt;code&gt;nums&lt;/code&gt;，请你将该数组升序排列。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;解题思路&lt;/strong&gt;&lt;/p&gt;
