@@ -52,25 +52,27 @@
 ```go
 // date 2026/07/08
 func reverse(x int) int {
-    const (
-        maxInt32 = 1<<31 - 1 // 2147483647
-        minInt32 = -1 << 31   // -2147483648
-    )
-    rev := 0
-    for x != 0 {
-        pop := x % 10
-        x /= 10
-        // 正溢出预判
-        if rev > maxInt32/10 || (rev == maxInt32/10 && pop > 7) {
-            return 0
-        }
-        // 负溢出预判
-        if rev < minInt32/10 || (rev == minInt32/10 && pop < -8) {
-            return 0
-        }
-        rev = rev*10 + pop
-    }
-    return rev
+	maxInt32 := 1<<31 - 1
+	minInt32 := -1 << 31
+
+	//关键是在计算前判断是否溢出
+	res := 0
+
+	for x != 0 {
+		pop := x % 10
+		x /= 10
+
+		if res > maxInt32/10 || (res == maxInt32/10 && pop > maxInt32%10) {
+			return 0
+		}
+		if res < minInt32/10 || (res == minInt32/10 && pop < minInt32%10) {
+			return 0
+		}
+
+		res = res*10 + pop
+	}
+
+	return res
 }
 ```
 
