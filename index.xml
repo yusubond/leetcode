@@ -295,7 +295,28 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; float64(&lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; (float64(&lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;)&lt;span style="color:#f92672"&gt;+&lt;/span&gt;float64(&lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;))&lt;span style="color:#f92672"&gt;/&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch01array/no.011_%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch01array/no.011_%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</guid><description>&lt;h2 id="11-盛最多水的容器-中等"&gt;11 盛最多水的容器-中等&lt;a class="anchor" href="#11-%e7%9b%9b%e6%9c%80%e5%a4%9a%e6%b0%b4%e7%9a%84%e5%ae%b9%e5%99%a8-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch01array/no.007_%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch01array/no.007_%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/</guid><description>&lt;h2 id="7-整数反转-中等"&gt;7 整数反转-中等&lt;a class="anchor" href="#7-%e6%95%b4%e6%95%b0%e5%8f%8d%e8%bd%ac-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给你一个 32 位的有符号整数 &lt;code&gt;x&lt;/code&gt; ，返回将 &lt;code&gt;x&lt;/code&gt; 中的数字部分反转后的结果。&lt;/p&gt;
+&lt;p&gt;如果反转后整数超过 32 位的有符号整数的范围 &lt;code&gt;[−2^31, 2^31 − 1]&lt;/code&gt;，就返回 0。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;假设环境不允许存储 64 位整数（有符号或无符号）。&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：x = 123
+输出：321&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：x = -123
+输出：-321&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：x = 120
+输出：21&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：x = 0
+输出：0&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;关键观察：在溢出发生之前预判&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;核心操作是逐位弹出和压入：&lt;code&gt;pop = x % 10; x /= 10; rev = rev*10 + pop&lt;/code&gt;。问题在于最后一步 &lt;code&gt;rev*10 + pop&lt;/code&gt; 可能溢出。&lt;/p&gt;
+&lt;p&gt;由于题目&lt;strong&gt;禁止使用 64 位整数&lt;/strong&gt;，不能在溢出后再判断——必须在乘法之前预判：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;正数溢出条件：&lt;code&gt;rev &amp;gt; INT_MAX/10&lt;/code&gt; 或 &lt;code&gt;rev == INT_MAX/10 &amp;amp;&amp;amp; pop &amp;gt; 7&lt;/code&gt;（因为 &lt;code&gt;INT_MAX = 2147483647&lt;/code&gt;，个位是 7）&lt;/li&gt;
+&lt;li&gt;负数溢出条件：&lt;code&gt;rev &amp;lt; INT_MIN/10&lt;/code&gt; 或 &lt;code&gt;rev == INT_MIN/10 &amp;amp;&amp;amp; pop &amp;lt; -8&lt;/code&gt;（因为 &lt;code&gt;INT_MIN = -2147483648&lt;/code&gt;，个位是 -8）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Go 语言特例&lt;/strong&gt;：Go 的 &lt;code&gt;int&lt;/code&gt; 在 64 位机器上是 64 位，如果直接用 &lt;code&gt;math.MaxInt32&lt;/code&gt; / &lt;code&gt;math.MinInt32&lt;/code&gt; 比较，实际上并没有违反&amp;quot;不允许存储 64 位整数&amp;quot;的精神——因为 Go 没有原生的 32 位整数溢出检查机制。但更严谨的写法是使用 &lt;code&gt;math.MaxInt32&lt;/code&gt; 常量参与预判逻辑，而非将结果存入 &lt;code&gt;int64&lt;/code&gt; 再比较。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch01array/no.011_%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch01array/no.011_%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</guid><description>&lt;h2 id="11-盛最多水的容器-中等"&gt;11 盛最多水的容器-中等&lt;a class="anchor" href="#11-%e7%9b%9b%e6%9c%80%e5%a4%9a%e6%b0%b4%e7%9a%84%e5%ae%b9%e5%99%a8-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给定一个长度为 &lt;code&gt;n&lt;/code&gt; 的整数数组 &lt;code&gt;height&lt;/code&gt; 。有 &lt;code&gt;n&lt;/code&gt; 条垂线，第 &lt;code&gt;i&lt;/code&gt; 条线的两个端点是 &lt;code&gt;(i, 0)&lt;/code&gt; 和 &lt;code&gt;(i, height[i])&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;找出其中的两条线，使得它们与 &lt;code&gt;x&lt;/code&gt; 轴共同构成的容器可以容纳最多的水。&lt;/p&gt;
@@ -2319,6 +2340,30 @@ Node *MergeSort(Node *phead) {
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个链表数组，每个链表都已经按升序排列。&lt;/p&gt;
 &lt;p&gt;请你将所有链表合并到一个升序链表中，返回合并后的链表。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：lists = [[1,4,5],[1,3,4],[2,6]]
+输出：[1,1,2,3,4,4,5,6]
+解释：链表数组如下：
+[
+ 1→4→5,
+ 1→3→4,
+ 2→6
+]
+将它们合并到一个有序链表中得到：
+1→1→2→3→4→4→5→6&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：lists = []
+输出：[]&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：lists = [[]]
+输出：[]&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;关键观察：合并两条链表的扩展 + 每次取最小头节点的策略&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;本题是 &lt;a href="https://subond.com/leetcode/docs/part1/ch02list/no.021_%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/"&gt;No.21 合并两个有序链表&lt;/a&gt; 的推广。核心问题变为：&lt;strong&gt;如何在 k 条链表的头节点中，高效选出当前最小值？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;四种策略对应四种&amp;quot;选最小&amp;quot;的方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;顺序合并&lt;/strong&gt;：每次取前 k-1 条合并结果与第 k 条做二路归并——等价于 k-1 次二路归并，但长链被反复扫描。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;分治归并&lt;/strong&gt;：两两配对合并，每轮链表数减半——每个节点只参与 O(log k) 次比较，是此题的最优解之一。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有序数组（优先队列）&lt;/strong&gt;：维护一个始终有序的数组存放各链表头节点，取最小 O(1)，插入新头 O(k)。整体 O(N·k)，适合 k 很小的情况。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最小堆&lt;/strong&gt;：用堆维护 k 个链表头，取最小 O(1)，插入新头 O(log k)。整体 O(N log k)，是实际工程中最常用的方案。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;解题思路&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;复习递归算法，掌握自底向上和自上向下的递归方法。&lt;/p&gt;
 &lt;ul&gt;
@@ -2327,295 +2372,7 @@ Node *MergeSort(Node *phead) {
 &lt;li&gt;优先队列 + 插入排序，详见解法3。data 始终保持 Val 升序，Push 用插入排序定位后插入，Pop 取首元素即可。时间复杂度 O(N·k)，空间复杂度 O(k)。&lt;/li&gt;
 &lt;li&gt;堆（heap），详见解法4。Push 末尾追加后 siftUp，Pop 交换首尾后 siftDown。时间复杂度 O(N log k)，空间复杂度 O(k)。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;复杂度对比&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设链表个数为 &lt;code&gt;k&lt;/code&gt;，所有节点总数为 &lt;code&gt;N&lt;/code&gt;。&lt;/p&gt;
-&lt;table&gt;
- &lt;thead&gt;
- &lt;tr&gt;
- &lt;th&gt;方法&lt;/th&gt;
- &lt;th&gt;时间&lt;/th&gt;
- &lt;th&gt;空间&lt;/th&gt;
- &lt;/tr&gt;
- &lt;/thead&gt;
- &lt;tbody&gt;
- &lt;tr&gt;
- &lt;td&gt;① 顺序两两合并&lt;/td&gt;
- &lt;td&gt;O(N·k)&lt;/td&gt;
- &lt;td&gt;O(1)&lt;/td&gt;
- &lt;/tr&gt;
- &lt;tr&gt;
- &lt;td&gt;② 分治归并&lt;/td&gt;
- &lt;td&gt;O(N log k)&lt;/td&gt;
- &lt;td&gt;O(log k)&lt;/td&gt;
- &lt;/tr&gt;
- &lt;tr&gt;
- &lt;td&gt;③ 优先队列 + 插入排序&lt;/td&gt;
- &lt;td&gt;O(N·k)&lt;/td&gt;
- &lt;td&gt;O(k)&lt;/td&gt;
- &lt;/tr&gt;
- &lt;tr&gt;
- &lt;td&gt;④ 堆（siftUp / siftDown）&lt;/td&gt;
- &lt;td&gt;O(N log k)&lt;/td&gt;
- &lt;td&gt;O(k)&lt;/td&gt;
- &lt;/tr&gt;
- &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/10/17&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for singly-linked list.
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * type ListNode struct {
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Val int
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Next *ListNode
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * }
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 解法1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 最朴素的顺序两两合并&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;mergeKLists&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt; []&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;) &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;) &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;k&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;mergeKLists&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;[:&lt;span style="color:#a6e22e"&gt;k&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]), &lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;k&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dumy&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;{}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dumy&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dumy&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 解法2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 分治思想，归并排序思想的合并&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for singly-linked list.
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * type ListNode struct {
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Val int
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Next *ListNode
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * }
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;mergeKLists&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt; []&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;merge&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt; []&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;merge&lt;/span&gt; = &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt; []&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &amp;gt; &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;mid&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;right&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;)&lt;span style="color:#f92672"&gt;/&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;mergeTwoList&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;merge&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;mid&lt;/span&gt;), &lt;span style="color:#a6e22e"&gt;merge&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;mid&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt;))
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;merge&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, len(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;mergeTwoList&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dummy&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;{}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dummy&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dummy&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2026/06/28&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 解法3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 优先队列（有序数组实现）：Push 用插入排序维持 data 单调递增，Pop 取首元素&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 时间复杂度 O(N·k)，空间复杂度 O(k)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for singly-linked list.
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * type ListNode struct {
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Val int
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Next *ListNode
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * }
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;mergeKLists&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt; []&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dumy&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;{}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;newPriQueue&lt;/span&gt;()
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dumy&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Len&lt;/span&gt;() &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Pop&lt;/span&gt;()
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dumy&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 优先队列，升序&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;type&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;priQueue&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;data&lt;/span&gt; []&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;newPriQueue&lt;/span&gt;() &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueue&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueue&lt;/span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;: make([]&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;),
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueue&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Len&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Push 用插入排序维持 data 单调递增（Val 升序）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 时间复杂度 O(k)，空间复杂度 O(1)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueue&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 1. 线性扫描找到插入位置：第一个大于 v.Val 的位置 i&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; len(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;) &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 2. 在位置 i 插入 v：[i, n) 整体后移一位&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;, &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; copy(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;:], &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;:])
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Pop 取出队首（最小）节点；O(1)，依赖 Push 维持的有序性&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueue&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Pop&lt;/span&gt;() &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;:]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2026/06/28&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 解法4&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 堆（heap）实现：Push 末尾追加后 siftUp，Pop 交换首尾后 siftDown&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 时间复杂度 O(N log k)，空间复杂度 O(k)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 与解法3 共用同一接口（Push / Pop / Len），仅内部实现不同&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for singly-linked list.
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * type ListNode struct {
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Val int
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Next *ListNode
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * }
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;mergeKLists&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt; []&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dumy&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;{}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;newPriQueueHeap&lt;/span&gt;()
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;lists&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dumy&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Len&lt;/span&gt;() &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Pop&lt;/span&gt;()
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;pq&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dumy&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 优先队列，最小堆（按 Val 升序）&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;type&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;priQueueHeap&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;data&lt;/span&gt; []&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;newPriQueueHeap&lt;/span&gt;() &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueueHeap&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueueHeap&lt;/span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;: make([]&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;),
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueueHeap&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Len&lt;/span&gt;() &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Push 追加到末尾后沿父节点上浮，保持最小堆性质&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 时间复杂度 O(log k)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueueHeap&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Push&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;v&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt;) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// siftUp&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;) &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;parent&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;) &lt;span style="color:#f92672"&gt;/&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;parent&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;break&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;parent&lt;/span&gt;], &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;], &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;parent&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;parent&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// Pop 取出堆顶（最小）节点；末尾元素提到堆顶后下沉&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 时间复杂度 O(log k)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; (&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;priQueueHeap&lt;/span&gt;) &lt;span style="color:#a6e22e"&gt;Pop&lt;/span&gt;() &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;ListNode&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;) &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;top&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;) &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[:&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// siftDown&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;; ; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;break&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;smallest&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; &amp;lt; len(&lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;) &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;right&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;smallest&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;smallest&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;break&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;], &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;smallest&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;smallest&lt;/span&gt;], &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;data&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;smallest&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;top&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch02list/no.024_%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch02list/no.024_%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/</guid><description>&lt;h2 id="24-两两交换链表中的节点-中等"&gt;24 两两交换链表中的节点-中等&lt;a class="anchor" href="#24-%e4%b8%a4%e4%b8%a4%e4%ba%a4%e6%8d%a2%e9%93%be%e8%a1%a8%e4%b8%ad%e7%9a%84%e8%8a%82%e7%82%b9-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;复杂度对比&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch02list/no.024_%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch02list/no.024_%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/</guid><description>&lt;h2 id="24-两两交换链表中的节点-中等"&gt;24 两两交换链表中的节点-中等&lt;a class="anchor" href="#24-%e4%b8%a4%e4%b8%a4%e4%ba%a4%e6%8d%a2%e9%93%be%e8%a1%a8%e4%b8%ad%e7%9a%84%e8%8a%82%e7%82%b9-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;解题思路&lt;/strong&gt;&lt;/p&gt;
@@ -7743,26 +7500,64 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * param_2 := obj.HasNext();
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.199_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8F%B3%E8%A7%86%E5%9B%BE/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.199_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8F%B3%E8%A7%86%E5%9B%BE/</guid><description>&lt;h2 id="199-二叉树的右视图-中等"&gt;199 二叉树的右视图-中等&lt;a class="anchor" href="#199-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e5%8f%b3%e8%a7%86%e5%9b%be-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
-&lt;p&gt;给定一个二叉树的根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;解题思路&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;层序遍历的最后一个节点值。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/10/23&lt;/span&gt;
+&lt;p&gt;给定一个二叉树的根节点 &lt;code&gt;root&lt;/code&gt;，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = [1,2,3,null,5,null,4]
+输出：[1,3,4]
+解释：
+ 1 ← 看到 1
+ / \
+ 2 3 ← 看到 3
+ \ \
+ 5 4 ← 看到 4&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = [1,2,3,4,null,null,null,5]
+输出：[1,3,4,5]
+解释：右视图按层依次为 [1,3,4,5]&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = [1,null,3]
+输出：[1,3]&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = []
+输出：[]&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;关键观察：每层的最右节点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;站在右侧看二叉树，每一层只能看到&lt;strong&gt;该层最右边的节点&lt;/strong&gt;。因此问题等价于：&lt;strong&gt;取每一层的最后一个节点（或按层序遍历反序取第一个）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;两种经典思路：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BFS（层序遍历）&lt;/strong&gt;：逐层访问，取每层最右侧节点。可以左→右遍历取最后一个，也可以右→左遍历取第一个。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DFS（深度优先）&lt;/strong&gt;：按&amp;quot;根 → 右 → 左&amp;quot;的顺序遍历，&lt;strong&gt;每层第一个访问到的节点&lt;/strong&gt;就是从右侧看到的节点。用一个 &lt;code&gt;depth&lt;/code&gt; 参数跟踪当前深度，当 &lt;code&gt;len(res) == depth&lt;/code&gt; 时说明这是该层首次访问，加入结果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;解法 1：BFS 层序遍历（左→右，取最后一个）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;最直观的写法：标准层序遍历，每层遍历结束后取最后一个节点。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2026/07/08&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for a binary tree node.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * type TreeNode struct {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Val int
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Left *TreeNode
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Right *TreeNode
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;rightSideView&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; { &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;) &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; { &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;) }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; { &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;) }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;:]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; []&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;{&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 每层最后一个节点即右视图节点&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;].&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;:]
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.2236_%E5%88%A4%E6%96%AD%E6%A0%B9%E8%8A%82%E7%82%B9%E6%98%AF%E5%90%A6%E7%AD%89%E4%BA%8E%E5%AD%90%E8%8A%82%E7%82%B9%E4%B9%8B%E5%92%8C/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.2236_%E5%88%A4%E6%96%AD%E6%A0%B9%E8%8A%82%E7%82%B9%E6%98%AF%E5%90%A6%E7%AD%89%E4%BA%8E%E5%AD%90%E8%8A%82%E7%82%B9%E4%B9%8B%E5%92%8C/</guid><description>&lt;h2 id="2236-判断根节点是否等于子节点之和-简单"&gt;2236 判断根节点是否等于子节点之和-简单&lt;a class="anchor" href="#2236-%e5%88%a4%e6%96%ad%e6%a0%b9%e8%8a%82%e7%82%b9%e6%98%af%e5%90%a6%e7%ad%89%e4%ba%8e%e5%ad%90%e8%8a%82%e7%82%b9%e4%b9%8b%e5%92%8c-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;解法 1 变体：BFS（右→左，取第一个）&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.2236_%E5%88%A4%E6%96%AD%E6%A0%B9%E8%8A%82%E7%82%B9%E6%98%AF%E5%90%A6%E7%AD%89%E4%BA%8E%E5%AD%90%E8%8A%82%E7%82%B9%E4%B9%8B%E5%92%8C/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.2236_%E5%88%A4%E6%96%AD%E6%A0%B9%E8%8A%82%E7%82%B9%E6%98%AF%E5%90%A6%E7%AD%89%E4%BA%8E%E5%AD%90%E8%8A%82%E7%82%B9%E4%B9%8B%E5%92%8C/</guid><description>&lt;h2 id="2236-判断根节点是否等于子节点之和-简单"&gt;2236 判断根节点是否等于子节点之和-简单&lt;a class="anchor" href="#2236-%e5%88%a4%e6%96%ad%e6%a0%b9%e8%8a%82%e7%82%b9%e6%98%af%e5%90%a6%e7%ad%89%e4%ba%8e%e5%ad%90%e8%8a%82%e7%82%b9%e4%b9%8b%e5%92%8c-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个 &lt;strong&gt;二叉树&lt;/strong&gt; 的根结点 &lt;code&gt;root&lt;/code&gt;，该二叉树由恰好 &lt;code&gt;3&lt;/code&gt; 个结点组成：根结点、左子结点和右子结点。&lt;/p&gt;
 &lt;p&gt;如果根结点值等于两个子结点值之和，返回 &lt;code&gt;true&lt;/code&gt; ，否则返回 &lt;code&gt;false&lt;/code&gt; 。&lt;/p&gt;
@@ -7849,34 +7644,18 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.236_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.236_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/</guid><description>&lt;h2 id="236-二叉树的最近公共祖先-中等"&gt;236 二叉树的最近公共祖先-中等&lt;a class="anchor" href="#236-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。&lt;/p&gt;
-&lt;p&gt;百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”&lt;/p&gt;
-&lt;p&gt;分析：&lt;/p&gt;
-&lt;p&gt;这里主要是把思路转变一下，通过寻找 p, q 在二叉树的位置来判断。&lt;/p&gt;
-&lt;p&gt;如果 p, q 分别位于二叉树的左右子树中，那么 root 就是最近的公共祖先。&lt;/p&gt;
-&lt;p&gt;否则，在左右子树中分别递归查找。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/10/24&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for a binary tree node.
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * type TreeNode struct {
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Val int
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Left *TreeNode
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Right *TreeNode
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * }
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;lowestCommonAncestor&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; &lt;span style="color:#f92672"&gt;||&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt; &lt;span style="color:#f92672"&gt;||&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;lowestCommonAncestor&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;lowestCommonAncestor&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;p&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;q&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;right&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;left&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.255_%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.255_%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/</guid><description>&lt;h2 id="255-验证二叉搜索树的前序遍历序列"&gt;255 验证二叉搜索树的前序遍历序列&lt;a class="anchor" href="#255-%e9%aa%8c%e8%af%81%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e5%89%8d%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;百度百科中最近公共祖先的定义为：&amp;ldquo;对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。&amp;rdquo;&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+输出：3
+解释：节点 5 和节点 1 的最近公共祖先是节点 3 。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+输出：5
+解释：节点 5 和节点 4 的最近公共祖先是节点 5 。因为根据定义，一个节点可以是它自己的祖先。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = [1,2], p = 1, q = 2
+输出：1&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;关键观察：递归返回值的三种含义&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;递归函数 &lt;code&gt;dfs(node)&lt;/code&gt; 在 node 的子树中查找 p 和 q，返回值有三种可能：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.255_%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.255_%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/</guid><description>&lt;h2 id="255-验证二叉搜索树的前序遍历序列"&gt;255 验证二叉搜索树的前序遍历序列&lt;a class="anchor" href="#255-%e9%aa%8c%e8%af%81%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e5%89%8d%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给定一个 &lt;strong&gt;无重复元素&lt;/strong&gt; 的整数数组 &lt;code&gt;preorder&lt;/code&gt; ， &lt;em&gt;如果它是以二叉搜索树的&lt;strong&gt;先序遍历&lt;/strong&gt;排列&lt;/em&gt; ，返回 &lt;code&gt;true&lt;/code&gt; 。&lt;/p&gt;
 &lt;blockquote class='book-hint '&gt;
@@ -8330,13 +8109,26 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;deorder&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.543_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.543_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/</guid><description>&lt;h2 id="543-二叉树的直径"&gt;543 二叉树的直径&lt;a class="anchor" href="#543-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e7%9b%b4%e5%be%84"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.543_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.543_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/</guid><description>&lt;h2 id="543-二叉树的直径-简单"&gt;543 二叉树的直径-简单&lt;a class="anchor" href="#543-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e7%9b%b4%e5%be%84-%e7%ae%80%e5%8d%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一棵二叉树的根节点，返回该树的 &lt;strong&gt;直径&lt;/strong&gt; 。&lt;/p&gt;
 &lt;p&gt;二叉树的 &lt;strong&gt;直径&lt;/strong&gt; 是指树中任意两个节点之间最长路径的 &lt;strong&gt;长度&lt;/strong&gt; 。这条路径可能经过也可能不经过根节点 &lt;code&gt;root&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;两节点之间路径的 &lt;strong&gt;长度&lt;/strong&gt; 由它们之间边数表示。&lt;/p&gt;
-&lt;p&gt;分析：&lt;/p&gt;
-&lt;p&gt;所谓直径就是每个节点的左右子树深度之和的全局最大值。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = [1,2,3,4,5]
+输出：3
+解释：3，取路径 [4,2,1,3] 或 [5,2,1,3] 的长度。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：root = [1,2]
+输出：1&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;关键观察：直径 = 左右子树深度之和的全局最大值&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于任意节点，&lt;strong&gt;经过该节点的&amp;quot;局部直径&amp;quot; = 左子树深度 + 右子树深度&lt;/strong&gt;（深度以边数计，叶子节点深度为 0）。&lt;/li&gt;
+&lt;li&gt;全局直径 = 所有节点局部直径的最大值。路径&lt;strong&gt;可能不经过根节点&lt;/strong&gt;，因此必须在每个节点都计算一次，而不能只在根节点算——这是本题最容易出错的地方。&lt;/li&gt;
+&lt;li&gt;**后序遍历（DFS 自底向上）**天然适合此题：先递归得到左右子树的深度，用它们的和更新全局答案，再向上返回&amp;quot;当前节点为根的子树深度&amp;quot;（&lt;code&gt;1 + max(左深, 右深)&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;该题与「二叉树的最大深度」（No.104）共享同一递归骨架，区别仅在于多了一个&amp;quot;在返回深度之前用 &lt;code&gt;左深+右深&lt;/code&gt; 更新直径&amp;quot;的步骤。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;解法 1：DFS 后序遍历 + 全局变量&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;每次递归返回子树深度的同时，用 &lt;code&gt;左深 + 右深&lt;/code&gt; 更新全局最大值。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/10/25&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for a binary tree node.
@@ -8349,27 +8141,27 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;diameterOfBinaryTree&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;depth&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;depth&lt;/span&gt; = &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;depth&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;depth&lt;/span&gt; = &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;node&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;l&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;r&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;depth&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;), &lt;span style="color:#a6e22e"&gt;depth&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// update ans&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;r&lt;/span&gt; &amp;gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;l&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;depth&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;r&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;depth&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 经过当前节点的局部直径 = 左深 + 右深&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;r&lt;/span&gt; &amp;gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;l&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;r&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 向上返回子树深度（边数）&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l&lt;/span&gt; &amp;gt; &lt;span style="color:#a6e22e"&gt;r&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;l&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;r&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;r&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;depth&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ans&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.545_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%BE%B9%E7%95%8C/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.545_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%BE%B9%E7%95%8C/</guid><description>&lt;h2 id="545-二叉树的边界-中等"&gt;545 二叉树的边界-中等&lt;a class="anchor" href="#545-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e8%be%b9%e7%95%8c-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;解法 1 变体：更简洁的写法&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.545_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%BE%B9%E7%95%8C/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.545_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%BE%B9%E7%95%8C/</guid><description>&lt;h2 id="545-二叉树的边界-中等"&gt;545 二叉树的边界-中等&lt;a class="anchor" href="#545-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e8%be%b9%e7%95%8c-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给定一个二叉树，按逆时针返回其边界。&lt;/p&gt;
 &lt;p&gt;分析：&lt;/p&gt;
@@ -9794,7 +9586,31 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;longest&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;解法1（DP 边界更新）&lt;/strong&gt; 以 &lt;code&gt;nums = [100,4,200,1,3,2]&lt;/code&gt; 为例：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch08hash/no.349_%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch08hash/no.349_%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86/</guid><description>&lt;h2 id="349-两个数组的交集"&gt;349 两个数组的交集&lt;a class="anchor" href="#349-%e4%b8%a4%e4%b8%aa%e6%95%b0%e7%bb%84%e7%9a%84%e4%ba%a4%e9%9b%86"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;解法1（DP 边界更新）&lt;/strong&gt; 以 &lt;code&gt;nums = [100,4,200,1,3,2]&lt;/code&gt; 为例：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch08hash/no.166_%E5%88%86%E6%95%B0%E5%88%B0%E5%B0%8F%E6%95%B0/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch08hash/no.166_%E5%88%86%E6%95%B0%E5%88%B0%E5%B0%8F%E6%95%B0/</guid><description>&lt;h2 id="166-分数到小数-中等"&gt;166 分数到小数-中等&lt;a class="anchor" href="#166-%e5%88%86%e6%95%b0%e5%88%b0%e5%b0%8f%e6%95%b0-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定两个整数，分别表示分数的分子 &lt;code&gt;numerator&lt;/code&gt; 和分母 &lt;code&gt;denominator&lt;/code&gt;，以 &lt;strong&gt;字符串形式&lt;/strong&gt; 返回小数。&lt;/p&gt;
+&lt;p&gt;如果小数部分为循环小数，则将循环的部分括在括号内。&lt;/p&gt;
+&lt;p&gt;如果存在多个答案，只需返回 &lt;strong&gt;任意一个&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;对于所有给定的输入，保证 &lt;strong&gt;答案字符串的长度小于 10^4&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;注意，如果分数可以表示为有限长度的字符串，则 &lt;strong&gt;必须&lt;/strong&gt; 返回它。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：numerator = 1, denominator = 2
+输出：&amp;#34;0.5&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：numerator = 2, denominator = 1
+输出：&amp;#34;2&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：numerator = 4, denominator = 333
+输出：&amp;#34;0.(012)&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：numerator = 1, denominator = 6
+输出：&amp;#34;0.1(6)&amp;#34;&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;关键观察：长除法 + 哈希表检测余数循环&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;分数转小数本质是模拟&lt;strong&gt;长除法（long division）&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先处理&lt;strong&gt;符号&lt;/strong&gt;：同号为正，异号为负。&lt;/li&gt;
+&lt;li&gt;算出&lt;strong&gt;整数部分&lt;/strong&gt;：&lt;code&gt;|numerator| / |denominator|&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;如有余数，开始小数部分：余数 × 10 ÷ 分母，商追加到结果，余数更新为 &lt;code&gt;余数 × 10 % 分母&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;核心&lt;/strong&gt;：小数部分的每一步产生一个新余数。如果某个余数&lt;strong&gt;重复出现&lt;/strong&gt;，则之后的商也会重复——这就是循环节。用哈希表 &lt;code&gt;map[余数]→位置&lt;/code&gt; 记录每个余数首次出现在结果字符串中的位置，当余数再次出现时，在该位置前插入 &lt;code&gt;(&lt;/code&gt;，末尾加 &lt;code&gt;)&lt;/code&gt;，结束。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;边缘情况&lt;/strong&gt;：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch08hash/no.349_%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch08hash/no.349_%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86/</guid><description>&lt;h2 id="349-两个数组的交集"&gt;349 两个数组的交集&lt;a class="anchor" href="#349-%e4%b8%a4%e4%b8%aa%e6%95%b0%e7%bb%84%e7%9a%84%e4%ba%a4%e9%9b%86"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;给定两个数组 &lt;code&gt;nums1&lt;/code&gt; 和 &lt;code&gt;nums2&lt;/code&gt; ，返回 &lt;em&gt;它们的 交集&lt;/em&gt; 。输出结果中的每个元素一定是 &lt;strong&gt;唯一&lt;/strong&gt; 的。我们可以 &lt;strong&gt;不考虑输出结果的顺序&lt;/strong&gt; 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;输入：nums1 = [1,2,2,1], nums2 = [2,2]
@@ -13781,27 +13597,22 @@ mincost[0][0] = cost[0][0]&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="算法实现"&gt;�
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="动规的泛化写法"&gt;动规的泛化写法&lt;a class="anchor" href="#%e5%8a%a8%e8%a7%84%e7%9a%84%e6%b3%9b%e5%8c%96%e5%86%99%e6%b3%95"&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 递推公式 dp[i] 表示第 i 个台阶有多少种走法&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// dp[i] = dp[i-1] + dp[i-2]，即两种情况&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 第一种：到达 i-1 的总解数，再走 1 步就到达 i&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 第二种：到达 i-2 的总解数，再走 2 步就到达 i&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;climbStairs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;steps&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;{&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="与-no377-组合总和--的关系"&gt;与 No.377 组合总和 Ⅳ 的关系&lt;a class="anchor" href="#%e4%b8%8e-no377-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c--%e7%9a%84%e5%85%b3%e7%b3%bb"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;No.070 本质上是 No.377 的特例&lt;/strong&gt;：&lt;code&gt;nums = [1, 2]&lt;/code&gt;，&lt;code&gt;target = n&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;爬楼梯求的是&lt;strong&gt;排列数&lt;/strong&gt;，而非组合数——先走 1 步再走 2 步，与先走 2 步再走 1 步，是两条不同的路径。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// No.377 的写法，nums = [1, 2]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;combinationSum4&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;target&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;target&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;] = &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;step&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;steps&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;step&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;continue&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;step&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;target&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; { &lt;span style="color:#75715e"&gt;// 外层：目标&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;num&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt; { &lt;span style="color:#75715e"&gt;// 内层：可选步长&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;num&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;num&lt;/span&gt;]
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.072_%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.072_%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/</guid><description>&lt;h2 id="72-编辑距离-中等"&gt;72 编辑距离-中等&lt;a class="anchor" href="#72-%e7%bc%96%e8%be%91%e8%b7%9d%e7%a6%bb-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;target&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对比 No.070 泛化写法——&lt;strong&gt;结构完全一致&lt;/strong&gt;：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.072_%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.072_%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/</guid><description>&lt;h2 id="72-编辑距离-中等"&gt;72 编辑距离-中等&lt;a class="anchor" href="#72-%e7%bc%96%e8%be%91%e8%b7%9d%e7%a6%bb-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你两个单词 word1 和 word2， 请返回将 word1 转换成 word2 所使用的最少操作数 。&lt;/p&gt;
 &lt;p&gt;你可以对一个单词进行如下三种操作：&lt;/p&gt;
@@ -14212,34 +14023,37 @@ dp[i] = max(dp[i], dp[j]+1)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;算法 1：标准�
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;算法2：贪心+二分查找&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.322_%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.322_%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/</guid><description>&lt;h2 id="322-零钱兑换-中等"&gt;322 零钱兑换-中等&lt;a class="anchor" href="#322-%e9%9b%b6%e9%92%b1%e5%85%91%e6%8d%a2-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。&lt;/p&gt;
-&lt;p&gt;计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。&lt;/p&gt;
+&lt;p&gt;计算并返回可以凑成总金额所需的 &lt;strong&gt;最少的硬币个数&lt;/strong&gt; 。如果没有任何一种硬币组合能组成总金额，返回 -1 。&lt;/p&gt;
 &lt;p&gt;你可以认为每种硬币的数量是无限的。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;解题思路&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;该问题具有最优子结构，设目标值为 target，目标值对应的最优解为 opt[target]，那么在所有的硬币里面可以得到下面的递推公式：&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;opt[target] = min(opt[target], 1+opt[target-coin])&lt;/code&gt;&lt;/pre&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/11/08&lt;/span&gt;
+&lt;p&gt;&lt;strong&gt;关键观察&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;最优子结构&lt;/strong&gt;：凑出金额 &lt;code&gt;target&lt;/code&gt; 的最优解，可以由&amp;quot;先凑出 &lt;code&gt;target - coin&lt;/code&gt;，再加一枚 &lt;code&gt;coin&lt;/code&gt;&amp;ldquo;得到。即 &lt;code&gt;opt[target] = min(opt[target], 1 + opt[target - coin])&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;无限硬币&lt;/strong&gt;：每枚硬币可以重复使用，因此内层正序遍历金额（完全背包）即可，与 No.518 的循环顺序一致。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;无法凑出&lt;/strong&gt;：用 &lt;code&gt;amount + 1&lt;/code&gt; 作为&amp;quot;不可达&amp;quot;的哨兵值（因为最坏情况也只需要 amount 枚 1 元硬币），最终 &lt;code&gt;dp[amount]&lt;/code&gt; 仍为此值则返回 -1。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;解法一：DP 自底向上（完全背包）&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/11/08&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;coinChange&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;coins&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#75715e"&gt;// dp[i] 凑出 i 金额的最少硬币数量&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;] = &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; &lt;span style="color:#75715e"&gt;// 哨兵：不可达&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// dp[0] = 0 已由 make 初始化&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;coin&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;coins&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;			&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;coin&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;				&lt;span style="color:#66d9ef"&gt;continue&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;			}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;			&lt;span style="color:#75715e"&gt;// pick up this coin&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;			&lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = min(&lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;], &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;coin&lt;/span&gt;])
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;coin&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;coins&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;coin&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;continue&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] = min(&lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;], &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;coin&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.337_%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.337_%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D3/</guid><description>&lt;h2 id="打家劫舍3-中等"&gt;打家劫舍3-中等&lt;a class="anchor" href="#%e6%89%93%e5%ae%b6%e5%8a%ab%e8%88%8d3-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;] &amp;gt; &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;交换内外层循环也正确（与 No.518 不同，这里求的是&lt;strong&gt;最小值&lt;/strong&gt;而非组合数，顺序不影响最优解）：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.337_%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.337_%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D3/</guid><description>&lt;h2 id="打家劫舍3-中等"&gt;打家劫舍3-中等&lt;a class="anchor" href="#%e6%89%93%e5%ae%b6%e5%8a%ab%e8%88%8d3-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;小偷又发现了一个新的可行窃的地区。这个地区只有一个入口，我们称之为 &lt;code&gt;root&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;除了 &lt;code&gt;root&lt;/code&gt; 之外，每栋房子有且只有一个“父“房子与之相连。一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。 如果 &lt;strong&gt;两个直接相连的房子在同一天晚上被打劫&lt;/strong&gt; ，房屋将自动报警。&lt;/p&gt;
@@ -14282,7 +14096,26 @@ dp[i] = max(dp[i], dp[j]+1)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;算法 1：标准�
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;x&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;y&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.416_%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.416_%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/</guid><description>&lt;h2 id="416-分割等和子集"&gt;416 分割等和子集&lt;a class="anchor" href="#416-%e5%88%86%e5%89%b2%e7%ad%89%e5%92%8c%e5%ad%90%e9%9b%86"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.377_%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.377_%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C4/</guid><description>&lt;h2 id="377-组合总和--中等"&gt;377 组合总和 Ⅳ-中等&lt;a class="anchor" href="#377-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c--%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给你一个由 &lt;strong&gt;不同&lt;/strong&gt; 整数组成的数组 &lt;code&gt;nums&lt;/code&gt;，和一个目标整数 &lt;code&gt;target&lt;/code&gt;。请你从 &lt;code&gt;nums&lt;/code&gt; 中找出并返回总和为 &lt;code&gt;target&lt;/code&gt; 的元素组合的个数。&lt;/p&gt;
+&lt;p&gt;题目数据保证答案符合 32 位整数范围。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关键观察&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;虽然题目叫&amp;quot;组合总和&amp;quot;，但实际求的是&lt;strong&gt;排列数&lt;/strong&gt;——不同顺序视为不同方案。&lt;/p&gt;
+&lt;p&gt;例如 &lt;code&gt;nums = [1,2,3]&lt;/code&gt;, &lt;code&gt;target = 4&lt;/code&gt;，答案为 7：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;(1,1,1,1) (1,1,2) (1,2,1) (1,3)
+(2,1,1) (2,2) (3,1)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;注意 &lt;code&gt;(1,1,2)&lt;/code&gt;、&lt;code&gt;(1,2,1)&lt;/code&gt;、&lt;code&gt;(2,1,1)&lt;/code&gt; 被计为 3 种——这就是排列。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;DP 转移方程&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;定义 &lt;code&gt;dp[i]&lt;/code&gt; = 总和为 &lt;code&gt;i&lt;/code&gt; 的排列个数。对每个 &lt;code&gt;num&lt;/code&gt;，可以把它拼到结果为 &lt;code&gt;i - num&lt;/code&gt; 的排列末尾：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;dp[i] = Σ dp[i - num] (对每个 num ≤ i)
+dp[0] = 1 // 凑出 0 有一种：什么都不选&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;决定成败的关键——循环顺序&lt;/strong&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;target&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; { &lt;span style="color:#75715e"&gt;// 外层：金额&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;num&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;range&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt; { &lt;span style="color:#75715e"&gt;// 内层：数字&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;num&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;num&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;外层金额、内层数字 → &lt;strong&gt;排列数&lt;/strong&gt;（本题要的）。因为对每个金额 &lt;code&gt;i&lt;/code&gt;，依次尝试用各个数字作为&amp;quot;最后一个&amp;quot;，排列 &lt;code&gt;{1,2}&lt;/code&gt; 和 &lt;code&gt;{2,1}&lt;/code&gt; 会分别在不同轮次被计入。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.416_%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.416_%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/</guid><description>&lt;h2 id="416-分割等和子集"&gt;416 分割等和子集&lt;a class="anchor" href="#416-%e5%88%86%e5%89%b2%e7%ad%89%e5%92%8c%e5%ad%90%e9%9b%86"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个 &lt;strong&gt;只包含正整数&lt;/strong&gt; 的 &lt;strong&gt;非空&lt;/strong&gt; 数组 &lt;code&gt;nums&lt;/code&gt; 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。&lt;/p&gt;
 &lt;blockquote class='book-hint '&gt;
@@ -14380,7 +14213,28 @@ dp[j] += dp[j - coin]&lt;/li&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;coin&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;in&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;coins&lt;/span&gt;: &lt;span style="color:#960050;background-color:#1e0010"&gt;#&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;外层&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;：&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;物品&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;j&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;from&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;coin&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;to&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;amount&lt;/span&gt;: &lt;span style="color:#960050;background-color:#1e0010"&gt;#&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;内层&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;：&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;背包&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;（&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;金额&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;），&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;正序&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;j&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dp&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;j&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;coin&lt;/span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;为什么这样就是&amp;quot;组合&amp;quot;？因为外层固定先处理硬币 A、再处理硬币 B，于是 {A, B} 只会按这个固定顺序被累加一次，不会出现 {B, A} 的重复计数。&lt;/p&gt;
-&lt;p&gt;▎ ⚠️ 如果把两层反过来（外层金额、内层硬币），算出来的是排列数，即 LeetCode 377（组合总和 Ⅳ）。同一组硬币不同顺序会被当成不同方案，本题就错了。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.673_%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97%E7%9A%84%E4%B8%AA%E6%95%B0/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.673_%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97%E7%9A%84%E4%B8%AA%E6%95%B0/</guid><description>&lt;h2 id="673-最长递增子序列的个数-中等"&gt;673 最长递增子序列的个数-中等&lt;a class="anchor" href="#673-%e6%9c%80%e9%95%bf%e9%80%92%e5%a2%9e%e5%ad%90%e5%ba%8f%e5%88%97%e7%9a%84%e4%b8%aa%e6%95%b0-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;▎ ⚠️ 如果把两层反过来（外层金额、内层硬币），算出来的是排列数，即 LeetCode 377（组合总和 Ⅳ）。同一组硬币不同顺序会被当成不同方案，本题就错了。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.583_%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.583_%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C/</guid><description>&lt;h2 id="583-两个字符串的删除操作-中等"&gt;583 两个字符串的删除操作-中等&lt;a class="anchor" href="#583-%e4%b8%a4%e4%b8%aa%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9a%84%e5%88%a0%e9%99%a4%e6%93%8d%e4%bd%9c-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给定两个单词 word1 和 word2，返回使得 word1 和 word2 &lt;strong&gt;相同&lt;/strong&gt;所需的最小步数。每步可以删除任意一个字符串中的一个字符。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关键观察&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这题与 &lt;a href="../No.1143_%e6%9c%80%e9%95%bf%e5%85%ac%e5%85%b1%e5%ad%90%e5%ba%8f%e5%88%97/"&gt;No.1143 最长公共子序列&lt;/a&gt; 和 &lt;a href="../No.072_%e7%bc%96%e8%be%91%e8%b7%9d%e7%a6%bb/"&gt;No.72 编辑距离&lt;/a&gt; 高度相关。&lt;/p&gt;
+&lt;p&gt;要使两个字符串相同，等价于：保留它们的最长公共子序列（LCS），删除其余字符。因此：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;最小删除步数 = len(word1) + len(word2) - 2 × LCS(word1, word2)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;例如 &lt;code&gt;word1 = &amp;quot;sea&amp;quot;&lt;/code&gt;, &lt;code&gt;word2 = &amp;quot;eat&amp;quot;&lt;/code&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;LCS = &amp;ldquo;ea&amp;rdquo;，长度为 2&lt;/li&gt;
+&lt;li&gt;最小步数 = 3 + 3 - 2×2 = 2&lt;/li&gt;
+&lt;li&gt;操作：删除 word1 的 &amp;rsquo;s&amp;rsquo;，删除 word2 的 &amp;rsquo;t&amp;rsquo;，得到 &amp;ldquo;ea&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;解法一：直接 DP（定义删除次数）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;定义 &lt;code&gt;dp[i][j]&lt;/code&gt; 表示使 &lt;code&gt;word1[0:i]&lt;/code&gt; 和 &lt;code&gt;word2[0:j]&lt;/code&gt; 相同的最小删除步数。&lt;/p&gt;
+&lt;p&gt;转移方程：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;1. word1[i-1] == word2[j-1]
+ dp[i][j] = dp[i-1][j-1] // 字符相等，无需删除
+
+2. word1[i-1] != word2[j-1]
+ dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + 1
+ // dp[i-1][j] + 1：删除 word1 的当前字符
+ // dp[i][j-1] + 1：删除 word2 的当前字符&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;初始条件：&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch18dp/no.673_%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97%E7%9A%84%E4%B8%AA%E6%95%B0/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch18dp/no.673_%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97%E7%9A%84%E4%B8%AA%E6%95%B0/</guid><description>&lt;h2 id="673-最长递增子序列的个数-中等"&gt;673 最长递增子序列的个数-中等&lt;a class="anchor" href="#673-%e6%9c%80%e9%95%bf%e9%80%92%e5%a2%9e%e5%ad%90%e5%ba%8f%e5%88%97%e7%9a%84%e4%b8%aa%e6%95%b0-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给定一个未排序的整数数组 nums ， 返回最长递增子序列的个数 。&lt;/p&gt;
 &lt;p&gt;注意 这个数列必须是 严格 递增的。&lt;/p&gt;

@@ -205,7 +205,28 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; float64(&lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; (float64(&lt;span style="color:#a6e22e"&gt;pre&lt;/span&gt;)&lt;span style="color:#f92672"&gt;+&lt;/span&gt;float64(&lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;))&lt;span style="color:#f92672"&gt;/&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch01array/no.011_%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch01array/no.011_%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</guid><description>&lt;h2 id="11-盛最多水的容器-中等"&gt;11 盛最多水的容器-中等&lt;a class="anchor" href="#11-%e7%9b%9b%e6%9c%80%e5%a4%9a%e6%b0%b4%e7%9a%84%e5%ae%b9%e5%99%a8-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch01array/no.007_%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch01array/no.007_%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC/</guid><description>&lt;h2 id="7-整数反转-中等"&gt;7 整数反转-中等&lt;a class="anchor" href="#7-%e6%95%b4%e6%95%b0%e5%8f%8d%e8%bd%ac-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给你一个 32 位的有符号整数 &lt;code&gt;x&lt;/code&gt; ，返回将 &lt;code&gt;x&lt;/code&gt; 中的数字部分反转后的结果。&lt;/p&gt;
+&lt;p&gt;如果反转后整数超过 32 位的有符号整数的范围 &lt;code&gt;[−2^31, 2^31 − 1]&lt;/code&gt;，就返回 0。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;假设环境不允许存储 64 位整数（有符号或无符号）。&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：x = 123
+输出：321&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：x = -123
+输出：-321&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：x = 120
+输出：21&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：x = 0
+输出：0&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;关键观察：在溢出发生之前预判&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;核心操作是逐位弹出和压入：&lt;code&gt;pop = x % 10; x /= 10; rev = rev*10 + pop&lt;/code&gt;。问题在于最后一步 &lt;code&gt;rev*10 + pop&lt;/code&gt; 可能溢出。&lt;/p&gt;
+&lt;p&gt;由于题目&lt;strong&gt;禁止使用 64 位整数&lt;/strong&gt;，不能在溢出后再判断——必须在乘法之前预判：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;正数溢出条件：&lt;code&gt;rev &amp;gt; INT_MAX/10&lt;/code&gt; 或 &lt;code&gt;rev == INT_MAX/10 &amp;amp;&amp;amp; pop &amp;gt; 7&lt;/code&gt;（因为 &lt;code&gt;INT_MAX = 2147483647&lt;/code&gt;，个位是 7）&lt;/li&gt;
+&lt;li&gt;负数溢出条件：&lt;code&gt;rev &amp;lt; INT_MIN/10&lt;/code&gt; 或 &lt;code&gt;rev == INT_MIN/10 &amp;amp;&amp;amp; pop &amp;lt; -8&lt;/code&gt;（因为 &lt;code&gt;INT_MIN = -2147483648&lt;/code&gt;，个位是 -8）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Go 语言特例&lt;/strong&gt;：Go 的 &lt;code&gt;int&lt;/code&gt; 在 64 位机器上是 64 位，如果直接用 &lt;code&gt;math.MaxInt32&lt;/code&gt; / &lt;code&gt;math.MinInt32&lt;/code&gt; 比较，实际上并没有违反&amp;quot;不允许存储 64 位整数&amp;quot;的精神——因为 Go 没有原生的 32 位整数溢出检查机制。但更严谨的写法是使用 &lt;code&gt;math.MaxInt32&lt;/code&gt; 常量参与预判逻辑，而非将结果存入 &lt;code&gt;int64&lt;/code&gt; 再比较。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch01array/no.011_%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch01array/no.011_%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</guid><description>&lt;h2 id="11-盛最多水的容器-中等"&gt;11 盛最多水的容器-中等&lt;a class="anchor" href="#11-%e7%9b%9b%e6%9c%80%e5%a4%9a%e6%b0%b4%e7%9a%84%e5%ae%b9%e5%99%a8-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给定一个长度为 &lt;code&gt;n&lt;/code&gt; 的整数数组 &lt;code&gt;height&lt;/code&gt; 。有 &lt;code&gt;n&lt;/code&gt; 条垂线，第 &lt;code&gt;i&lt;/code&gt; 条线的两个端点是 &lt;code&gt;(i, 0)&lt;/code&gt; 和 &lt;code&gt;(i, height[i])&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;找出其中的两条线，使得它们与 &lt;code&gt;x&lt;/code&gt; 轴共同构成的容器可以容纳最多的水。&lt;/p&gt;
