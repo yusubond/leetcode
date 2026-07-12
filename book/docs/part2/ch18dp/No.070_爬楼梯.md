@@ -31,13 +31,32 @@ func climbStairs(n int) int {
 
 
 
-## 动规的泛化写法
+## 与 No.377 组合总和 Ⅳ 的关系
+
+**No.070 本质上是 No.377 的特例**：`nums = [1, 2]`，`target = n`。
+
+爬楼梯求的是**排列数**，而非组合数——先走 1 步再走 2 步，与先走 2 步再走 1 步，是两条不同的路径。
 
 ```go
-// 递推公式 dp[i] 表示第 i 个台阶有多少种走法
-// dp[i] = dp[i-1] + dp[i-2]，即两种情况
-// 第一种：到达 i-1 的总解数，再走 1 步就到达 i
-// 第二种：到达 i-2 的总解数，再走 2 步就到达 i
+// No.377 的写法，nums = [1, 2]
+func combinationSum4(nums []int, target int) int {
+    dp := make([]int, target+1)
+    dp[0] = 1
+    for i := 1; i <= target; i++ {       // 外层：目标
+        for _, num := range nums {        // 内层：可选步长
+            if i >= num {
+                dp[i] += dp[i-num]
+            }
+        }
+    }
+    return dp[target]
+}
+```
+
+对比 No.070 泛化写法——**结构完全一致**：
+
+```go
+// date 2023/11/07
 func climbStairs(n int) int {
     dp := make([]int, n+1)
     steps := []int{1, 2}
@@ -55,4 +74,15 @@ func climbStairs(n int) int {
     return dp[n]
 }
 ```
+
+**循环顺序决定排列还是组合**：
+
+| 循环方式 | 结果 | 应用到爬楼梯 |
+|---------|------|-------------|
+| 外层目标 i，内层步长 → **排列数** | No.377 / No.070 泛化写法 | 1→2 和 2→1 是不同的路径 |
+| 外层步长，内层目标 i → **组合数** | No.518 零钱兑换 2 | 对爬楼梯无意义（同组步长只计一次） |
+
+**推广到任意步长**：若每次可爬 `[1, 2, 3]` 步，递推公式为 `dp[i] = dp[i-1] + dp[i-2] + dp[i-3]`；若步长集合为 `steps`，则为 `dp[i] = Σ dp[i-step]`。这就是 No.377 的泛化写法。
+
+> **一句话**：爬楼梯 = 用步长集合 `steps` 凑出目标 `n` 的排列数，等价于 No.377(nums=steps, target=n)。斐波那契写法（`dp[i]=dp[i-1]+dp[i-2]`）只是 `steps=[1,2]` 时的特例优化。
 
