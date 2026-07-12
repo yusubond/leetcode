@@ -15655,8 +15655,48 @@ mapSum.sum(&amp;#34;ap&amp;#34;); // 返回 5 (apple + app = 3 + 2 = 5)&lt;/code
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 6 的二进制是 0b110&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;8 &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;6&lt;/span&gt; + 2^1
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 7 的二进制是 0b111&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;8 &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;7&lt;/span&gt; + 2^0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从另一个角度看，&lt;code&gt;2^k&lt;/code&gt;也是 son 下标的二进制表示形式中从尾部数第一个 1 所代表的数值。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part3/ch26/readme/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch26/readme/</guid><description>&lt;h1 id="第-21-章-图"&gt;第 21 章 图&lt;a class="anchor" href="#%e7%ac%ac-21-%e7%ab%a0-%e5%9b%be"&gt;#&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;待更新&amp;hellip;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</guid><description>&lt;h2 id="177-第n高的薪水-中等"&gt;177 第N高的薪水-中等&lt;a class="anchor" href="#177-%e7%ac%acn%e9%ab%98%e7%9a%84%e8%96%aa%e6%b0%b4-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;8 &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;7&lt;/span&gt; + 2^0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从另一个角度看，&lt;code&gt;2^k&lt;/code&gt;也是 son 下标的二进制表示形式中从尾部数第一个 1 所代表的数值。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part3/ch26/no.1462_%E8%AF%BE%E7%A8%8B%E8%A1%A84/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch26/no.1462_%E8%AF%BE%E7%A8%8B%E8%A1%A84/</guid><description>&lt;h2 id="1462-课程表4-中等"&gt;1462 课程表4-中等&lt;a class="anchor" href="#1462-%e8%af%be%e7%a8%8b%e8%a1%a84-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;你总共需要上 &lt;code&gt;numCourses&lt;/code&gt; 门课，课程编号依次为 &lt;code&gt;0&lt;/code&gt; 到 &lt;code&gt;numCourses-1&lt;/code&gt; 。你会得到一个数组 &lt;code&gt;prerequisite&lt;/code&gt; ，其中 &lt;code&gt;prerequisites[i] = [ai, bi]&lt;/code&gt; 表示如果你想选 &lt;code&gt;bi&lt;/code&gt; 课程，你 &lt;strong&gt;必须&lt;/strong&gt; 先选 &lt;code&gt;ai&lt;/code&gt; 课程。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;有的课会有直接的先修课程，比如如果想上课程 &lt;code&gt;1&lt;/code&gt; ，你必须先上课程 &lt;code&gt;0&lt;/code&gt; ，那么会以 &lt;code&gt;[0,1]&lt;/code&gt; 数对的形式给出先修课程数对。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;先决条件也可以是 &lt;strong&gt;间接&lt;/strong&gt; 的。如果课程 &lt;code&gt;a&lt;/code&gt; 是课程 &lt;code&gt;b&lt;/code&gt; 的先决条件，课程 &lt;code&gt;b&lt;/code&gt; 是课程 &lt;code&gt;c&lt;/code&gt; 的先决条件，那么课程 &lt;code&gt;a&lt;/code&gt; 就是课程 &lt;code&gt;c&lt;/code&gt; 的先决条件。&lt;/p&gt;
+&lt;p&gt;你也得到一个数组 &lt;code&gt;queries&lt;/code&gt; ，其中 &lt;code&gt;queries[j] = [uj, vj]&lt;/code&gt;。对于第 &lt;code&gt;j&lt;/code&gt; 个查询，您应该回答课程 &lt;code&gt;uj&lt;/code&gt; 是否是课程 &lt;code&gt;vj&lt;/code&gt; 的先决条件。&lt;/p&gt;
+&lt;p&gt;返回一个布尔数组 &lt;code&gt;answer&lt;/code&gt; ，其中 &lt;code&gt;answer[j]&lt;/code&gt; 是第 &lt;code&gt;j&lt;/code&gt; 个查询的答案。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://assets.leetcode.com/uploads/2021/05/01/courses4-1-graph.jpg" alt="img" /&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part3/ch26/no.207_%E8%AF%BE%E7%A8%8B%E8%A1%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch26/no.207_%E8%AF%BE%E7%A8%8B%E8%A1%A8/</guid><description>&lt;h2 id="207-课程表-中等"&gt;207 课程表-中等&lt;a class="anchor" href="#207-%e8%af%be%e7%a8%8b%e8%a1%a8-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;你这个学期必须选修 &lt;code&gt;numCourses&lt;/code&gt; 门课程，记为 &lt;code&gt;0&lt;/code&gt; 到 &lt;code&gt;numCourses - 1&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;在选修某些课程之前需要一些先修课程。 先修课程按数组 &lt;code&gt;prerequisites&lt;/code&gt; 给出，其中 &lt;code&gt;prerequisites[i] = [ai, bi]&lt;/code&gt; ，表示如果要学习课程 &lt;code&gt;ai&lt;/code&gt; 则 &lt;strong&gt;必须&lt;/strong&gt; 先学习课程 &lt;code&gt;bi&lt;/code&gt; 。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;例如，先修课程对 &lt;code&gt;[0, 1]&lt;/code&gt; 表示：想要学习课程 &lt;code&gt;0&lt;/code&gt; ，你需要先完成课程 &lt;code&gt;1&lt;/code&gt; 。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;请你判断是否可能完成所有课程的学习？如果可以，返回 &lt;code&gt;true&lt;/code&gt; ；否则，返回 &lt;code&gt;false&lt;/code&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：numCourses = 2, prerequisites = [[1,0]]
+输出：true
+解释：总共有 2 门课程。学习课程 1 之前，你需要完成课程 0 。这是可能的。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：numCourses = 2, prerequisites = [[1,0],[0,1]]
+输出：false
+解释：总共有 2 门课程。学习课程 1 之前，你需要先完成课程 0 ；并且学习课程 0 之前，你还应先完成课程 1 。这是不可能的。&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;分析：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part3/ch26/no.210_%E8%AF%BE%E7%A8%8B%E8%A1%A82/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch26/no.210_%E8%AF%BE%E7%A8%8B%E8%A1%A82/</guid><description>&lt;h2 id="210-课程表-ii-中等"&gt;210 课程表 II-中等&lt;a class="anchor" href="#210-%e8%af%be%e7%a8%8b%e8%a1%a8-ii-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;现在你总共有 &lt;code&gt;numCourses&lt;/code&gt; 门课需要选，记为 &lt;code&gt;0&lt;/code&gt; 到 &lt;code&gt;numCourses - 1&lt;/code&gt;。给你一个数组 &lt;code&gt;prerequisites&lt;/code&gt; ，其中 &lt;code&gt;prerequisites[i] = [ai, bi]&lt;/code&gt; ，表示在选修课程 &lt;code&gt;ai&lt;/code&gt; 前 &lt;strong&gt;必须&lt;/strong&gt; 先选修 &lt;code&gt;bi&lt;/code&gt; 。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;例如，想要学习课程 &lt;code&gt;0&lt;/code&gt; ，你需要先完成课程 &lt;code&gt;1&lt;/code&gt; ，我们用一个匹配来表示：&lt;code&gt;[0,1]&lt;/code&gt; 。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;返回你为了学完所有课程所安排的学习顺序。可能会有多个正确的顺序，你只要返回 &lt;strong&gt;任意一种&lt;/strong&gt; 就可以了。如果不可能完成所有课程，返回 &lt;strong&gt;一个空数组&lt;/strong&gt; 。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：numCourses = 2, prerequisites = [[1,0]]
+输出：[0,1]
+解释：总共有 2 门课程。要学习课程 1，你需要先完成课程 0。因此，正确的课程顺序为 [0,1] 。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]
+输出：[0,2,1,3]
+解释：总共有 4 门课程。要学习课程 3，你应该先完成课程 1 和课程 2。并且课程 1 和课程 2 都应该排在课程 0 之后。
+因此，一个正确的课程顺序是 [0,1,2,3] 。另一个正确的排序是 [0,2,1,3] 。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</guid><description>&lt;h2 id="177-第n高的薪水-中等"&gt;177 第N高的薪水-中等&lt;a class="anchor" href="#177-%e7%ac%acn%e9%ab%98%e7%9a%84%e8%96%aa%e6%b0%b4-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;表：&lt;code&gt;Employee&lt;/code&gt;&lt;/p&gt;
 &lt;table&gt;
@@ -16043,7 +16083,39 @@ mapSum.sum(&amp;#34;ap&amp;#34;); // 返回 5 (apple + app = 3 + 2 = 5)&lt;/code
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;		&lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;child&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;]
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	}
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;isEndOfWord&lt;/span&gt; = &lt;span style="color:#66d9ef"&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从插入操作可以看出，&lt;strong&gt;key 越长，字典树的深度越大&lt;/strong&gt;。&lt;/p&gt;</description></item><item><title>第 3 章 队列</title><link>https://subond.com/leetcode/docs/part1/ch03queue/queue/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch03queue/queue/</guid><description>&lt;h1 id="queue"&gt;Queue&lt;a class="anchor" href="#queue"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从插入操作可以看出，&lt;strong&gt;key 越长，字典树的深度越大&lt;/strong&gt;。&lt;/p&gt;</description></item><item><title>第 21 章 图</title><link>https://subond.com/leetcode/docs/part3/ch26/readme/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch26/readme/</guid><description>&lt;h2 id="第-21-章-图-graph"&gt;第 21 章 图 Graph&lt;a class="anchor" href="#%e7%ac%ac-21-%e7%ab%a0-%e5%9b%be-graph"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id="1基本概念"&gt;1、基本概念&lt;a class="anchor" href="#1%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5"&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;图（Graph）由顶点（Vertex）和边（Edge）组成，记为 &lt;code&gt;G = (V, E)&lt;/code&gt;。相比线性表（一对一）和树（一对多），图表示的是&lt;strong&gt;多对多&lt;/strong&gt;的关系，是数据结构中表达力最强的一种。&lt;/p&gt;
+&lt;p&gt;按边是否有方向：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;无向图&lt;/strong&gt;：边 &lt;code&gt;(u, v)&lt;/code&gt; 与 &lt;code&gt;(v, u)&lt;/code&gt; 相同；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有向图&lt;/strong&gt;：边 &lt;code&gt;&amp;lt;u, v&amp;gt;&lt;/code&gt; 有方向，称为从 u 指向 v 的有向边（弧）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;按边是否有权值：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;无权图&lt;/strong&gt; / &lt;strong&gt;带权图&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;常用术语：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;度&lt;/strong&gt;：与顶点相连的边数。有向图中分&lt;strong&gt;入度&lt;/strong&gt;（指向该顶点的边数）和&lt;strong&gt;出度&lt;/strong&gt;（从该顶点出发的边数）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;连通&lt;/strong&gt;：无向图中两顶点间存在路径；&lt;strong&gt;连通分量&lt;/strong&gt;是极大连通子图。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DAG&lt;/strong&gt;：有向无环图（Directed Acyclic Graph），拓扑排序的作用对象。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2图的表示"&gt;2、图的表示&lt;a class="anchor" href="#2%e5%9b%be%e7%9a%84%e8%a1%a8%e7%a4%ba"&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;邻接矩阵&lt;/strong&gt;：&lt;code&gt;adj[i][j]&lt;/code&gt; 表示顶点 i 到 j 是否有边（或权值）。判断两点是否相邻 O(1)，但空间 O(V²)，适合稠密图。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;邻接表&lt;/strong&gt;：每个顶点维护一个列表，记录它指向的所有邻居。空间 O(V+E)，适合稀疏图（LeetCode 中最常用）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 邻接表（用切片实现）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;adjacency&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([][]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;adjacency&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;u&lt;/span&gt;] = append(&lt;span style="color:#a6e22e"&gt;adjacency&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;u&lt;/span&gt;], &lt;span style="color:#a6e22e"&gt;v&lt;/span&gt;) &lt;span style="color:#75715e"&gt;// 添加一条 u -&amp;gt; v 的有向边&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="3图的遍历"&gt;3、图的遍历&lt;a class="anchor" href="#3%e5%9b%be%e7%9a%84%e9%81%8d%e5%8e%86"&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;广度优先搜索 BFS&lt;/strong&gt;：借助队列，从起点出发逐层扩展。常用于&lt;strong&gt;无权图最短路径&lt;/strong&gt;、层序遍历、连通分量计数。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;深度优先搜索 DFS&lt;/strong&gt;：借助递归（或显式栈），沿一条路径走到底再回溯。常用于&lt;strong&gt;连通性判断&lt;/strong&gt;、&lt;strong&gt;环检测&lt;/strong&gt;、&lt;strong&gt;拓扑排序&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;两种遍历的时间复杂度均为 O(V+E)，因为每个顶点和每条边都只访问有限次。&lt;/p&gt;
+&lt;h3 id="4拓扑排序topological-sort"&gt;4、拓扑排序（Topological Sort）&lt;a class="anchor" href="#4%e6%8b%93%e6%89%91%e6%8e%92%e5%ba%8ftopological-sort"&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;拓扑排序针对&lt;strong&gt;有向无环图（DAG）&lt;/strong&gt;：把所有顶点排成线性序列，使得对每条边 &lt;code&gt;&amp;lt;u, v&amp;gt;&lt;/code&gt;，u 都排在 v 之前。&lt;/p&gt;</description></item><item><title>第 3 章 队列</title><link>https://subond.com/leetcode/docs/part1/ch03queue/queue/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch03queue/queue/</guid><description>&lt;h1 id="queue"&gt;Queue&lt;a class="anchor" href="#queue"&gt;#&lt;/a&gt;&lt;/h1&gt;
 &lt;h2 id="1基本定义"&gt;1.基本定义&lt;a class="anchor" href="#1%e5%9f%ba%e6%9c%ac%e5%ae%9a%e4%b9%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;队列实现的是一种先进先出（FIFO）策略的线性表。&lt;/p&gt;
 &lt;p&gt;队列有队头(head)和队尾(tail)，当有一个元素入队时，放入队尾；出队时，即取出队头元素。&lt;/p&gt;
