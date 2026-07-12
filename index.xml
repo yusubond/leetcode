@@ -3677,8 +3677,10 @@ Node *MergeSort(Node *phead) {
 &lt;li&gt;&lt;code&gt;void addAtIndex(int index, int val)&lt;/code&gt; 将一个值为 &lt;code&gt;val&lt;/code&gt; 的节点插入到链表中下标为 &lt;code&gt;index&lt;/code&gt; 的节点之前。如果 &lt;code&gt;index&lt;/code&gt; 等于链表的长度，那么该节点会被追加到链表的末尾。如果 &lt;code&gt;index&lt;/code&gt; 比长度更大，该节点将 &lt;strong&gt;不会插入&lt;/strong&gt; 到链表中。&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;void deleteAtIndex(int index)&lt;/code&gt; 如果下标有效，则删除链表中下标为 &lt;code&gt;index&lt;/code&gt; 的节点。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;分析：&lt;/p&gt;
-&lt;p&gt;使用 双链表 方便在尾部增加，同时把双向链表的 head 和 tail 用哑结点 表示，这样可以减少不必要的判断。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch02list/no.725_%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch02list/no.725_%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/</guid><description>&lt;h2 id="725-分隔链表-中等"&gt;725 分隔链表-中等&lt;a class="anchor" href="#725-%e5%88%86%e9%9a%94%e9%93%be%e8%a1%a8-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;关键观察&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;哑结点（Dummy Node）消除边界判断&lt;/strong&gt;：使用哑 head 和哑 tail，所有插入/删除都在&amp;quot;中间&amp;quot;完成，无需特殊处理头尾插入。这是链表题的经典技巧——哨兵节点让代码逻辑统一。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch02list/no.725_%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch02list/no.725_%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/</guid><description>&lt;h2 id="725-分隔链表-中等"&gt;725 分隔链表-中等&lt;a class="anchor" href="#725-%e5%88%86%e9%9a%94%e9%93%be%e8%a1%a8-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你一个头节点为 head 的单链表和一个整数 k，请你设计一个算法将链表分隔为 k 个连续的部分。&lt;/p&gt;
 &lt;p&gt;每部分的长度尽可能的相等：任意两部分的长度差距不能超过 1。这可能导致有些部分为 null。【也就是不够分的时候，用空链表填充。】&lt;/p&gt;
