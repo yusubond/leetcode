@@ -2,19 +2,24 @@
 
 > 本篇是 [146. LRU 缓存](./No.146_LRU缓存.md) 的姊妹篇，在其基础上引入「过期时间」维度。146 的淘汰只看「访问时间」，本篇额外引入「存活时长 TTL」——超时即视为失效。这是工程中（Redis、Caffeine、Guava Cache 等）的真实需求，也是 LRU 类题目的常见进阶问法。
 >
-> 题号说明：这是 LeetCode 之外的设计扩展题（非标准编号），完整可运行实现见 `template/lru_cache_ttl.go`。
+> 题号说明：这是 LeetCode 之外的设计扩展题（非标准编号）。本篇给出**两种方案对比**：方案一「纯惰性删除」（面试最常用，对应 `template/ttl_lru.go`）与方案二「惰性 + 最小堆主动清理」（工程完整，对应 `template/lru_cache_ttl.go`）。
 
 题目：
 
-请你设计并实现一个**支持过期时间（TTL，Time To Live）** 的 LRU 缓存。在 [146. LRU 缓存](./No.146_LRU缓存.md) 的两个约束（容量淘汰 + O(1) 读写）之外，每个 key-value 还带有存活时长 `ttl`：一旦存活超过 `ttl`，该条目视为过期，应当被淘汰。
+请你设计并实现一个**支持过期时间（TTL，Time To Live）** 的 LRU 缓存。在 [146. LRU 缓存](./No.146_LRU缓存.md) 的两个约束（容量淘汰 + 高效读写）之外，每个 key-value 还带有存活时长 `ttl`：一旦存活超过 `ttl`，该条目视为过期，应当被淘汰。
 
-实现 `TTLCache` 类：
+实现一个 TTL 缓存类：
 
-- `Constructor(capacity, ttl)` 以容量 `capacity`（条数）和默认存活时长 `ttl` 初始化缓存。
-- `int get(key)`：若 key **不存在**或**已过期**，返回 `-1`（并视为未命中）；命中则返回 value。`get` 不刷新过期时间。
-- `void put(key, value)`：若 key 已存在且未过期，更新 value 并把过期时刻重置为「当前时间 + ttl」；若不存在或已过期，按新条目插入。当插入导致数量超过 `capacity` 时，**优先淘汰已过期数据，仍超容量再按 LRU 淘汰最久未使用的数据**。
+- `Constructor(capacity, ttl)` 以容量 `capacity`（条数）和存活时长 `ttl` 初始化缓存。
+- `int get(key)`：若 key **不存在**或**已过期**，返回 `-1`（视为未命中）；命中则返回 value。
+- `void put(key, value)`：插入或更新，并把该 key 的过期时刻（重）置为「当前时间 + ttl」。插入导致数量超过 `capacity` 时需淘汰数据。
 
-`get` 与 `put` 的时间复杂度应尽量接近 O(1)（容许对数级别）。
+有两个语义点需要特别说明——它们正是本篇两种方案的分野：
+
+- **get 是否刷新过期时间**：刷新即为「滑动过期」（持续被访问的活跃数据不过期），不刷新即为「固定生命周期」。
+- **超容量时是否优先淘汰过期数据**：优先淘汰能更及时回收内存，但需要额外结构。
+
+`get` / `put` 的时间复杂度应尽量接近 O(1)（容许对数级别）。
 
 
 
@@ -24,23 +29,136 @@ LRU 部分完全复用 146 的「map + 双向链表」：map 做 O(1) 查找，�
 
 这有两条路线：
 
-- **惰性删除（lazy / passive）**：只有当 `get`/`put` 命中某个 key 时，才检查它是否过期、过期才删。优点是实现极简、`get` 严格 O(1)；缺点是过期却长期不被访问的 key 会一直占着内存，直到被 LRU 误淘汰。
+- **惰性删除（lazy / passive）**：只有当 `get`/`put` 命中某个 key 时，才检查它是否过期、过期才删。优点是实现极简、`get` 严格 O(1)；缺点是过期却长期不被访问的 key 会一直占着内存，直到被 LRU 挤出尾部。
 - **主动删除（active / proactive）**：额外维护一个按过期时间排序的结构，定期或在写入前批量清理已过期数据。优点是内存回收及时；缺点是需要额外结构与清理成本。
 
-成熟的实现（如 Redis）两者都用：惰性兜底 + 定期采样清理。本篇也采用「**惰性 + 最小堆主动清理**」的组合。
+成熟的实现（如 Redis）两者都用：惰性兜底 + 定期采样清理。由这两条路线衍生出本篇的两种典型方案，下文逐一给出并对比：
+
+- **方案一（纯惰性）**：只用惰性删除，且 `get` 续期。极简，是面试中最常见的写法。
+- **方案二（惰性 + 最小堆主动清理）**：在惰性基础上加最小堆批量清过期，`get` 不续期。工程上更完整。
+
+
+
+## 方案一：纯惰性删除（面试最常用）
+
+只采用「惰性删除」：`get` 命中时检查过期，过期当场删；`put` 超容量时按 LRU 直接删尾部，**不主动扫描过期节点**。并采用「访问续期」语义——`get` 命中顺带刷新过期时刻，因此持续被访问的活跃数据不会过期。
+
+优点是极简：相比 146，节点只多了一个 `expiredTime` 字段，没有额外的堆与版本号。代价是：过期但未被再次访问的节点会一直占用容量，直到被 LRU 挤出尾部或偶然被 `get` 命中。
+
+```go
+// date 2026/07/26
+// 方案一：纯惰性删除（对应 template/ttl_lru.go）
+import "time"
+
+type TTLNode struct {
+	key, val    int
+	prev, next  *TTLNode
+	expiredTime time.Time // 绝对过期时刻
+}
+
+type TTLLRUCache struct {
+	capacity   int
+	ttl        time.Duration
+	head, tail *TTLNode
+	cache      map[int]*TTLNode
+	now        func() time.Time // 可注入时钟，默认 time.Now，便于测试
+}
+
+func NewTTLLRUCache(capacity int, ttl time.Duration) *TTLLRUCache {
+	ca := &TTLLRUCache{
+		capacity: capacity,
+		ttl:      ttl,
+		head:     &TTLNode{},
+		tail:     &TTLNode{},
+		cache:    make(map[int]*TTLNode, capacity),
+		now:      time.Now,
+	}
+	ca.head.next = ca.tail
+	ca.tail.prev = ca.head
+	return ca
+}
+
+// get：命中且未过期→提到表头并返回 value；命中但已过期→惰性删除后返回 -1；不存在→返回 -1。
+// 采用「访问续期」语义：命中顺带刷新过期时刻，活跃数据不会过期。
+func (ca *TTLLRUCache) Get(key int) int {
+	node, ok := ca.cache[key]
+	if !ok {
+		return -1
+	}
+	now := ca.now()
+	if now.After(node.expiredTime) { // 惰性删除：命中即检查
+		ca.removeNode(node)
+		delete(ca.cache, key)
+		return -1
+	}
+	ca.moveToHead(node)
+	node.expiredTime = now.Add(ca.ttl) // 访问续期
+	return node.val
+}
+
+// put：存在则更新值并重置过期时刻（即便该 key 已过期，也按命中「复活」）；不存在则新建。
+// 超容量时按 LRU 直接删尾部，不主动判断是否过期。
+func (ca *TTLLRUCache) Put(key int, value int) {
+	now := ca.now()
+	if node, ok := ca.cache[key]; ok {
+		node.val = value
+		node.expiredTime = now.Add(ca.ttl)
+		ca.moveToHead(node)
+		return
+	}
+	node := &TTLNode{key: key, val: value, expiredTime: now.Add(ca.ttl)}
+	ca.cache[key] = node
+	ca.addToHead(node)
+	if len(ca.cache) > ca.capacity {
+		rmd := ca.removeTail()
+		delete(ca.cache, rmd.key)
+	}
+}
+
+// --- 双向链表辅助函数（与 146 一致） ---
+func (ca *TTLLRUCache) addToHead(node *TTLNode) {
+	node.next = ca.head.next
+	node.prev = ca.head
+	ca.head.next.prev = node
+	ca.head.next = node
+}
+func (ca *TTLLRUCache) removeNode(node *TTLNode) {
+	node.prev.next = node.next
+	node.next.prev = node.prev
+}
+func (ca *TTLLRUCache) moveToHead(node *TTLNode) {
+	ca.removeNode(node)
+	ca.addToHead(node)
+}
+func (ca *TTLLRUCache) removeTail() *TTLNode {
+	node := ca.tail.prev
+	ca.removeNode(node)
+	return node
+}
+```
+
+**复杂度分析：**
+
+- 时间复杂度：`get` / `put` 均为 **O(1)**，只有一次 map 查找 + 常数次链表指针操作 + O(1) 的过期判断。
+- 空间复杂度：**O(capacity)**，map 与双向链表各存一份节点。
+
+
+
+## 方案二：惰性 + 最小堆主动清理（工程完整）
+
+在方案一的惰性删除之上，再加一个**按过期时间排序的最小堆**：`get` 命中时仍做惰性检查（不续期），`put` 触发超容量时则用最小堆**批量弹出所有过期项**，确保「优先淘汰过期数据」而非误伤未过期的热数据。
 
 **两个关键点**（对应 146 的两个关键点，体会 TTL 带来的新增量）：
 
-1. **过期数据何时删？** 这是 TTL 区别于纯 LRU 的核心。`get` 命中时做惰性检查（O(1)）保证读路径不退化；`put` 触发超容量时，用最小堆批量弹出所有过期项，确保「优先淘汰过期数据」而非误伤未过期的热数据。
+1. **过期数据何时删？** `get` 命中时做惰性检查（O(1)）保证读路径不退化；`put` 触发超容量时，用最小堆批量弹出所有过期项，确保「优先淘汰过期数据」而非误伤未过期的热数据。
 
 2. **最小堆如何删除「已被 LRU 淘汰 / 已被更新」的节点？** 堆不支持 O(log n) 以下删除任意节点。采用**懒删除（lazy deletion）**：节点带 `version` 版本号，每次 `put` 更新时 `version++`；堆里存的是 `(expireAt, key, version)` 三元组。弹出堆顶时，若该 `key` 已不在 map（被 LRU 淘汰）或 `version` 不一致（被更新过），即为脏条目，直接丢弃，继续弹下一个。这样避免了「堆中真删除」的高昂代价。
 
 数据结构相比 146 的增量：节点新增 `expireAt`（绝对过期时刻）与 `version`（版本号）；缓存新增一个最小堆 `expHeap`（按 `expireAt` 排序）和一个可注入的时钟 `now`（便于测试与演示过期）。
 
-
-
 ```go
 // date 2026/07/26
+// 方案二：惰性 + 最小堆主动清理（对应 template/lru_cache_ttl.go）
 import (
 	"container/heap"
 	"time"
@@ -189,13 +307,6 @@ func (c *TTLCache) removeTail() *ttlNode {
 	c.removeNode(node)
 	return node
 }
-
-/**
- * Your TTLCache object will be instantiated and called as such:
- * obj := TTLConstructor(capacity, ttl);
- * param_1 := obj.Get(key);
- * obj.Put(key,value);
- */
 ```
 
 
@@ -214,7 +325,7 @@ func (c *TTLCache) removeTail() *ttlNode {
 
 两个值得对比 146 的瞬间：
 
-- **t=3 put(3,3)**：同样的操作序列，146 会淘汰「最久未使用」的尾部 2；而 TTL 版先批量清掉过期的 1，于是 2 被保留。这正是「优先淘汰过期数据」带来的差别。
+- **t=3 put(3,3)**：同样的操作序列，146 会淘汰「最久未使用」的尾部 2；而本方案先批量清掉过期的 1，于是 2 被保留。这正是「优先淘汰过期数据」带来的差别。
 - **t=7 get(3)**：即便容量没满，过期数据也会在读时被惰性删除——这是 TTL 独有、146 完全没有的语义。
 
 
@@ -223,6 +334,29 @@ func (c *TTLCache) removeTail() *ttlNode {
 
 - 时间复杂度：`get` 为 **O(1)**，只涉及一次 map 查找 + 常数次链表指针操作 + O(1) 的过期判断；`put` 为**均摊 O(log n)**，主要开销是 `heap.Push` 的 O(log n)，而 `evictExpired` 中每个过期项的弹出均可摊到它当初入堆的那次 `put`，整体均摊仍是 O(log n)。
 - 空间复杂度：map 与双向链表 **O(capacity)**；最小堆 **O(P)**，其中 P 为累计 `put` 次数（含待清理的脏条目）。脏条目在轮到堆顶时被丢弃，长期规模与有效条目同阶。若需要把堆空间严格压到 O(capacity)，可改用「索引堆」（节点记录自身在堆中的下标）实现 O(log n) 的真删除。
+
+
+
+## 两种方案对比
+
+| 维度 | 方案一 纯惰性 | 方案二 惰性 + 最小堆 |
+|------|--------------|---------------------|
+| 数据结构 | map + 双向链表 | 再加 最小堆 + version |
+| get 复杂度 | O(1) | O(1) |
+| put 复杂度 | O(1) | 均摊 O(log n) |
+| get 是否续期 | 是（滑动过期） | 否（固定生命周期） |
+| 过期回收时机 | 仅 get 命中时 | get 命中 + put 超容量时批量 |
+| 过期未访问节点 | 占内存，直到被 LRU 挤出 | put 时主动清理 |
+| 实现复杂度 | 极简 | 中等（堆 + 懒删除） |
+| 适用场景 | 面试 / 小规模缓存 | 工程 / 需及时回收内存 |
+| 对应文件 | `template/ttl_lru.go` | `template/lru_cache_ttl.go` |
+
+**关键差异**（capacity = 2，ttl = 3：t=0 先后 put(1,1)、put(2,2)，两者过期时刻都 = 3；t=4 时 1、2 均已过期，此时 put(3,3) 触发超容量）：
+
+- **方案一**：put(3,3) 直接按 LRU 删尾部 1，但 2 同样过期却仍留在缓存里占着一个位置——要等下一次 put 才可能被挤出。
+- **方案二**：put(3,3) 先 evictExpired 把过期的 1、2 一次性清掉，再插入 3，最终缓存里只剩 3。
+
+换言之，方案一**被动**地随访问 / 淘汰清理过期数据，方案二**主动**地在写入时批量回收。面试中若只要求「能用、好写」，方案一足够；若追问「过期数据长期占内存怎么办」，再引出方案二。
 
 
 
