@@ -6706,7 +6706,7 @@ word2： p q
 &lt;p&gt;给你二叉树的根节点 root 和一个表示目标和的整数 targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 targetSum 。如果存在，返回 true ；否则，返回 false 。&lt;/p&gt;
 &lt;p&gt;叶子节点 是指没有子节点的节点。&lt;/p&gt;
 &lt;p&gt;分析：&lt;/p&gt;
-&lt;p&gt;算法1：递归&lt;/p&gt;
+&lt;p&gt;算法1：递归 DFS（自顶向下）&lt;/p&gt;
 &lt;p&gt;这种递归是&lt;strong&gt;自顶向下&lt;/strong&gt;的方式，通过结合当前节点值，向下一层级传递新的目标值，以判断到达叶子节点时是否满足条件。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2022/10/19&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;hasPathSum&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;targetSum&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
@@ -6718,48 +6718,36 @@ word2： p q
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;targetSum&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;hasPathSum&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;targetSum&lt;/span&gt;) &lt;span style="color:#f92672"&gt;||&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;hasPathSum&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;targetSum&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;算法2：【推荐该算法】&lt;/p&gt;
-&lt;p&gt;迭代，类似层序遍历，当遍历到叶子节点时，判断值是否为零&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/10/18&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/**
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Definition for a binary tree node.
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * type TreeNode struct {
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Val int
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Left *TreeNode
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * Right *TreeNode
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; * }
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt; */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;算法2：迭代 DFS（栈）&lt;/p&gt;
+&lt;p&gt;和算法1思路相同，只是将系统调用栈显式地用栈模拟。每次弹出节点时，判断是否为叶子节点且剩余值是否为零。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2025/07/22&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;hasPathSum&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;targetSum&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;bool&lt;/span&gt; {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;targetSum&lt;/span&gt;&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;) &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt; = len(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; &lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 找到叶子节点&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 栈中存放 (节点, 剩余目标和)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;type&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;pair&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt; &lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;TreeNode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;sum&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; []&lt;span style="color:#a6e22e"&gt;pair&lt;/span&gt;{{&lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;targetSum&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;root&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;}}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;) &amp;gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;top&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;remain&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;top&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;top&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;sum&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;remain&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;true&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 先压右再压左，因为栈是后进先出（顺序无关，只为和递归保持一致的遍历方向）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;pair&lt;/span&gt;{&lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;remain&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;})
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;] &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;cur&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Right&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt; &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;stack&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;pair&lt;/span&gt;{&lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;remain&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;node&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Left&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Val&lt;/span&gt;})
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;queue&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;:]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;csum&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;n&lt;/span&gt;:]
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.113_%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.113_%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C2/</guid><description>&lt;h2 id="113-路径总和2-中等"&gt;113 路径总和2-中等&lt;a class="anchor" href="#113-%e8%b7%af%e5%be%84%e6%80%bb%e5%92%8c2-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;算法3：迭代 BFS（队列）【推荐该算法】&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part1/ch06binarytree/no.113_%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part1/ch06binarytree/no.113_%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C2/</guid><description>&lt;h2 id="113-路径总和2-中等"&gt;113 路径总和2-中等&lt;a class="anchor" href="#113-%e8%b7%af%e5%be%84%e6%80%bb%e5%92%8c2-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。&lt;/p&gt;
 &lt;p&gt;叶子节点 是指没有子节点的节点。&lt;/p&gt;
@@ -11684,61 +11672,56 @@ int KthSmallest(vector&amp;lt;int&amp;gt; &amp;amp;data, int low, int high, int 
 &lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;0000&amp;#34;
 输出：[&amp;#34;0.0.0.0&amp;#34;]&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;101023&amp;#34;
-输出：[&amp;#34;1.0.10.23&amp;#34;,&amp;#34;1.0.102.3&amp;#34;,&amp;#34;10.1.0.23&amp;#34;,&amp;#34;10.10.2.3&amp;#34;,&amp;#34;101.0.2.3&amp;#34;]&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;分析：&lt;/p&gt;
-&lt;p&gt;这道题可以选用 DFS。递归深搜的时候需要注意两种情况：&lt;/p&gt;
-&lt;p&gt;第一种，多个值可以合并，只要不超过 255，且不为零&lt;/p&gt;
-&lt;p&gt;第二种，单个值，正常递归&lt;/p&gt;
-&lt;p&gt;中间值不可有前导零，通过判断 idx 来实现。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// date 2023/12/26&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;restoreIpAddresses&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;) []&lt;span style="color:#66d9ef"&gt;string&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; make([]&lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt; = &lt;span style="color:#66d9ef"&gt;func&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;) &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;4&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;toString&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;))
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt; &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// IP 地址的第一个值可以为零&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 所以这里不需要判断 num == 0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;num&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strconv&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Atoi&lt;/span&gt;(string(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;]))
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;num&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; } &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 非 IP 地址的第一个值,都需要判断不为零&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;num&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;_&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strconv&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Atoi&lt;/span&gt;(string(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;]))
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]&lt;span style="color:#f92672"&gt;*&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;10&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;num&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;// 如果多个可以当做一个&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;255&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] = &lt;span style="color:#a6e22e"&gt;next&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;[len(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;] &lt;span style="color:#f92672"&gt;/=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;10&lt;/span&gt; &lt;span style="color:#75715e"&gt;// 撤销 num 选择&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;) &amp;lt; &lt;span style="color:#ae81ff"&gt;4&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt; = append(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;num&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;idx&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;, &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt; = &lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;[:len(&lt;span style="color:#a6e22e"&gt;ip&lt;/span&gt;)&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;dfs&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;s&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;{})
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;func&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;toString&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt; []&lt;span style="color:#66d9ef"&gt;int&lt;/span&gt;) &lt;span style="color:#66d9ef"&gt;string&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strconv&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Itoa&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt;[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;])
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &lt;span style="color:#f92672"&gt;:=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt; &amp;lt; len(&lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt;); &lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;&lt;span style="color:#f92672"&gt;++&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt; &lt;span style="color:#f92672"&gt;+=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;.&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;strconv&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;Itoa&lt;/span&gt;(&lt;span style="color:#a6e22e"&gt;nums&lt;/span&gt;[&lt;span style="color:#a6e22e"&gt;i&lt;/span&gt;])
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;res&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch13bt/no.216_%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch13bt/no.216_%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C3/</guid><description>&lt;h2 id="216-组合总和3-中等"&gt;216 组合总和3-中等&lt;a class="anchor" href="#216-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c3-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+输出：[&amp;#34;1.0.10.23&amp;#34;,&amp;#34;1.0.102.3&amp;#34;,&amp;#34;10.1.0.23&amp;#34;,&amp;#34;10.10.2.3&amp;#34;,&amp;#34;101.0.2.3&amp;#34;]&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;分析：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个合法 IPv4 地址 = 把 &lt;code&gt;s&lt;/code&gt; &lt;strong&gt;按原顺序&lt;/strong&gt;切成恰好 &lt;strong&gt;4 段&lt;/strong&gt;，每段必须同时满足：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;数值在 &lt;code&gt;0 ~ 255&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不能有前导 &lt;code&gt;0&lt;/code&gt;&lt;/strong&gt;（即 &lt;code&gt;&amp;quot;0&amp;quot;&lt;/code&gt; 合法，但 &lt;code&gt;&amp;quot;01&amp;quot;&lt;/code&gt;、&lt;code&gt;&amp;quot;001&amp;quot;&lt;/code&gt; 非法）；&lt;/li&gt;
+&lt;li&gt;长度只能是 1 ~ 3。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;由此可得一个重要剪枝：4 段每段至少 1 位、最多 3 位，所以 &lt;code&gt;s&lt;/code&gt; 长度必须在 &lt;strong&gt;4 ~ 12&lt;/strong&gt; 之间，否则直接返回空。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch13bt/no.131_%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch13bt/no.131_%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2/</guid><description>&lt;h2 id="131-分割回文串-中等"&gt;131 分割回文串-中等&lt;a class="anchor" href="#131-%e5%88%86%e5%89%b2%e5%9b%9e%e6%96%87%e4%b8%b2-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;给你一个字符串 &lt;code&gt;s&lt;/code&gt;，请你将 &lt;code&gt;s&lt;/code&gt; 分割成一些子串，使每个子串都是&lt;strong&gt;回文串&lt;/strong&gt;。返回 &lt;code&gt;s&lt;/code&gt; 所有可能的分割方案。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;aab&amp;#34;
+输出：[[&amp;#34;a&amp;#34;,&amp;#34;a&amp;#34;,&amp;#34;b&amp;#34;],[&amp;#34;aa&amp;#34;,&amp;#34;b&amp;#34;]]&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：s = &amp;#34;a&amp;#34;
+输出：[[&amp;#34;a&amp;#34;]]&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;分析：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;本题与 &lt;a href="https://subond.com/leetcode/docs/part2/ch13bt/no.093_%E5%A4%8D%E5%8E%9Fip%E5%9C%B0%E5%9D%80/"&gt;No.093 复原IP地址&lt;/a&gt; 是同一类「&lt;strong&gt;字符串分割&lt;/strong&gt;」回溯，区别只有两点：&lt;/p&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;&lt;/th&gt;
+ &lt;th&gt;No.093 复原IP地址&lt;/th&gt;
+ &lt;th&gt;No.131 分割回文串&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;段的合法性&lt;/td&gt;
+ &lt;td&gt;数值 0~255、无前导 0&lt;/td&gt;
+ &lt;td&gt;是回文串&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;段数&lt;/td&gt;
+ &lt;td&gt;固定 4 段&lt;/td&gt;
+ &lt;td&gt;任意段&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;终止条件&lt;/td&gt;
+ &lt;td&gt;凑满 4 段 &lt;strong&gt;且&lt;/strong&gt; 用完整个串&lt;/td&gt;
+ &lt;td&gt;用完整个串即可&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;正因为&lt;strong&gt;段数不固定&lt;/strong&gt;，本题的递归终止就只有一条——「切到字符串末尾 &lt;code&gt;start == n&lt;/code&gt;」。这正好对应我们讨论 No.093 终止条件时的另一种自然写法：以「用完字符串」作为 gate，无需 &lt;code&gt;len == k&lt;/code&gt; 的深度上界。框架依然是回溯三要素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;路径&lt;/strong&gt; &lt;code&gt;path&lt;/code&gt;：已经切好的回文子串；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;选择列表&lt;/strong&gt;：在 &lt;code&gt;start&lt;/code&gt; 之后枚举切点 &lt;code&gt;end&lt;/code&gt;，只要 &lt;code&gt;s[start..end]&lt;/code&gt; 是回文就切下来；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结束条件&lt;/strong&gt;：&lt;code&gt;start == n&lt;/code&gt;，把当前 &lt;code&gt;path&lt;/code&gt; 收集为一种方案。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;回文判断有两种做法：(1) 现场用双指针判断；(2) 先用区间 DP 预处理一张 &lt;code&gt;g[i][j]&lt;/code&gt; 回文表，回溯时 O(1) 查表。下面分别给出。&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part2/ch13bt/no.216_%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part2/ch13bt/no.216_%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C3/</guid><description>&lt;h2 id="216-组合总和3-中等"&gt;216 组合总和3-中等&lt;a class="anchor" href="#216-%e7%bb%84%e5%90%88%e6%80%bb%e5%92%8c3-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;找出所有相加之和为 &lt;code&gt;n&lt;/code&gt; 的 &lt;code&gt;k&lt;/code&gt; 个数的组合，且满足下列条件：&lt;/p&gt;
 &lt;ul&gt;
@@ -15697,7 +15680,20 @@ mapSum.sum(&amp;#34;ap&amp;#34;); // 返回 5 (apple + app = 3 + 2 = 5)&lt;/code
 &lt;pre tabindex="0"&gt;&lt;code&gt;输入：numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]
 输出：[0,2,1,3]
 解释：总共有 4 门课程。要学习课程 3，你应该先完成课程 1 和课程 2。并且课程 1 和课程 2 都应该排在课程 0 之后。
-因此，一个正确的课程顺序是 [0,1,2,3] 。另一个正确的排序是 [0,2,1,3] 。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</guid><description>&lt;h2 id="177-第n高的薪水-中等"&gt;177 第N高的薪水-中等&lt;a class="anchor" href="#177-%e7%ac%acn%e9%ab%98%e7%9a%84%e8%96%aa%e6%b0%b4-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+因此，一个正确的课程顺序是 [0,1,2,3] 。另一个正确的排序是 [0,2,1,3] 。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part3/ch26/no.743_%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F%E6%97%B6%E9%97%B4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch26/no.743_%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F%E6%97%B6%E9%97%B4/</guid><description>&lt;h2 id="743-网络延迟时间-中等"&gt;743 网络延迟时间-中等&lt;a class="anchor" href="#743-%e7%bd%91%e7%bb%9c%e5%bb%b6%e8%bf%9f%e6%97%b6%e9%97%b4-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;有 &lt;code&gt;n&lt;/code&gt; 个网络节点，标记为 &lt;code&gt;1&lt;/code&gt; 到 &lt;code&gt;n&lt;/code&gt;。给你一个列表 &lt;code&gt;times&lt;/code&gt;，表示信号经过&lt;strong&gt;有向边&lt;/strong&gt;的传递时间。&lt;code&gt;times[i] = (ui, vi, wi)&lt;/code&gt;，其中 &lt;code&gt;ui&lt;/code&gt; 是源节点，&lt;code&gt;vi&lt;/code&gt; 是目标节点，&lt;code&gt;wi&lt;/code&gt; 是一个信号从源节点传递到目标节点的时间。&lt;/p&gt;
+&lt;p&gt;现在，从某个节点 &lt;code&gt;k&lt;/code&gt; 发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回 &lt;code&gt;-1&lt;/code&gt;。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
+输出：2
+解释：第 1 秒，信号到达节点 1 和节点 3；第 2 秒，信号由节点 3 到达节点 4。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：times = [[1,2,1]], n = 2, k = 1
+输出：1&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：times = [[1,2,1]], n = 2, k = 2
+输出：-1
+解释：信号只能从节点 2 出发，但没有任何边从节点 2 出去，节点 1 收不到信号。&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;分析：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part4/ch27sql/no.177_%E7%AC%ACn%E9%AB%98%E7%9A%84%E8%96%AA%E6%B0%B4/</guid><description>&lt;h2 id="177-第n高的薪水-中等"&gt;177 第N高的薪水-中等&lt;a class="anchor" href="#177-%e7%ac%acn%e9%ab%98%e7%9a%84%e8%96%aa%e6%b0%b4-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;题目：&lt;/p&gt;
 &lt;p&gt;表：&lt;code&gt;Employee&lt;/code&gt;&lt;/p&gt;
 &lt;table&gt;

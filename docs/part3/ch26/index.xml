@@ -39,7 +39,20 @@
 &lt;pre tabindex="0"&gt;&lt;code&gt;输入：numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]
 输出：[0,2,1,3]
 解释：总共有 4 门课程。要学习课程 3，你应该先完成课程 1 和课程 2。并且课程 1 和课程 2 都应该排在课程 0 之后。
-因此，一个正确的课程顺序是 [0,1,2,3] 。另一个正确的排序是 [0,2,1,3] 。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>第 21 章 图</title><link>https://subond.com/leetcode/docs/part3/ch26/readme/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch26/readme/</guid><description>&lt;h2 id="第-21-章-图-graph"&gt;第 21 章 图 Graph&lt;a class="anchor" href="#%e7%ac%ac-21-%e7%ab%a0-%e5%9b%be-graph"&gt;#&lt;/a&gt;&lt;/h2&gt;
+因此，一个正确的课程顺序是 [0,1,2,3] 。另一个正确的排序是 [0,2,1,3] 。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title/><link>https://subond.com/leetcode/docs/part3/ch26/no.743_%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F%E6%97%B6%E9%97%B4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch26/no.743_%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F%E6%97%B6%E9%97%B4/</guid><description>&lt;h2 id="743-网络延迟时间-中等"&gt;743 网络延迟时间-中等&lt;a class="anchor" href="#743-%e7%bd%91%e7%bb%9c%e5%bb%b6%e8%bf%9f%e6%97%b6%e9%97%b4-%e4%b8%ad%e7%ad%89"&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;题目：&lt;/p&gt;
+&lt;p&gt;有 &lt;code&gt;n&lt;/code&gt; 个网络节点，标记为 &lt;code&gt;1&lt;/code&gt; 到 &lt;code&gt;n&lt;/code&gt;。给你一个列表 &lt;code&gt;times&lt;/code&gt;，表示信号经过&lt;strong&gt;有向边&lt;/strong&gt;的传递时间。&lt;code&gt;times[i] = (ui, vi, wi)&lt;/code&gt;，其中 &lt;code&gt;ui&lt;/code&gt; 是源节点，&lt;code&gt;vi&lt;/code&gt; 是目标节点，&lt;code&gt;wi&lt;/code&gt; 是一个信号从源节点传递到目标节点的时间。&lt;/p&gt;
+&lt;p&gt;现在，从某个节点 &lt;code&gt;k&lt;/code&gt; 发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回 &lt;code&gt;-1&lt;/code&gt;。&lt;/p&gt;
+&lt;blockquote class='book-hint '&gt;
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
+输出：2
+解释：第 1 秒，信号到达节点 1 和节点 3；第 2 秒，信号由节点 3 到达节点 4。&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：times = [[1,2,1]], n = 2, k = 1
+输出：1&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;输入：times = [[1,2,1]], n = 2, k = 2
+输出：-1
+解释：信号只能从节点 2 出发，但没有任何边从节点 2 出去，节点 1 收不到信号。&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;strong&gt;分析：&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>第 21 章 图</title><link>https://subond.com/leetcode/docs/part3/ch26/readme/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://subond.com/leetcode/docs/part3/ch26/readme/</guid><description>&lt;h2 id="第-21-章-图-graph"&gt;第 21 章 图 Graph&lt;a class="anchor" href="#%e7%ac%ac-21-%e7%ab%a0-%e5%9b%be-graph"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;h3 id="1基本概念"&gt;1、基本概念&lt;a class="anchor" href="#1%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5"&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;图（Graph）由顶点（Vertex）和边（Edge）组成，记为 &lt;code&gt;G = (V, E)&lt;/code&gt;。相比线性表（一对一）和树（一对多），图表示的是&lt;strong&gt;多对多&lt;/strong&gt;的关系，是数据结构中表达力最强的一种。&lt;/p&gt;
 &lt;p&gt;按边是否有方向：&lt;/p&gt;
