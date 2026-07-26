@@ -12,7 +12,7 @@
 
 分析：
 
-算法1：递归
+算法1：递归 DFS（自顶向下）
 
 这种递归是**自顶向下**的方式，通过结合当前节点值，向下一层级传递新的目标值，以判断到达叶子节点时是否满足条件。
 
@@ -32,9 +32,46 @@ func hasPathSum(root *TreeNode, targetSum int) bool {
 
 
 
-算法2：【推荐该算法】
+算法2：迭代 DFS（栈）
 
-迭代，类似层序遍历，当遍历到叶子节点时，判断值是否为零
+和算法1思路相同，只是将系统调用栈显式地用栈模拟。每次弹出节点时，判断是否为叶子节点且剩余值是否为零。
+
+```go
+// date 2025/07/22
+func hasPathSum(root *TreeNode, targetSum int) bool {
+    if root == nil {
+        return false
+    }
+    // 栈中存放 (节点, 剩余目标和)
+    type pair struct {
+        node *TreeNode
+        sum  int
+    }
+    stack := []pair{{root, targetSum - root.Val}}
+    for len(stack) > 0 {
+        top := stack[len(stack)-1]
+        stack = stack[:len(stack)-1]
+        node, remain := top.node, top.sum
+        if node.Left == nil && node.Right == nil && remain == 0 {
+            return true
+        }
+        // 先压右再压左，因为栈是后进先出（顺序无关，只为和递归保持一致的遍历方向）
+        if node.Right != nil {
+            stack = append(stack, pair{node.Right, remain - node.Right.Val})
+        }
+        if node.Left != nil {
+            stack = append(stack, pair{node.Left, remain - node.Left.Val})
+        }
+    }
+    return false
+}
+```
+
+
+
+算法3：迭代 BFS（队列）【推荐该算法】
+
+层序遍历，当遍历到叶子节点时，判断值是否为零
 
 ```go
 // date 2023/10/18
